@@ -1,6 +1,5 @@
 package com.example.carrental.UserJcode;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -26,7 +25,7 @@ public class MainActivityUser extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.u_userhome);  //set UI to this java files
+        setContentView(R.layout.user_home);  //set UI to this java files
         //initializing the UI variables here
         greeting = (TextView)findViewById(R.id.greeting);
         logoutbutton = (ImageButton)findViewById(R.id.logoutbutton);
@@ -54,7 +53,7 @@ public class MainActivityUser extends AppCompatActivity {
         homebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navigationHelper.GotoHomeScreen();
+                navigationHelper.GotoHomeScreen(session.getloggedInUserType());
 
             }
         });
@@ -70,11 +69,7 @@ public class MainActivityUser extends AppCompatActivity {
         viewmyreservation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-
-
-            }
+      }
         });
 
     }

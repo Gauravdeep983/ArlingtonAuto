@@ -2,6 +2,7 @@ package com.example.carrental.AdminJcode;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -11,6 +12,8 @@ import com.example.carrental.NavigationHelper;
 import com.example.carrental.R;
 import com.example.carrental.SessionHelper;
 
+import java.nio.file.Files;
+
 public class MainActivityAdmin extends AppCompatActivity {
 
     public SessionHelper session;
@@ -18,15 +21,18 @@ public class MainActivityAdmin extends AppCompatActivity {
     TextView greeting;
     ImageButton logoutbutton;
     ImageButton homebutton;
-
+    Button viewprofilebutton;
+    Button searchusers;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.admin_userhome);
+        setContentView(R.layout.admin_home);
         //initializing the UI variables here
         greeting = (TextView)findViewById(R.id.greeting);
         logoutbutton = (ImageButton)findViewById(R.id.logoutbutton);
         homebutton = (ImageButton)findViewById(R.id.homebutton);
+        viewprofilebutton = (Button)findViewById(R.id.viewprofilebutton);
+        searchusers = (Button)findViewById(R.id.searchusers);
 
         session = new SessionHelper(this);
         navigationHelper = new NavigationHelper(MainActivityAdmin.this);
@@ -46,10 +52,16 @@ public class MainActivityAdmin extends AppCompatActivity {
         homebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navigationHelper.GotoHomeScreen();
+                navigationHelper.GotoHomeScreen(session.getloggedInUserType());
 
             }
         });
 
+        viewprofilebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigationHelper.GotoViewProfile();
+            }
+        });
     }
 }

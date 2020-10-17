@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#51BCBCBC">
+    <LinearLayout
+        android:id="@+id/myownbar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/colorPrimary">
+
+        <TextView
+            android:id="@+id/greeting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:text="HELLO, "
+            android:textAllCaps="true"
+            android:textSize="24sp"
+            android:layout_marginLeft="16sp"
+            android:fontFamily="sans-serif-medium"
+            android:layout_gravity="center" />
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:gravity="right"
+            android:layout_marginRight="16sp"
+            android:layout_marginEnd="16sp">
+
+            <ImageButton
+                android:id="@+id/homebutton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginRight="7dp"
+                android:background="@drawable/homescreen"
+                android:visibility="invisible">
+
+            </ImageButton>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:text="Logout"
+                android:textAllCaps="true"
+                android:textSize="15sp"
+                android:fontFamily="sans-serif-medium"
+                android:layout_gravity="center"
+                />
+            <ImageButton
+               android:id="@+id/logoutbutton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/logout"
+                android:layout_gravity="center"
+
+                />
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/rounded_edge"
+        >
+
+        <Button
+            android:id="@+id/viewprofilebutton"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:drawableLeft="@drawable/personincircle"
+            android:paddingLeft="15dp"
+            android:drawablePadding="-15dp"
+            android:text="View Profile"
+            android:textAllCaps="true"
+            android:textSize="19dp"
+            android:textColor="@color/colorPrimary"
+            android:background="@drawable/rounded_edge"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="15dp"
+            >
+
+        </Button>
+
+        <Button
+            android:id="@+id/searchcar"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:drawableLeft="@drawable/carspic"
+            android:paddingLeft="15dp"
+            android:drawablePadding="-15dp"
+            android:text="Search Vehicles"
+            android:textAllCaps="true"
+            android:textSize="19dp"
+            android:textColor="@color/colorPrimary"
+            android:background="@drawable/rounded_edge"
+            android:layout_marginBottom="20dp"
+            >
+
+        </Button>
+
+        <Button
+            android:id="@+id/viewreservationbutton"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:drawableLeft="@drawable/carspic"
+            android:paddingLeft="15dp"
+            android:drawablePadding="-15dp"
+            android:text="View Rental History"
+            android:textAllCaps="true"
+            android:textSize="19dp"
+            android:textColor="@color/colorPrimary"
+            android:background="@drawable/rounded_edge"
+            android:layout_marginBottom="20dp"
+            >
+
+        </Button>
+
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
