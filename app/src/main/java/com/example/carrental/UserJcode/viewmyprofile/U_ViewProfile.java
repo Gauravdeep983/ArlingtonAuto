@@ -64,7 +64,7 @@ public class U_ViewProfile extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.u_viewmyprofile);
+        setContentView(R.layout.viewmyprofile);
 
         session = new SessionHelper(this);
         navigationHelper = new NavigationHelper(U_ViewProfile.this);

@@ -30,13 +30,13 @@ public class MainActivityUser extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.u_userhome);  //set UI to this java files
+        setContentView(R.layout.user_home);  //set UI to this java files
         //initializing the UI variables here
         greeting = (TextView) findViewById(R.id.greeting);
         logoutbutton = (ImageButton) findViewById(R.id.logoutbutton);
         homebutton = (ImageButton) findViewById(R.id.homebutton);
         viewprofilebtn = (Button) findViewById(R.id.viewprofilebutton);
-        searchvehicle = (Button) findViewById(R.id.searchvehiclebutton);
+        searchvehicle = (Button) findViewById(R.id.searchcar);
         viewmyreservation = (Button) findViewById(R.id.viewreservationbutton);
 
         session = new SessionHelper(this);
@@ -57,7 +57,7 @@ public class MainActivityUser extends AppCompatActivity {
         homebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navigationHelper.GotoHomeScreen();
+                navigationHelper.GotoHomeScreen(session.getloggedInUserType());
 
             }
         });
