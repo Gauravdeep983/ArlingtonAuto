@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:background="#51BCBCBC"
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/myownbar"
@@ -63,4 +64,54 @@
 
         </LinearLayout>
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/rounded_edge"
+        >
+
+        <Button
+            android:id="@+id/viewprofilebutton"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:drawableLeft="@drawable/personincircle"
+            android:paddingLeft="15dp"
+            android:drawablePadding="-15dp"
+            android:text="View Profile"
+            android:textAllCaps="true"
+            android:textSize="19dp"
+            android:textColor="@color/colorPrimary"
+            android:background="@drawable/rounded_edge"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="15dp"
+            >
+
+        </Button>
+
+        <Button
+            android:id="@+id/searchusers"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:drawableLeft="@drawable/userspic"
+            android:paddingLeft="15dp"
+            android:drawablePadding="-15dp"
+            android:text="Search All Users"
+            android:textAllCaps="true"
+            android:textSize="19dp"
+            android:textColor="@color/colorPrimary"
+            android:background="@drawable/rounded_edge"
+            android:layout_marginBottom="20dp"
+            >
+
+        </Button>
+
+    </LinearLayout>
+
 </LinearLayout>

@@ -2,6 +2,7 @@ package com.example.carrental.RMJcode;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -19,15 +20,16 @@ public class MainActivityRM extends AppCompatActivity {
     TextView greeting;
     ImageButton logoutbutton;
     ImageButton homebutton;
-
+    Button viewprofilebutton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.rm_userhome);
+        setContentView(R.layout.rm_home);
         //initializing the UI variables here
         greeting = (TextView) findViewById(R.id.greeting);
         logoutbutton = (ImageButton) findViewById(R.id.logoutbutton);
         homebutton = (ImageButton) findViewById(R.id.homebutton);
+        viewprofilebutton = (Button)findViewById(R.id.viewprofilebutton);
 
         session = new SessionHelper(this);
         navigationHelper = new NavigationHelper(MainActivityRM.this);
@@ -47,8 +49,15 @@ public class MainActivityRM extends AppCompatActivity {
         homebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navigationHelper.GotoHomeScreen();
+                navigationHelper.GotoHomeScreen(session.getloggedInUserType());
 
+            }
+        });
+
+        viewprofilebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigationHelper.GotoViewProfile();
             }
         });
 
