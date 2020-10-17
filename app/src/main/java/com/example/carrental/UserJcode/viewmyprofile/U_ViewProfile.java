@@ -125,28 +125,42 @@ public class U_ViewProfile extends AppCompatActivity {
 
         // attaching data adapter to spinner
         spinner.setAdapter(dataAdapter);
-
-
-        if (userType.equalsIgnoreCase("user")) {
-            spinner.setEnabled(false);
-            spinner.setSelection(((ArrayAdapter<String>) spinner.getAdapter()).getPosition("User"));
-        } else if (userType.equalsIgnoreCase("rental manager")) {
-            spinner.setEnabled(false);
-            spinner.setSelection(((ArrayAdapter<String>) spinner.getAdapter()).getPosition("Rental Manager"));
-            membership.setEnabled(false);
-            membership.setVisibility(View.GONE);
-        } else {
-            spinner.setSelection(((ArrayAdapter<String>) spinner.getAdapter()).getPosition("Admin"));
-            spinner.setEnabled(false);
-            membership.setEnabled(true);
-            membership.setVisibility(View.GONE);
-        }
         newmaintable.setVisibility(View.VISIBLE);
         newmaintable.startAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_up));
         updatebutton.setVisibility(View.VISIBLE);
         updatebutton.startAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_left));
         ignorebutton.setVisibility(View.VISIBLE);
         ignorebutton.startAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_right));
+        spinner.setEnabled(false);
+        if (userType.equalsIgnoreCase("user")) {
+            spinner.setSelection(((ArrayAdapter<String>) spinner.getAdapter()).getPosition("User"));
+        }
+        else if (userType.equalsIgnoreCase("rental manager")) {
+            spinner.setSelection(((ArrayAdapter<String>) spinner.getAdapter()).getPosition("Rental Manager"));
+            membership.setEnabled(false);
+            membership.setVisibility(View.GONE);
+        }
+        else {
+            spinner.setSelection(((ArrayAdapter<String>) spinner.getAdapter()).getPosition("Admin"));
+            membership.setEnabled(true);
+            //disabling everything because admin cannot change these inputs
+            username.setEnabled(false);
+            password.setEnabled(false);
+            studentid.setEnabled(false);
+            lastname.setEnabled(false);
+            firstname.setEnabled(false);
+            address.setEnabled(false);
+            phonenumber.setEnabled(false);
+            email.setEnabled(false);
+            city.setEnabled(false);
+            state.setEnabled(false);
+            zipcode.setEnabled(false);
+
+            membership.setVisibility(View.GONE);
+            updatebutton.setVisibility(View.GONE);
+            ignorebutton.setVisibility(View.GONE);
+        }
+
         //linear layout click event
         linearlayout.setOnClickListener(new View.OnClickListener() {
 
