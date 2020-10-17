@@ -15,7 +15,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -51,12 +50,8 @@ public class U_ViewProfile extends AppCompatActivity {
     Button ignorebutton;
     LinearLayout linearlayout;
     TableLayout newmaintable;
-    ImageButton backbutton;
-    ImageButton homebutton;
-    ImageButton logoutbutton;
     public SessionHelper session;
     public NavigationHelper navigationHelper;
-
     //db related
 
     SharedPreferences sharedpreferences;
@@ -64,8 +59,8 @@ public class U_ViewProfile extends AppCompatActivity {
     private SQLiteDatabase mDb;
 
     String sessionUsername = null;
-    String userType= null;
-    
+    String userType = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,10 +96,7 @@ public class U_ViewProfile extends AppCompatActivity {
         ignorebutton = (Button) findViewById(R.id.ignorechanges);
         linearlayout = (LinearLayout) findViewById(R.id.llviewprofile);
         newmaintable = (TableLayout) findViewById(R.id.newmaintable);
-        backbutton = (ImageButton)findViewById(R.id.backbutton);
-        homebutton = (ImageButton)findViewById(R.id.homebutton);
-        logoutbutton = (ImageButton)findViewById(R.id.logoutbutton);
-        homebutton.setVisibility(View.INVISIBLE);
+
 
         //spinner code
 
@@ -125,42 +117,29 @@ public class U_ViewProfile extends AppCompatActivity {
 
         // attaching data adapter to spinner
         spinner.setAdapter(dataAdapter);
+
+
+        if (userType.equalsIgnoreCase("user")) {
+            spinner.setEnabled(false);
+            spinner.setSelection(((ArrayAdapter<String>) spinner.getAdapter()).getPosition("User"));
+        } else if (userType.equalsIgnoreCase("rental manager")) {
+            spinner.setEnabled(false);
+            spinner.setSelection(((ArrayAdapter<String>) spinner.getAdapter()).getPosition("Rental Manager"));
+            membership.setEnabled(false);
+            membership.setVisibility(View.GONE);
+        } else {
+            spinner.setSelection(((ArrayAdapter<String>) spinner.getAdapter()).getPosition("Admin"));
+            spinner.setEnabled(false);
+            spinner.setVisibility(View.GONE);
+            membership.setEnabled(true);
+            membership.setVisibility(View.GONE);
+        }
         newmaintable.setVisibility(View.VISIBLE);
         newmaintable.startAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_up));
         updatebutton.setVisibility(View.VISIBLE);
         updatebutton.startAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_left));
         ignorebutton.setVisibility(View.VISIBLE);
         ignorebutton.startAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_right));
-        spinner.setEnabled(false);
-        if (userType.equalsIgnoreCase("user")) {
-            spinner.setSelection(((ArrayAdapter<String>) spinner.getAdapter()).getPosition("User"));
-        }
-        else if (userType.equalsIgnoreCase("rental manager")) {
-            spinner.setSelection(((ArrayAdapter<String>) spinner.getAdapter()).getPosition("Rental Manager"));
-            membership.setEnabled(false);
-            membership.setVisibility(View.GONE);
-        }
-        else {
-            spinner.setSelection(((ArrayAdapter<String>) spinner.getAdapter()).getPosition("Admin"));
-            membership.setEnabled(true);
-            //disabling everything because admin cannot change these inputs
-            username.setEnabled(false);
-            password.setEnabled(false);
-            studentid.setEnabled(false);
-            lastname.setEnabled(false);
-            firstname.setEnabled(false);
-            address.setEnabled(false);
-            phonenumber.setEnabled(false);
-            email.setEnabled(false);
-            city.setEnabled(false);
-            state.setEnabled(false);
-            zipcode.setEnabled(false);
-
-            membership.setVisibility(View.GONE);
-            updatebutton.setVisibility(View.GONE);
-            ignorebutton.setVisibility(View.GONE);
-        }
-
         //linear layout click event
         linearlayout.setOnClickListener(new View.OnClickListener() {
 
@@ -231,50 +210,28 @@ public class U_ViewProfile extends AppCompatActivity {
             }
         });
 
+    }
 
-        backbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
-        homebutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navigationHelper.GotoHomeScreen(session.getloggedInUserType());
-            }
-        });
-
-        logoutbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navigationHelper.logout();
-            }
-        });
-
-
- }
     private void UpdateProfileinDB(String sUsername) {
 
         ContentValues cv = new ContentValues();
-        cv.put("username",username.getText().toString().trim()); //These Fields should be your String values of actual column names
-        cv.put("password",password.getText().toString().trim());
-        cv.put("uta_id",studentid.getText().toString().trim());
+        cv.put("username", username.getText().toString().trim()); //These Fields should be your String values of actual column names
+        cv.put("password", password.getText().toString().trim());
+        cv.put("uta_id", studentid.getText().toString().trim());
         cv.put("last_name", lastname.getText().toString().trim());
-        cv.put("first_name",firstname.getText().toString().trim());
-        cv.put("phone",phonenumber.getText().toString().trim());
-        cv.put("email",email.getText().toString().trim());
-        cv.put("address",address.getText().toString().trim());
-        cv.put("city",city.getText().toString().trim());
-        cv.put("state",state.getText().toString().trim());
-        cv.put("zip",zipcode.getText().toString().trim());
-        cv.put("role",spinner.getSelectedItem().toString().trim());
+        cv.put("first_name", firstname.getText().toString().trim());
+        cv.put("phone", phonenumber.getText().toString().trim());
+        cv.put("email", email.getText().toString().trim());
+        cv.put("address", address.getText().toString().trim());
+        cv.put("city", city.getText().toString().trim());
+        cv.put("state", state.getText().toString().trim());
+        cv.put("zip", zipcode.getText().toString().trim());
+        cv.put("role", spinner.getSelectedItem().toString().trim());
         cv.put("club_membership", getMembership());   //1 - true, 0 -false
         cv.put("is_revoked", 0);
 
 
-        mDb.update("user", cv, "username='"+sUsername+"'", null);
+        mDb.update("user", cv, "username='" + sUsername + "'", null);
 
 
         //Toast.makeText(getActivity(), "Account Details Updated", Toast.LENGTH_LONG).show();
@@ -286,15 +243,15 @@ public class U_ViewProfile extends AppCompatActivity {
         session.setSessionUsername(username.getText().toString().trim());
         session.setSessionUserType(spinner.getSelectedItem().toString().trim());
 
-        sessionUsername= session.getloggedInUsername();
-        userType= session.getloggedInUserType();
+        sessionUsername = session.getloggedInUsername();
+        userType = session.getloggedInUserType();
     }
 
     //fetch initial data from db
     public void GetUserDetailsFromDb(String sessionUsername) {
         Cursor cursor = mDb.rawQuery("select username FROM user", null);
         if (cursor.getCount() > 0) {
-            String query = "Select * from user where username = '" + sessionUsername.toString().trim()+"'";
+            String query = "Select * from user where username = '" + sessionUsername.toString().trim() + "'";
             cursor = mDb.rawQuery(query, null);
             if (cursor.getCount() <= 0) {
                 Intent loginIntent = new Intent(this, RegistrationActivity.class);
@@ -315,8 +272,8 @@ public class U_ViewProfile extends AppCompatActivity {
                     city.setText(cursor.getString(cursor.getColumnIndex("city")));
                     state.setText(cursor.getString(cursor.getColumnIndex("state")));
                     zipcode.setText(cursor.getString(cursor.getColumnIndex("zip")));
-                    spinner.setSelection(((ArrayAdapter<String>)spinner.getAdapter()).getPosition(cursor.getString(cursor.getColumnIndex("role"))));
-                    membership.setChecked(cursor.getInt(cursor.getColumnIndex("club_membership"))==1);
+                    spinner.setSelection(((ArrayAdapter<String>) spinner.getAdapter()).getPosition(cursor.getString(cursor.getColumnIndex("role"))));
+                    membership.setChecked(cursor.getInt(cursor.getColumnIndex("club_membership")) == 1);
 
                 }
                 cursor.close();
@@ -325,8 +282,9 @@ public class U_ViewProfile extends AppCompatActivity {
         }
 
     }
-    public String getMembership() {
-        return membership.isChecked()?"1":"0";
-}
 
+    public String getMembership() {
+        return membership.isChecked() ? "1" : "0";
+
+    }
 }

@@ -391,7 +391,6 @@
                     android:textColor="#020202"
                     android:textColorHint="#FFFDFD"
                     android:textSize="17sp"
-
                     tools:layout_editor_absoluteX="448dp"
                     tools:layout_editor_absoluteY="671dp"
                     android:background="@drawable/buttonrounded_edge"

@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/llselectvehicle"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:background="#51BCBCBC"
+    android:clickable="true"
+    android:isScrollContainer="false">
+
+    <TableLayout
+        android:id="@+id/car_details"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="0dp"
+        android:background="@drawable/rounded_edge"
+        android:isScrollContainer="false"
+        android:paddingTop="15dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="20dp"
+        android:verticalScrollbarPosition="right"
+        android:visibility="visible"
+        tools:layout_editor_absoluteX="-1dp"
+        tools:layout_editor_absoluteY="3dp">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:baselineAligned="false"
+            android:gravity="center_horizontal"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="37dp"
+                android:text="Reservation Details"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp">
+
+            <TextView
+                android:id="@+id/carNameLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Car Name" />
+
+            <TextView
+                android:id="@+id/carName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                tools:text="Economic" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp">
+
+            <TextView
+                android:id="@+id/occupantCapacityLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Occupant Capacity" />
+
+            <TextView
+                android:id="@+id/occupantCapacity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                tools:text="2" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp">
+
+            <TextView
+                android:id="@+id/startDateLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Start Date" />
+
+            <TextView
+                android:id="@+id/startDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                tools:text="10-20-2020" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp">
+
+            <TextView
+                android:id="@+id/startTimeLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Start Time" />
+
+            <TextView
+                android:id="@+id/startTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                tools:text="16:00" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp">
+
+            <TextView
+                android:id="@+id/endDateLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="End Date" />
+
+            <TextView
+                android:id="@+id/endDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                tools:text="10-20-2020" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp">
+
+            <TextView
+                android:id="@+id/endTimeLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="End Time" />
+
+            <TextView
+                android:id="@+id/endTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                tools:text="20:00" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp">
+
+            <TextView
+                android:id="@+id/carNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                tools:text="ABC123" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:baselineAligned="false"
+            android:gravity="center_horizontal"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="37dp"
+                android:text="Optional Features"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp">
+
+            <CheckBox
+                android:id="@+id/gps"
+                android:layout_width="96dp"
+                android:layout_height="match_parent"
+                android:text="GPS" />
+
+            <CheckBox
+                android:id="@+id/siriusxm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SiriusXM" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp">
+
+            <CheckBox
+                android:id="@+id/onstar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="OnStar" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp">
+
+            <TextView
+                android:id="@+id/totalCostLabel"
+                android:layout_width="148dp"
+                android:layout_height="37dp"
+                android:text="Total Cost:"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/totalCost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$45.99" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/btnReserve"
+                android:layout_width="156dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/buttonrounded_edge"
+                android:fontFamily="sans-serif-medium"
+                android:text="Reserve"
+                android:textColor="#020202"
+                android:textColorHint="#FFFDFD"
+                android:textSize="17sp"
+                android:visibility="visible"
+                tools:layout_editor_absoluteX="448dp"
+                tools:layout_editor_absoluteY="671dp" />
+
+            <Button
+                android:id="@+id/btnBack"
+                android:layout_width="156dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/buttonrounded_edge"
+                android:fontFamily="sans-serif-medium"
+                android:text="back"
+                android:textColor="#020202"
+                android:textColorHint="#FFFDFD"
+                android:textSize="17sp"
+                android:visibility="visible"
+                tools:layout_editor_absoluteX="448dp"
+                tools:layout_editor_absoluteY="671dp" />
+        </TableRow>
+    </TableLayout>
+
+</LinearLayout>

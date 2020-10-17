@@ -35,6 +35,14 @@
             android:name=".UserJcode.viewmyprofile.U_ViewProfile"
             android:label="View Profile"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".UserJcode.SearchVehicle"
+            android:label="Search Vehicle"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".UserJcode.SelectVehicle"
+            android:label="Vehicle Details"
+            android:theme="@style/AppTheme.NoActionBar" />
 
 
 
