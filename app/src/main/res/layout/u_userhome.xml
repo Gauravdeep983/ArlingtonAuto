@@ -91,6 +91,23 @@
         </Button>
 
         <Button
+            android:id="@+id/searchvehiclebutton"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:drawableLeft="@drawable/carspic"
+            android:paddingLeft="15dp"
+            android:drawablePadding="-15dp"
+            android:text="Search Vehicle"
+            android:textAllCaps="true"
+            android:textSize="19dp"
+            android:textColor="@color/colorPrimary"
+            android:background="@drawable/rounded_edge"
+            android:layout_marginBottom="20dp"
+            >
+
+        </Button>
+
+        <Button
             android:id="@+id/viewreservationbutton"
             android:layout_width="300dp"
             android:layout_height="60dp"

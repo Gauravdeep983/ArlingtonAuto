@@ -2,7 +2,6 @@ package com.example.carrental.UserJcode.viewmyprofile;
 
 import android.app.ActivityOptions;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -60,8 +59,8 @@ public class U_ViewProfile extends AppCompatActivity {
     private SQLiteDatabase mDb;
 
     String sessionUsername = null;
-    String userType= null;
-    
+    String userType = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -211,27 +210,28 @@ public class U_ViewProfile extends AppCompatActivity {
             }
         });
 
- }
+    }
+
     private void UpdateProfileinDB(String sUsername) {
 
         ContentValues cv = new ContentValues();
-        cv.put("username",username.getText().toString().trim()); //These Fields should be your String values of actual column names
-        cv.put("password",password.getText().toString().trim());
-        cv.put("uta_id",studentid.getText().toString().trim());
+        cv.put("username", username.getText().toString().trim()); //These Fields should be your String values of actual column names
+        cv.put("password", password.getText().toString().trim());
+        cv.put("uta_id", studentid.getText().toString().trim());
         cv.put("last_name", lastname.getText().toString().trim());
-        cv.put("first_name",firstname.getText().toString().trim());
-        cv.put("phone",phonenumber.getText().toString().trim());
-        cv.put("email",email.getText().toString().trim());
-        cv.put("address",address.getText().toString().trim());
-        cv.put("city",city.getText().toString().trim());
-        cv.put("state",state.getText().toString().trim());
-        cv.put("zip",zipcode.getText().toString().trim());
-        cv.put("role",spinner.getSelectedItem().toString().trim());
+        cv.put("first_name", firstname.getText().toString().trim());
+        cv.put("phone", phonenumber.getText().toString().trim());
+        cv.put("email", email.getText().toString().trim());
+        cv.put("address", address.getText().toString().trim());
+        cv.put("city", city.getText().toString().trim());
+        cv.put("state", state.getText().toString().trim());
+        cv.put("zip", zipcode.getText().toString().trim());
+        cv.put("role", spinner.getSelectedItem().toString().trim());
         cv.put("club_membership", getMembership());   //1 - true, 0 -false
         cv.put("is_revoked", 0);
 
 
-        mDb.update("user", cv, "username='"+sUsername+"'", null);
+        mDb.update("user", cv, "username='" + sUsername + "'", null);
 
 
         //Toast.makeText(getActivity(), "Account Details Updated", Toast.LENGTH_LONG).show();
@@ -243,15 +243,15 @@ public class U_ViewProfile extends AppCompatActivity {
         session.setSessionUsername(username.getText().toString().trim());
         session.setSessionUserType(spinner.getSelectedItem().toString().trim());
 
-        sessionUsername= session.getloggedInUsername();
-        userType= session.getloggedInUserType();
+        sessionUsername = session.getloggedInUsername();
+        userType = session.getloggedInUserType();
     }
 
     //fetch initial data from db
     public void GetUserDetailsFromDb(String sessionUsername) {
         Cursor cursor = mDb.rawQuery("select username FROM user", null);
         if (cursor.getCount() > 0) {
-            String query = "Select * from user where username = '" + sessionUsername.toString().trim()+"'";
+            String query = "Select * from user where username = '" + sessionUsername.toString().trim() + "'";
             cursor = mDb.rawQuery(query, null);
             if (cursor.getCount() <= 0) {
                 Intent loginIntent = new Intent(this, RegistrationActivity.class);
@@ -272,8 +272,8 @@ public class U_ViewProfile extends AppCompatActivity {
                     city.setText(cursor.getString(cursor.getColumnIndex("city")));
                     state.setText(cursor.getString(cursor.getColumnIndex("state")));
                     zipcode.setText(cursor.getString(cursor.getColumnIndex("zip")));
-                    spinner.setSelection(((ArrayAdapter<String>)spinner.getAdapter()).getPosition(cursor.getString(cursor.getColumnIndex("role"))));
-                    membership.setChecked(cursor.getInt(cursor.getColumnIndex("club_membership"))==1);
+                    spinner.setSelection(((ArrayAdapter<String>) spinner.getAdapter()).getPosition(cursor.getString(cursor.getColumnIndex("role"))));
+                    membership.setChecked(cursor.getInt(cursor.getColumnIndex("club_membership")) == 1);
 
                 }
                 cursor.close();
@@ -282,8 +282,9 @@ public class U_ViewProfile extends AppCompatActivity {
         }
 
     }
+
     public String getMembership() {
-        return membership.isChecked()?"1":"0";
+        return membership.isChecked() ? "1" : "0";
 
     }
 }
