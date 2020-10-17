@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/llsearchvehicle"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:background="#51BCBCBC"
+    android:clickable="true"
+    android:isScrollContainer="false">
+
+    <TableLayout
+        android:id="@+id/tableMain"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="0dp"
+        android:background="@drawable/rounded_edge"
+        android:isScrollContainer="false"
+        android:paddingLeft="15dp"
+        android:paddingTop="15dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="20dp"
+        android:verticalScrollbarPosition="right"
+        android:visibility="visible"
+        tools:layout_editor_absoluteX="-1dp"
+        tools:layout_editor_absoluteY="3dp">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:baselineAligned="false"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp">
+
+            <EditText
+                android:id="@+id/capacity"
+                android:layout_width="162dp"
+                android:layout_height="45dp"
+                android:autofillHints=""
+                android:drawableLeft="@drawable/person"
+                android:drawablePadding="@dimen/textboxPadding"
+                android:ems="11"
+                android:hint="Capacity"
+                android:inputType="number"
+                android:text="1"
+                android:textColor="#000000"
+                android:textColorHint="#70000000" />
+        </TableRow>
+
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:baselineAligned="false"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity=""
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/startDate"
+                    android:layout_width="162dp"
+                    android:layout_height="45dp"
+                    android:drawableLeft="@drawable/utaid"
+                    android:drawablePadding="15dp"
+                    android:ems="10"
+                    android:hint="Start Date"
+                    android:inputType="date"
+                    android:text="10-17-2020" />
+
+                <EditText
+                    android:id="@+id/startTime"
+                    android:layout_width="162dp"
+                    android:layout_height="45dp"
+
+                    android:drawablePadding="15dp"
+                    android:ems="10"
+                    android:hint="Start Time"
+                    android:inputType="time"
+                    android:text="12:00 pm" />
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:baselineAligned="false"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity=""
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/endDate"
+                    android:layout_width="162dp"
+                    android:layout_height="45dp"
+                    android:drawableLeft="@drawable/utaid"
+                    android:drawablePadding="15dp"
+                    android:ems="10"
+                    android:hint="End Date"
+                    android:inputType="date"
+                    android:text="10-18-2020" />
+
+                <EditText
+                    android:id="@+id/endTime"
+                    android:layout_width="162dp"
+                    android:layout_height="45dp"
+                    android:drawablePadding="15dp"
+                    android:ems="10"
+
+                    android:hint="End TIme"
+                    android:inputType="time"
+                    android:text="11:00 am" />
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:baselineAligned="false"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp" />
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnSearch"
+                    android:layout_width="156dp"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/buttonrounded_edge"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Search"
+                    android:textColor="#020202"
+                    android:textColorHint="#FFFDFD"
+                    android:textSize="17sp"
+                    android:visibility="visible"
+                    tools:layout_editor_absoluteX="448dp"
+                    tools:layout_editor_absoluteY="671dp" />
+
+                <Button
+                    android:id="@+id/btnBack"
+                    android:layout_width="156dp"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/buttonrounded_edge"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Back"
+                    android:textColor="#020202"
+                    android:textColorHint="#FFFDFD"
+                    android:textSize="17sp"
+                    android:visibility="visible"
+                    tools:layout_editor_absoluteX="448dp"
+                    tools:layout_editor_absoluteY="671dp" />
+            </LinearLayout>
+        </TableRow>
+
+    </TableLayout>
+
+</LinearLayout>
