@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/llviewprofile"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:background="#51BCBCBC"
+    android:clickable="true"
+    android:isScrollContainer="false">
+
+    <TableLayout
+        android:id="@+id/newmaintable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="0dp"
+        android:isScrollContainer="false"
+        android:paddingTop="15dp"
+        android:paddingBottom="20dp"
+        android:verticalScrollbarPosition="right"
+        tools:layout_editor_absoluteX="-1dp"
+        tools:layout_editor_absoluteY="3dp"
+        android:background="@drawable/rounded_edge"
+        android:visibility="visible"
+          >
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:baselineAligned="false"
+            android:gravity="center_horizontal"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp">
+
+            <EditText
+                android:id="@+id/newusername"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:drawableLeft="@drawable/person"
+                android:drawablePadding="@dimen/textboxPadding"
+                android:ems="11"
+                android:hint="@string/usernameplaceholder"
+                android:inputType="textPersonName"
+                android:text="omkar"
+                android:textColor="#000000"
+                android:textColorHint="#70000000"
+                android:textSize="24sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:baselineAligned="false"
+            android:gravity="center_horizontal"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp">
+
+            <EditText
+                android:id="@+id/newpassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:drawableLeft="@drawable/passkey"
+                android:drawablePadding="@dimen/textboxPadding"
+                android:ems="10"
+                android:hint="@string/passwordplaceholder"
+                android:inputType="text"
+                android:text="omkar"
+                android:textColor="#000000"
+                android:textColorHint="#70000000"
+                android:textSize="24sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:baselineAligned="false"
+            android:gravity="center_horizontal"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp">
+
+            <EditText
+                android:id="@+id/newemail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:drawableLeft="@drawable/emailpic"
+                android:drawablePadding="@dimen/textboxPadding"
+                android:ems="10"
+                android:hint="EMAIL"
+                android:inputType="textEmailAddress"
+                android:text="omkar@gmail.com"
+                android:textColor="#000000"
+                android:textColorHint="#70000000"
+                android:textSize="24sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:baselineAligned="false"
+            android:gravity="center_horizontal"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:gravity="center"
+                >
+
+                <EditText
+                    android:id="@+id/newlastname"
+                    android:layout_width="162dp"
+                    android:layout_height="45dp"
+                    android:ems="10"
+                    android:hint="LASTNAME"
+                    android:inputType="textPersonName"
+                    android:text="om"
+                    android:textColor="#000000"
+                    android:textColorHint="#70000000" />
+
+                <EditText
+                    android:id="@+id/newfirstname"
+                    android:layout_width="162dp"
+                    android:layout_height="45dp"
+                    android:ems="10"
+                    android:hint="FIRSTNAME"
+                    android:inputType="textPersonName"
+                    android:text="john"
+                    android:textColor="#000000"
+                    android:textColorHint="#70000000" />
+
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:baselineAligned="false"
+            android:gravity="center_horizontal"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/newstudentid"
+                    android:layout_width="162dp"
+                    android:layout_height="45dp"
+
+                    android:drawableLeft="@drawable/utaid"
+                    android:drawablePadding="15dp"
+                    android:ems="10"
+                    android:hint="UTA ID"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:text="123"
+                    android:textColor="#000000"
+                    android:textColorHint="#70000000" />
+
+                <EditText
+                    android:id="@+id/newphonenumber"
+                    android:layout_width="162dp"
+                    android:layout_height="45dp"
+                    android:drawableLeft="@drawable/phonepic"
+                    android:drawablePadding="15dp"
+                    android:ems="10"
+                    android:hint="PHONE"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:text="1223456"
+                    android:textColor="#000000"
+                    android:textColorHint="#70000000" />
+
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:baselineAligned="false"
+            android:gravity="center_horizontal"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/newaddress"
+                    android:layout_width="162dp"
+                    android:layout_height="45dp"
+                    android:ems="10"
+                    android:hint="ADDRESS"
+                    android:inputType="textPersonName"
+                    android:textColor="#000000"
+                    android:textColorHint="#70000000" />
+
+                <EditText
+                    android:id="@+id/newcity"
+                    android:layout_width="162dp"
+                    android:layout_height="45dp"
+                    android:ems="10"
+                    android:hint="CITY"
+                    android:inputType="text"
+                    android:textColor="#000000"
+                    android:textColorHint="#70000000" />
+
+            </LinearLayout>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:baselineAligned="false"
+            android:gravity="center_horizontal"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/newstate"
+                    android:layout_width="162dp"
+                    android:layout_height="45dp"
+                    android:ems="10"
+                    android:hint="STATE"
+                    android:inputType="text"
+                    android:textColor="#000000"
+                    android:textColorHint="#70000000" />
+
+                <EditText
+                    android:id="@+id/newzipcode"
+                    android:layout_width="162dp"
+                    android:layout_height="45dp"
+                    android:ems="10"
+                    android:hint="ZIPCODE"
+                    android:inputType="number"
+                    android:maxLength="5"
+                    android:textColor="#000000"
+                    android:textColorHint="#70000000" />
+
+            </LinearLayout>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:gravity="center_horizontal"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/newrole"
+                    style="?android:attr/spinnerDropDownItemStyle"
+                    android:layout_width="154dp"
+                    android:layout_height="45dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:prompt="@string/pickrole"
+                    android:spinnerMode="dropdown"
+                    android:textColor="#000000"
+                    android:textColorHint="#70000000" />
+
+                <Switch
+                    android:id="@+id/newmembership"
+                    android:layout_width="162dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:ems="11"
+                    android:enabled="true"
+                    android:text="CLUB MEMBERSHIP"
+                    android:textColor="#000000"
+                    android:textColorHint="#70000000" />
+
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="28dp"
+            android:baselineAligned="false"
+            android:gravity="center_horizontal"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/updateprofilebutton"
+                    android:layout_width="156dp"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Update Profile"
+                    android:textColor="#020202"
+                    android:textColorHint="#FFFDFD"
+                    android:textSize="17sp"
+
+                    tools:layout_editor_absoluteX="448dp"
+                    tools:layout_editor_absoluteY="671dp"
+                    android:background="@drawable/buttonrounded_edge"
+                    android:visibility="gone"/>
+
+                <Button
+                    android:id="@+id/ignorechanges"
+                    android:layout_width="156dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Ignore Changes"
+                    android:textColor="#020202"
+                    android:textColorHint="#FFFDFD"
+                    android:textSize="17sp"
+                    tools:layout_editor_absoluteX="448dp"
+                    tools:layout_editor_absoluteY="671dp"
+                    android:background="@drawable/buttonrounded_edge"
+                    android:visibility="gone"/>
+
+            </LinearLayout>
+
+        </TableRow>
+
+
+    </TableLayout>
+
+</LinearLayout>

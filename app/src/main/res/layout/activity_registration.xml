@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:background="@drawable/homescreenroundededge"
+    android:padding="10dp"
+    android:clickable="true"
+    android:isScrollContainer="false"
+    tools:context=".RegistrationActivity">
+
+    <TableLayout
+        android:id="@+id/maintable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginBottom="0dp"
+        android:isScrollContainer="false"
+        tools:layout_editor_absoluteX="-1dp"
+        tools:layout_editor_absoluteY="3dp">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:baselineAligned="false"
+            android:gravity="center_horizontal"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp">
+
+            <EditText
+                android:id="@+id/textboxUsername"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:drawableLeft="@drawable/person"
+                android:drawablePadding="@dimen/textboxPadding"
+                android:ems="11"
+                android:hint="@string/usernameplaceholder"
+                android:inputType="textPersonName"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#C5BEBE"
+                android:textSize="24sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:baselineAligned="false"
+            android:gravity="center_horizontal"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp">
+
+            <EditText
+                android:id="@+id/textboxPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:drawableLeft="@drawable/passkey"
+                android:drawableRight="@drawable/showpassword"
+                android:drawablePadding="@dimen/textboxPadding"
+                android:ems="10"
+                android:hint="@string/passwordplaceholder"
+
+                android:inputType="textPassword"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#DAD1D1"
+                android:textSize="24sp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/row3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:baselineAligned="false"
+            android:gravity="center_horizontal"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp"
+            android:tag="registrationinputs"
+            android:visibility="gone">
+
+            <EditText
+                android:id="@+id/email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:drawableLeft="@drawable/emailpic"
+                android:drawablePadding="@dimen/textboxPadding"
+                android:ems="10"
+                android:hint="EMAIL"
+                android:inputType="textEmailAddress"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#DAD1D1"
+                android:textSize="24sp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/row4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:baselineAligned="false"
+            android:gravity="center_horizontal"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp"
+            android:tag="registrationinputs"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/lastname"
+                    android:layout_width="151dp"
+                    android:layout_height="42dp"
+                    android:ems="10"
+                    android:hint="LASTNAME"
+                    android:inputType="textPersonName"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#DAD1D1" />
+
+                <EditText
+                    android:id="@+id/firstname"
+                    android:layout_width="151dp"
+                    android:layout_height="42dp"
+                    android:ems="10"
+                    android:hint="FIRSTNAME"
+                    android:inputType="textPersonName"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#EDEAEA" />
+
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/row5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:baselineAligned="false"
+            android:gravity="center_horizontal"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp"
+            android:tag="registrationinputs"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/studentid"
+                    android:layout_width="151dp"
+                    android:layout_height="42dp"
+                    android:drawableLeft="@drawable/utaid"
+                    android:drawablePadding="15dp"
+                    android:ems="10"
+                    android:hint="UTA ID"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#DAD1D1" />
+
+                <EditText
+                    android:id="@+id/phonenumber"
+                    android:layout_width="151dp"
+                    android:layout_height="42dp"
+                    android:drawableLeft="@drawable/phonepic"
+                    android:drawablePadding="15dp"
+                    android:ems="10"
+
+                    android:hint="PHONE"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#EDEAEA" />
+
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/row6"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:baselineAligned="false"
+            android:gravity="center_horizontal"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp"
+            android:tag="registrationinputs"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/address"
+                    android:layout_width="151dp"
+                    android:layout_height="42dp"
+                    android:ems="10"
+                    android:hint="ADDRESS"
+                    android:inputType="textPersonName"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#DAD1D1" />
+
+                <EditText
+                    android:id="@+id/city"
+                    android:layout_width="151dp"
+                    android:layout_height="42dp"
+                    android:ems="10"
+                    android:hint="CITY"
+                    android:inputType="text"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#EDEAEA" />
+
+            </LinearLayout>
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/row7"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:baselineAligned="false"
+            android:gravity="center_horizontal"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp"
+            android:tag="registrationinputs"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/state"
+                    android:layout_width="151dp"
+                    android:layout_height="42dp"
+                    android:ems="10"
+                    android:hint="STATE"
+                    android:inputType="text"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#DAD1D1" />
+
+                <EditText
+                    android:id="@+id/zipcode"
+                    android:layout_width="151dp"
+                    android:layout_height="42dp"
+                    android:ems="10"
+                    android:hint="ZIPCODE"
+                    android:inputType="number"
+                    android:maxLength="5"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#EDEAEA" />
+
+            </LinearLayout>
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/row8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:gravity="center_horizontal"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp"
+            android:tag="registrationinputs"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/role"
+                    style="?android:attr/spinnerDropDownItemStyle"
+                    android:layout_width="151dp"
+                    android:layout_height="42dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:prompt="@string/pickrole"
+                    android:spinnerMode="dropdown"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#EDEAEA" />
+
+                <Switch
+                    android:id="@+id/membership"
+                    android:layout_width="151dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:enabled="true"
+                    android:text="CLUB MEMBERSHIP"
+                    android:textColor="#EDEAEA"
+                    android:textColorHint="#EDEAEA" />
+
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="28dp"
+            android:baselineAligned="false"
+            android:gravity="center_horizontal"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/loginbutton"
+                    android:layout_width="146dp"
+                    android:layout_height="42dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/buttonrounded_edge"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@string/LOGIN"
+                    android:textColor="#D3D1D1"
+                    android:textSize="24sp"
+                    android:visibility="visible"
+                    tools:layout_editor_absoluteX="448dp"
+                    tools:layout_editor_absoluteY="671dp"
+
+                    />
+
+                <Button
+                    android:id="@+id/registerbtn"
+                    android:layout_width="146dp"
+                    android:layout_height="42dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/buttonrounded_edge"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="REGISTER"
+                    android:textColor="#D3D1D1"
+                    android:textSize="24sp"
+                    android:visibility="gone"
+                    tools:layout_editor_absoluteX="448dp"
+                    tools:layout_editor_absoluteY="671dp" />
+
+            </LinearLayout>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:baselineAligned="false"
+            android:gravity="center_horizontal"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp">
+
+            <TextView
+                android:id="@+id/registerbutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="10dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:fontFamily="sans-serif-medium"
+                android:linksClickable="false"
+                android:text="@string/question"
+                android:textColor="#FFF1F1"
+                android:textSize="18sp"
+                android:visibility="visible"
+                tools:layout_editor_absoluteX="448dp"
+                tools:layout_editor_absoluteY="671dp" />
+        </TableRow>
+
+    </TableLayout>
+
+</LinearLayout>

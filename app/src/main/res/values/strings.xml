@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">CAR RENTAL</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- my variables  -->
+    <string name="Username">Lastname FirstName</string>
+    <string name="email">username@gmail.com</string>
+    <string name="logout">Logout</string>
+    <string name="usernameplaceholder">USERNAME</string>
+    <string name="passwordplaceholder">PASSWORD</string>
+    <string name="LOGIN">LOGIN</string>
+    <string name="question">Not a User? Click Here</string>
+
+
+    <!-- my variables  ending-->
+
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">View Profile</string>
+    <string name="menu_slideshow">View Reservations</string>
+    <string name="pickrole">Choose a Role</string>
+    <!-- Strings used for fragments for navigation -->
+
+    <!-- TODO: Remove or change this placeholder text -->
+
+</resources>
