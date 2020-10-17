@@ -2,7 +2,6 @@ package com.example.carrental.UserJcode.viewmyprofile;
 
 import android.app.ActivityOptions;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -16,6 +15,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -51,8 +51,12 @@ public class U_ViewProfile extends AppCompatActivity {
     Button ignorebutton;
     LinearLayout linearlayout;
     TableLayout newmaintable;
+    ImageButton backbutton;
+    ImageButton homebutton;
+    ImageButton logoutbutton;
     public SessionHelper session;
     public NavigationHelper navigationHelper;
+
     //db related
 
     SharedPreferences sharedpreferences;
@@ -65,7 +69,7 @@ public class U_ViewProfile extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.u_viewmyprofile);
+        setContentView(R.layout.viewmyprofile);
 
         session = new SessionHelper(this);
         navigationHelper = new NavigationHelper(U_ViewProfile.this);
@@ -97,7 +101,10 @@ public class U_ViewProfile extends AppCompatActivity {
         ignorebutton = (Button) findViewById(R.id.ignorechanges);
         linearlayout = (LinearLayout) findViewById(R.id.llviewprofile);
         newmaintable = (TableLayout) findViewById(R.id.newmaintable);
-
+        backbutton = (ImageButton)findViewById(R.id.backbutton);
+        homebutton = (ImageButton)findViewById(R.id.homebutton);
+        logoutbutton = (ImageButton)findViewById(R.id.logoutbutton);
+        homebutton.setVisibility(View.INVISIBLE);
 
         //spinner code
 
@@ -118,29 +125,42 @@ public class U_ViewProfile extends AppCompatActivity {
 
         // attaching data adapter to spinner
         spinner.setAdapter(dataAdapter);
-
-
-        if (userType.equalsIgnoreCase("user")) {
-            spinner.setEnabled(false);
-            spinner.setSelection(((ArrayAdapter<String>) spinner.getAdapter()).getPosition("User"));
-        } else if (userType.equalsIgnoreCase("rental manager")) {
-            spinner.setEnabled(false);
-            spinner.setSelection(((ArrayAdapter<String>) spinner.getAdapter()).getPosition("Rental Manager"));
-            membership.setEnabled(false);
-            membership.setVisibility(View.GONE);
-        } else {
-            spinner.setSelection(((ArrayAdapter<String>) spinner.getAdapter()).getPosition("Admin"));
-            spinner.setEnabled(false);
-            spinner.setVisibility(View.GONE);
-            membership.setEnabled(true);
-            membership.setVisibility(View.GONE);
-        }
         newmaintable.setVisibility(View.VISIBLE);
         newmaintable.startAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_up));
         updatebutton.setVisibility(View.VISIBLE);
         updatebutton.startAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_left));
         ignorebutton.setVisibility(View.VISIBLE);
         ignorebutton.startAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_right));
+        spinner.setEnabled(false);
+        if (userType.equalsIgnoreCase("user")) {
+            spinner.setSelection(((ArrayAdapter<String>) spinner.getAdapter()).getPosition("User"));
+        }
+        else if (userType.equalsIgnoreCase("rental manager")) {
+            spinner.setSelection(((ArrayAdapter<String>) spinner.getAdapter()).getPosition("Rental Manager"));
+            membership.setEnabled(false);
+            membership.setVisibility(View.GONE);
+        }
+        else {
+            spinner.setSelection(((ArrayAdapter<String>) spinner.getAdapter()).getPosition("Admin"));
+            membership.setEnabled(true);
+            //disabling everything because admin cannot change these inputs
+            username.setEnabled(false);
+            password.setEnabled(false);
+            studentid.setEnabled(false);
+            lastname.setEnabled(false);
+            firstname.setEnabled(false);
+            address.setEnabled(false);
+            phonenumber.setEnabled(false);
+            email.setEnabled(false);
+            city.setEnabled(false);
+            state.setEnabled(false);
+            zipcode.setEnabled(false);
+
+            membership.setVisibility(View.GONE);
+            updatebutton.setVisibility(View.GONE);
+            ignorebutton.setVisibility(View.GONE);
+        }
+
         //linear layout click event
         linearlayout.setOnClickListener(new View.OnClickListener() {
 
@@ -210,6 +230,29 @@ public class U_ViewProfile extends AppCompatActivity {
                 }
             }
         });
+
+
+        backbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        homebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigationHelper.GotoHomeScreen(session.getloggedInUserType());
+            }
+        });
+
+        logoutbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigationHelper.logout();
+            }
+        });
+
 
  }
     private void UpdateProfileinDB(String sUsername) {
@@ -284,6 +327,6 @@ public class U_ViewProfile extends AppCompatActivity {
     }
     public String getMembership() {
         return membership.isChecked()?"1":"0";
+}
 
-    }
 }
