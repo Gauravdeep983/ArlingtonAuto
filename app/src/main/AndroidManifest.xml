@@ -36,13 +36,6 @@
             android:label="View Profile"
             android:theme="@style/AppTheme.NoActionBar" />
 
-
-
-
-
-
-
-
         <activity
             android:name=".UserJcode.SearchVehicle"
             android:label="Search Vehicle"
