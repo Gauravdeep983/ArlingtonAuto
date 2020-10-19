@@ -10,6 +10,7 @@
         android:roundIcon="@drawable/carspic"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".RegistrationActivity"
             android:noHistory="true">
@@ -35,7 +36,6 @@
             android:name=".UserJcode.viewmyprofile.U_ViewProfile"
             android:label="View Profile"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".UserJcode.SearchVehicle"
             android:label="Search Vehicle"
@@ -44,15 +44,10 @@
             android:name=".UserJcode.SelectVehicle"
             android:label="Vehicle Details"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".AdminJcode.Admin_searchallusers"
-            android:theme="@style/AppTheme.NoActionBar"
             android:label="SEARCH ALL USERS"
-            />
-
-
-
+            android:theme="@style/AppTheme.NoActionBar" />
 
     </application>
 
