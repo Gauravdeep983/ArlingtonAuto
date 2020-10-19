@@ -63,5 +63,15 @@ public class MainActivityAdmin extends AppCompatActivity {
                 navigationHelper.GotoViewProfile();
             }
         });
+
+
+        searchusers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigationHelper.GotoSearchallUsers();
+            }
+        });
+
+
     }
 }

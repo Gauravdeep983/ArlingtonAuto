@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.example.carrental.AdminJcode.Admin_searchallusers;
 import com.example.carrental.AdminJcode.MainActivityAdmin;
 import com.example.carrental.RMJcode.MainActivityRM;
 import com.example.carrental.UserJcode.MainActivityUser;
@@ -69,6 +70,15 @@ public class NavigationHelper {
     public void GotoViewProfile()
     {
         Intent loginIntent = new Intent(context, U_ViewProfile.class);
+        ActivityOptions options =
+                ActivityOptions.makeCustomAnimation(context, android.R.anim.fade_in, android.R.anim.fade_out);
+
+        context.startActivity(loginIntent, options.toBundle());
+    }
+
+    public void GotoSearchallUsers()
+    {
+        Intent loginIntent = new Intent(context, Admin_searchallusers.class);
         ActivityOptions options =
                 ActivityOptions.makeCustomAnimation(context, android.R.anim.fade_in, android.R.anim.fade_out);
 

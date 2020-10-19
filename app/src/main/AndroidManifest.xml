@@ -46,6 +46,20 @@
 
 
 
+
+
+
+
+
+        <activity
+            android:name=".AdminJcode.Admin_searchallusers"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="SEARCH ALL USERS"
+            />
+
+
+
+
     </application>
 
 </manifest>
