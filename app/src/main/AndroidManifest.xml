@@ -44,13 +44,6 @@
             android:label="Vehicle Details"
             android:theme="@style/AppTheme.NoActionBar" />
 
-
-
-
-
-
-
-
         <activity
             android:name=".AdminJcode.Admin_searchallusers"
             android:theme="@style/AppTheme.NoActionBar"
