@@ -1,7 +1,9 @@
 package com.example.carrental.UserJcode.viewmyprofile;
 
 import android.app.ActivityOptions;
+import android.app.AlertDialog;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -225,8 +227,25 @@ public class U_ViewProfile extends AppCompatActivity {
                 } else if (zipcode.getText().toString().trim().equals("")) {
                     zipcode.setError("zipcode is required!");
                 } else {
-
-                    UpdateProfileinDB(sessionUsername);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(U_ViewProfile.this);
+                    builder.setMessage("Do you want to update ?");
+                    builder.setTitle("Are you sure ?");
+                    builder.setCancelable(true);
+                    builder.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog,int which)
+                        {
+                            UpdateProfileinDB(sessionUsername);
+                        }});
+                    builder.setNegativeButton("No",new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog,int which)
+                        {
+                            dialog.cancel();
+                        }
+                    });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
                 }
             }
         });
