@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RegistrationActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-
+    //Comment, test from xyz
     EditText username;
     EditText password;
     EditText email;
