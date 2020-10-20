@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RegistrationActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-    //this is my line where there is already something on git
+
     EditText username;
     EditText password;
     EditText email;
