@@ -2,8 +2,11 @@ package com.example.carrental;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -11,12 +14,18 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.InputType;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -29,6 +38,7 @@ import android.widget.Toast;
 import com.example.carrental.AdminJcode.MainActivityAdmin;
 import com.example.carrental.RMJcode.MainActivityRM;
 import com.example.carrental.UserJcode.MainActivityUser;
+import com.example.carrental.UserJcode.viewmyprofile.U_ViewProfile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +64,14 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
 
     TableLayout maintable;
     Button registerbtn;
+    TableRow tr3;
+    TableRow tr4;
+    TableRow tr5;
+    TableRow tr6;
+    TableRow tr7;
+    TableRow tr8;
+    Boolean pswdvisible=false;
+
 
     //db related
     SharedPreferences sharedpreferences;
@@ -62,6 +80,7 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
 
 
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,12 +120,16 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
         linearlayout = (LinearLayout)findViewById(R.id.ll);
         loginbutton = (Button)findViewById(R.id.loginbutton);
         registerlink = (TextView)findViewById(R.id.registerbutton);
-
+        pswdvisible=false;
 
         maintable = (TableLayout)findViewById(R.id.maintable);
         registerbtn = (Button)findViewById(R.id.registerbtn);
-
-
+        tr3 =  (TableRow)findViewById(R.id.row3);
+        tr4 =  (TableRow)findViewById(R.id.row4);
+        tr5 =  (TableRow)findViewById(R.id.row5);
+        tr6 =  (TableRow)findViewById(R.id.row6);
+        tr7 =  (TableRow)findViewById(R.id.row7);
+        tr8 =  (TableRow)findViewById(R.id.row8);
 
         // Spinner element
 
@@ -198,12 +221,12 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
 
             @Override
             public void onClick(View v) {
-                if(loginbutton.getCurrentTextColor() == Color.parseColor("#D3D1D1"))
+                if(registerbtn.getCurrentTextColor() == Color.parseColor("#D3D1D1"))
                 {
-                    loginbutton.setTextColor(Color.parseColor("#ffffff"));
+                    registerbtn.setTextColor(Color.parseColor("#ffffff"));
                 }
                 else{
-                    loginbutton.setTextColor(Color.parseColor("#D3D1D1"));
+                    registerbtn.setTextColor(Color.parseColor("#D3D1D1"));
                 }
                 InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
                 inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(), 0);
@@ -233,39 +256,48 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
                 }
                 // username and password not empty
                 else {
+                    if (membership.isChecked())
+                    {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(RegistrationActivity.this);
+                        builder.setMessage("You have selected Club Membership");
+                        builder.setTitle("Enter the valid code");
+                        builder.setIcon(R.drawable.passkey);
+                        builder.setCancelable(true);
+                        final EditText input = new EditText(RegistrationActivity.this);
+                        input.setInputType(InputType.TYPE_CLASS_TEXT);
+                        builder.setView(input);
 
-                    //check with db
-                    sharedpreferences = getSharedPreferences("MyPREFERENCES", Context.MODE_PRIVATE);
-                    Cursor cursor = mDb.rawQuery("select username FROM user", null);
-                    if (cursor.getCount() > 0) {
-                        String query = "Select * from user where username = '" + username.getText().toString().trim() + "'";
-                        cursor = mDb.rawQuery(query, null);
-                        if (cursor.getCount() > 0) {
-                            Toast.makeText(getApplicationContext(), "Username already exists", Toast.LENGTH_LONG).show();
-                            username.setText("");
+                        builder.setPositiveButton("Validate",new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog,int which)
+                            {
+                                if(input.getText().toString().equalsIgnoreCase("1234"))
+                                {
+                                    Toast.makeText(getApplicationContext(), "Membership activated", Toast.LENGTH_SHORT).show();
+                                    InsertUserinDB();
+                                }
+                                else{
+                                    Toast.makeText(getApplicationContext(), "Invalid code entered", Toast.LENGTH_SHORT).show();
+                                    membership.setChecked(false);
+                                }
 
-                            cursor.close();
-                        } else {
+                            }});
+                        builder.setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog,int which)
+                            {
+                                membership.setChecked(false);
+                                dialog.cancel();
+                            }
+                        });
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.show();
 
- String insert_query = "insert into user (username, password, uta_id, last_name, first_name, phone, email, address, city, state, zip, role, club_membership, is_revoked) " +
-         "values ('"+ username.getText().toString().trim() +"','"+password.getText().toString().trim()+"','"+studentid.getText().toString().trim()+"','" +
-         lastname.getText().toString().trim()+"','"+firstname.getText().toString().trim()+"','"+phonenumber.getText().toString().trim()+"','"+email.getText().toString().trim()+"','" +
-         address.getText().toString().trim()+"','"+city.getText().toString().trim()+"','"+state.getText().toString().trim()+"','"+zipcode.getText().toString().trim()+"','"+spinner.getSelectedItem().toString().trim()+"','"+
-         getMembership() +"','0' ) ";
- System.out.println(insert_query);
-                            mDb.execSQL(insert_query);
-                            Toast.makeText(getApplicationContext(), "Registration Successful", Toast.LENGTH_LONG).show();
-                            cursor.close();
-                            String userType =  spinner.getSelectedItem().toString().trim();
-                            //saving a session for a logged in user in the form of (key,value) pair (username, "")
-                            SharedPreferences.Editor session = sharedpreferences.edit();
-                            session.putString("username", username.getText().toString().trim());
-                            session.putString("userType", userType);
-                            session.commit();
-
-                            ForwardUsertoUI(userType);
-                        }
                     }
+                    else{
+                        InsertUserinDB();
+                    }
+
                 }
 
                 registerbtn.setTextColor(Color.parseColor("#D3D1D1"));
@@ -292,6 +324,15 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
             }
         } );
 
+        membership.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                // do something, the isChecked will be
+                // true if the switch is in the On position
+                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(membership.getRootView().getApplicationWindowToken(), 0);
+
+            }
+        });
 
         registerlink.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -299,26 +340,76 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
                 registerlink.setTextSize(16);
                 registerbtn.setVisibility(View.VISIBLE);
                 registerlink.setVisibility(View.INVISIBLE);
-               TableRow tr3 =  (TableRow)findViewById(R.id.row3);
-               tr3.setVisibility(View.VISIBLE);
-
-                TableRow tr4 =  (TableRow)findViewById(R.id.row4);
+                tr3.setVisibility(View.VISIBLE);
                 tr4.setVisibility(View.VISIBLE);
-
-                TableRow tr5 =  (TableRow)findViewById(R.id.row5);
                 tr5.setVisibility(View.VISIBLE);
-
-                TableRow tr6 =  (TableRow)findViewById(R.id.row6);
                 tr6.setVisibility(View.VISIBLE);
-
-                TableRow tr7 =  (TableRow)findViewById(R.id.row7);
                 tr7.setVisibility(View.VISIBLE);
-
-                TableRow tr8 =  (TableRow)findViewById(R.id.row8);
                 tr8.setVisibility(View.VISIBLE);
             }
         });
+
+        password.setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                final int DRAWABLE_LEFT = 0;
+                final int DRAWABLE_TOP = 1;
+                final int DRAWABLE_RIGHT = 2;
+                final int DRAWABLE_BOTTOM = 3;
+
+                if(event.getAction() == MotionEvent.ACTION_UP) {
+                    if(event.getRawX() >= (password.getRight() - password.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                        // your action here
+                        if(pswdvisible.equals(false))
+                        {  password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());   pswdvisible=true;}
+                        else
+                        { password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                            pswdvisible=false;}
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+
  } //end of Oncreate
+
+    private void InsertUserinDB()
+    {
+        //check with db
+        sharedpreferences = getSharedPreferences("MyPREFERENCES", Context.MODE_PRIVATE);
+        Cursor cursor = mDb.rawQuery("select username FROM user", null);
+        if (cursor.getCount() > 0) {
+            String query = "Select * from user where username = '" + username.getText().toString().trim() + "'";
+            cursor = mDb.rawQuery(query, null);
+            if (cursor.getCount() > 0) {
+                Toast.makeText(getApplicationContext(), "Username already exists", Toast.LENGTH_LONG).show();
+                username.setText("");
+
+                cursor.close();
+            } else {
+
+                String insert_query = "insert into user (username, password, uta_id, last_name, first_name, phone, email, address, city, state, zip, role, club_membership, is_revoked) " +
+                        "values ('"+ username.getText().toString().trim() +"','"+password.getText().toString().trim()+"','"+studentid.getText().toString().trim()+"','" +
+                        lastname.getText().toString().trim()+"','"+firstname.getText().toString().trim()+"','"+phonenumber.getText().toString().trim()+"','"+email.getText().toString().trim()+"','" +
+                        address.getText().toString().trim()+"','"+city.getText().toString().trim()+"','"+state.getText().toString().trim()+"','"+zipcode.getText().toString().trim()+"','"+spinner.getSelectedItem().toString().trim()+"','"+
+                        getMembership() +"','0' ) ";
+                System.out.println(insert_query);
+                mDb.execSQL(insert_query);
+                Toast.makeText(getApplicationContext(), "Registration Successful", Toast.LENGTH_LONG).show();
+                cursor.close();
+
+                tr3.setVisibility(View.GONE);
+                tr4.setVisibility(View.GONE);
+                tr5.setVisibility(View.GONE);
+                tr6.setVisibility(View.GONE);
+                tr7.setVisibility(View.GONE);
+                tr8.setVisibility(View.GONE);
+                //ForwardUsertoUI(userType);
+            }
+        }
+    }
+
 
     private void ForwardUsertoUI(String data) {
         loginbutton.setBackgroundColor(Color.parseColor("#607d8b"));
@@ -345,12 +436,13 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
             startActivity(loginIntent, options.toBundle());
         }
     }
-
+    //when user selects the role, hide the membership accordingly and hide the keyboard
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         // On selecting a spinner item
         String item = parent.getItemAtPosition(position).toString();
-
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(membership.getRootView().getApplicationWindowToken(), 0);
         // Showing selected spinner item
         //Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
         if(!item.equals("User"))
