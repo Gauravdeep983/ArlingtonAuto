@@ -1,5 +1,6 @@
 package com.example.carrental.RMJcode;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +22,8 @@ public class MainActivityRM extends AppCompatActivity {
     ImageButton logoutbutton;
     ImageButton homebutton;
     Button viewprofilebutton;
+    Button searchcar;
+    Button viewavailablecars;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +33,8 @@ public class MainActivityRM extends AppCompatActivity {
         logoutbutton = (ImageButton) findViewById(R.id.logoutbutton);
         homebutton = (ImageButton) findViewById(R.id.homebutton);
         viewprofilebutton = (Button)findViewById(R.id.viewprofilebutton);
+        searchcar = (Button)findViewById(R.id.searchcar);
+        viewavailablecars = (Button)findViewById(R.id.viewavailablecars);
 
         session = new SessionHelper(this);
         navigationHelper = new NavigationHelper(MainActivityRM.this);
@@ -61,5 +66,22 @@ public class MainActivityRM extends AppCompatActivity {
             }
         });
 
+        searchcar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent ui = new Intent(MainActivityRM.this, SearchCars.class);
+                startActivity(ui);
+            }
+        });
+
+        viewavailablecars.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent ui = new Intent(MainActivityRM.this, ViewAvailableCars.class);
+                startActivity(ui);
+            }
+        });
     }
 }
