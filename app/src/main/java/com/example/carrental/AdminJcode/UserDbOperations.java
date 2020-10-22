@@ -85,5 +85,51 @@ public class UserDbOperations {
         return Allusers;
     }
 
+    public List<ArrayList<String>> SearchVehicles(int capacity, String startDate, String endDate) {
+        String sql = "SELECT * FROM car\n" +
+                "WHERE car_name NOT IN (SELECT car_name FROM car_reservation WHERE start_date > '" + startDate + "' AND end_date <'" + endDate + "') " +
+                "AND capacity >= " + capacity + "ORDER BY weekly_rate ASC";
+
+        return FindVehiclesInDB(sql);
+    }
+
+
+    public List<ArrayList<String>> FindVehiclesInDB(String sql)
+    {
+        List<ArrayList<String>> allVehicles = new ArrayList<ArrayList<String>>();
+        allVehicles.clear();
+        Cursor cursor = mDb.rawQuery("select car_name FROM car", null);
+        if (cursor.getCount() > 0) {
+            String query = sql;
+            cursor = mDb.rawQuery(query, null);
+            if (cursor.getCount() <= 0) {
+                //no user
+                cursor.close();
+
+            } else {
+                cursor.moveToFirst();
+                try {
+                    do {
+                        ArrayList<String> eachVehicle = new ArrayList<String>();
+                        eachVehicle.add(cursor.getString(cursor.getColumnIndex("car_name")));
+                        eachVehicle.add(cursor.getString(cursor.getColumnIndex("car_number")));
+                        eachVehicle.add(cursor.getString(cursor.getColumnIndex("capacity")));
+                        eachVehicle.add(cursor.getString(cursor.getColumnIndex("weekday_rate")));
+                        eachVehicle.add(cursor.getString(cursor.getColumnIndex("weekend_rate")));
+                        eachVehicle.add(cursor.getString(cursor.getColumnIndex("weekly_rate")));
+                        eachVehicle.add(cursor.getString(cursor.getColumnIndex("gps_rate")));
+                        eachVehicle.add(cursor.getString(cursor.getColumnIndex("onstar_rate")));
+                        eachVehicle.add(cursor.getString(cursor.getColumnIndex("siriusxm_rate")));
+                        allVehicles.add(eachVehicle);
+                    }
+                    while (cursor.moveToNext());
+                } finally {
+                    cursor.close();
+                }
+            }
+        }
+        return allVehicles;
+    }
+
 
 }
