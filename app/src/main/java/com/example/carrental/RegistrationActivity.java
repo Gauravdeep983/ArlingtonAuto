@@ -195,14 +195,21 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
                             cursor.close();
                         } else {
                             String data = "User";
+                            Boolean isMember = false;
+                            String membershipStatus = "";
                             if (cursor.moveToFirst()) {
                                 data = cursor.getString(cursor.getColumnIndex("role"));
+                                membershipStatus = cursor.getString(cursor.getColumnIndex("club_membership"));
+                                if (membershipStatus.equals("1")) {
+                                    isMember = true;
+                                }
                             }
                             cursor.close();
                             //saving a session for a logged in user in the form of (key,value) pair (username, "")
                             SharedPreferences.Editor session = sharedpreferences.edit();
                             session.putString("username", username.getText().toString().trim());
                             session.putString("userType", data);
+                            session.putString("membershipStatus", isMember.toString());
                             session.commit();
 
                             ForwardUsertoUI(data);

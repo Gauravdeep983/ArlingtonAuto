@@ -2,15 +2,21 @@ package com.example.carrental.UserJcode;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.res.Resources;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import androidx.annotation.RequiresApi;
@@ -42,14 +48,17 @@ public class SearchVehicle extends AppCompatActivity {
     DatePickerDialog dpicker;
     EditText capacity;
     Button searchbtn;
-    LinearLayout scrollList;
+    List<ArrayList<String>> allCars = null;
     public UserDbOperations userDbOperations;
+    ScrollView scroller;
+    LinearLayout scrollList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_vehicle_user);
         session = new SessionHelper(this);
+        userDbOperations = new UserDbOperations(this);
         userType = session.getloggedInUserType();
         backButton = (ImageButton) findViewById(R.id.backbutton);
         logoutButton = (ImageButton) findViewById(R.id.logoutbutton);
@@ -62,6 +71,8 @@ public class SearchVehicle extends AppCompatActivity {
         decreaseButton = (ImageButton) findViewById(R.id.decreasebutton);
         capacity = (EditText) findViewById(R.id.capacity);
         searchbtn = (Button) findViewById(R.id.btnSearch);
+        scrollList = (LinearLayout) findViewById(R.id.scrollList);
+        scroller = (ScrollView) findViewById(R.id.scroller);
         // Back button click
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -200,10 +211,16 @@ public class SearchVehicle extends AppCompatActivity {
 
     }
 
-    private void searchVehicles(int capacity, String startDate, String endDate) {
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+    private void searchVehicles(final int capacity, String startDate, String endDate) {
         //clearing whatever is in scroll list first
-        //scrollList.removeAllViewsInLayout();
-        List<ArrayList<String>> allCars = userDbOperations.SearchVehicles(capacity, startDate, endDate);
+        scrollList.removeAllViewsInLayout();
+        // search for cars
+        final ArrayList<String> userInputs = new ArrayList<String>();
+        userInputs.add(0, Integer.toString(capacity));
+        userInputs.add(1, startDate);
+        userInputs.add(2, endDate);
+        allCars = userDbOperations.SearchVehicles(capacity, startDate, endDate);
         for (final ArrayList<String> car : allCars) {
             String carName = car.get(0);
             String carNumber = car.get(1);
@@ -214,12 +231,64 @@ public class SearchVehicle extends AppCompatActivity {
             String gpsRate = car.get(6);
             String onstarRate = car.get(7);
             String siriusxmRate = car.get(8);
-        }
-    }
 
+            LinearLayout linearItem = new LinearLayout(this);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.setMargins(dpToPx(5), dpToPx(5), dpToPx(5), dpToPx(0));
+            linearItem.setLayoutParams(params);
+            linearItem.setOrientation(LinearLayout.HORIZONTAL);
+            linearItem.setBackgroundResource(R.drawable.rounded_edge);
+            linearItem.setClickable(true);
+            linearItem.setFocusable(true);
+            linearItem.setId(View.generateViewId());
+            //properties for Imageview
+            ImageView userpic = new ImageView(this);
+            LinearLayout.LayoutParams Imageviewparams = new LinearLayout.LayoutParams(dpToPx(50), dpToPx(50));
+            Imageviewparams.setMargins(dpToPx(10), dpToPx(10), dpToPx(10), dpToPx(10));
+            Imageviewparams.gravity = Gravity.CENTER;
+            userpic.setLayoutParams(Imageviewparams);
+
+            userpic.setBackgroundResource(R.drawable.personinorange);
+            userpic.setContentDescription("UserImage");
+            linearItem.addView(userpic);
+
+            //properties for TextView
+            TextView userSummaryTextObject = new TextView(this);
+            LinearLayout.LayoutParams txtparms = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 0.7f);
+            txtparms.setMargins(dpToPx(10), dpToPx(10), dpToPx(10), dpToPx(10));
+            userSummaryTextObject.setLayoutParams(txtparms);
+            userSummaryTextObject.setText(carName.trim());
+            userSummaryTextObject.setTextSize(15);
+            userSummaryTextObject.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+            linearItem.addView(userSummaryTextObject);
+
+            //properties for Button
+            Button btn = new Button(this);
+            LinearLayout.LayoutParams btnparams = new LinearLayout.LayoutParams(dpToPx(30), dpToPx(30));
+            btnparams.setMargins(dpToPx(0), dpToPx(0), dpToPx(30), dpToPx(0));
+            btnparams.gravity = Gravity.CENTER;
+            btn.setLayoutParams(btnparams);
+            btn.setBackgroundResource(R.drawable.backbuttongrey);
+            btn.setRotation(180f);
+            linearItem.addView(btn);
+            //adding the linearitem to main linear or scroll view
+            scrollList.addView(linearItem);
+
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    navigationHelper.GoToReservationDetails(car, userInputs);
+                }
+            });
+        }
+
+    }
 
     private String mergeDateTime(String date, String time) {
         return date.concat(" " + time + ":00");
     }
 
+    public static int dpToPx(int dp) {
+        return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
+    }
 }
