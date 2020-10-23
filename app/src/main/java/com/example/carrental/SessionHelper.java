@@ -7,6 +7,7 @@ public class SessionHelper {
 
     public SharedPreferences prefs;
     SharedPreferences.Editor session;
+
     public SessionHelper(Context cntx) {
         // TODO Auto-generated constructor stub
         prefs = cntx.getSharedPreferences("MyPREFERENCES", Context.MODE_PRIVATE);
@@ -14,24 +15,32 @@ public class SessionHelper {
     }
 
     public String getloggedInUsername() {
-        String username = prefs.getString("username","");
+        String username = prefs.getString("username", "");
         return username;
     }
+
     public String getloggedInUserType() {
-        String userType = prefs.getString("userType","");
+        String userType = prefs.getString("userType", "");
         return userType;
     }
 
-    public void setSessionUsername(String uname)
-    {
+    public void setSessionUsername(String uname) {
         session.putString("username", uname);
         session.commit();
     }
 
-    public void setSessionUserType(String utype)
-    {
+    public void setSessionUserType(String utype) {
         session.putString("userType", utype);
         session.commit();
+    }
+
+    public void setMembershipStatus(Boolean isMember) {
+        session.putString("membershipStatus", isMember.toString());
+        session.commit();
+    }
+    public String getMembershipStatus() {
+        String userType = prefs.getString("membershipStatus", "");
+        return userType;
     }
 
 
