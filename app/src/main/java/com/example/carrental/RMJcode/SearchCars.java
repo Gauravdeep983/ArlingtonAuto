@@ -1,16 +1,201 @@
 package com.example.carrental.RMJcode;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.res.Resources;
+import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.Gravity;
+import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
 
+import com.example.carrental.AdminJcode.Admin_searchallusers;
+import com.example.carrental.AdminJcode.UserDbOperations;
+import com.example.carrental.NavigationHelper;
 import com.example.carrental.R;
+import com.example.carrental.SessionHelper;
+import com.example.carrental.UserJcode.SearchVehicle;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SearchCars extends AppCompatActivity {
 
+    ImageButton backbutton;
+    ImageButton logoutbutton;
+    public NavigationHelper navigationHelper;
+    LinearLayout scrollList;
+    EditText carname;
+    Button searchbutton;
+    ScrollView scroller;
+    public SessionHelper session;
+    public UserDbOperations userDbOperations;
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_cars);
+        setContentView(R.layout.rm_search_cars);
+        navigationHelper = new NavigationHelper(SearchCars.this);
+        backbutton = (ImageButton)findViewById(R.id.backbutton);
+        logoutbutton = (ImageButton)findViewById(R.id.logoutbutton);
+        backbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        logoutbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigationHelper.logout();
+            }
+        });
+        session = new SessionHelper(this);
+        navigationHelper = new NavigationHelper(SearchCars.this);
+        userDbOperations = new UserDbOperations(SearchCars.this);
+        scroller = (ScrollView)findViewById(R.id.scroller);
+        carname = (EditText)findViewById(R.id.carname);
+        searchbutton = (Button)findViewById(R.id.searchforcarbutton);
+        scrollList = (LinearLayout)findViewById(R.id.scrollList);
+
+        UpdateUserList();
+        searchbutton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+            @Override
+            public void onClick(View v) {
+                //getting details from db
+                UpdateUserList();
+            }
+        });
+
+        //start searching the user when the text is being written
+        carname.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                UpdateUserList();
+            }
+        });
+        //closing the keyboard when user is scrolling the list
+        scroller.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+            @Override
+            public void onScrollChanged() {
+                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(scroller.getWindowToken(),0);
+
+            }
+        });
+    }
+
+
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+    private void UpdateUserList() {
+
+        //clearing whatever is in scroll list first
+        scrollList.removeAllViewsInLayout();
+
+        List<ArrayList<String>> allusers =  userDbOperations.SearchAllUser(carname.getText().toString().trim());
+
+        for (final ArrayList<String> user : allusers) {
+            String userRole = user.get(0);
+            String userSummary = user.get(1);
+            final String username = user.get(2);
+
+            LinearLayout linearItem = new LinearLayout(this);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.setMargins(dpToPx(5),dpToPx(5),dpToPx(5),dpToPx(0));
+            linearItem.setLayoutParams(params);
+            linearItem.setOrientation(LinearLayout.HORIZONTAL);
+            linearItem.setBackgroundResource(R.drawable.rounded_edge);
+            linearItem.setClickable(true);
+            linearItem.setFocusable(true);
+            linearItem.setId(View.generateViewId());
+            //properties for Imageview
+            ImageView userpic = new ImageView(this);
+            LinearLayout.LayoutParams Imageviewparams = new LinearLayout.LayoutParams(dpToPx(50),dpToPx(50));
+            Imageviewparams.setMargins(dpToPx(10),dpToPx(10),dpToPx(10),dpToPx(10));
+            Imageviewparams.gravity = Gravity.CENTER;
+            userpic.setLayoutParams(Imageviewparams);
+            if(userRole.equalsIgnoreCase("Admin")){
+                userpic.setBackgroundResource(R.mipmap.adminpic);
+            }
+            else if(userRole.equalsIgnoreCase("Rental Manager")){
+                userpic.setBackgroundResource(R.drawable.personincircle);
+            }
+            else {
+                userpic.setBackgroundResource(R.drawable.personinorange);
+            }
+
+            userpic.setContentDescription("UserImage");
+            linearItem.addView(userpic);
+
+            //properties for TextView
+            TextView userSummaryTextObject = new TextView(this);
+            LinearLayout.LayoutParams txtparms = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 0.7f);
+            txtparms.setMargins(dpToPx(10),dpToPx(10),dpToPx(10),dpToPx(10));
+            userSummaryTextObject.setLayoutParams(txtparms);
+            userSummaryTextObject.setText(userSummary.toString().trim());
+            userSummaryTextObject.setTextSize(15);
+            userSummaryTextObject.setTypeface(Typeface.create("sans-serif-medium",Typeface.NORMAL));
+            linearItem.addView(userSummaryTextObject);
+
+            //properties for Button
+            Button btn = new Button(this);
+            LinearLayout.LayoutParams btnparams = new LinearLayout.LayoutParams(dpToPx(30),dpToPx(30));
+            btnparams.setMargins(dpToPx(0),dpToPx(0),dpToPx(30),dpToPx(0));
+            btnparams.gravity = Gravity.CENTER;
+            btn.setLayoutParams(btnparams);
+            btn.setBackgroundResource(R.drawable.backbuttongrey);
+            btn.setRotation(180f);
+            linearItem.addView(btn);
+
+            //we'll add what action needs to be done when user clicks on one of these items
+            linearItem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    navigationHelper.GotoViewProfile();
+
+                }
+            });
+
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //route the user to a specific screen and pass the username as parameter. Ex: GoToUserProfile(username);
+                    navigationHelper.GotoViewProfile();
+
+                }
+            });
+
+            //adding the linearitem to main linear or scroll view
+            scrollList.addView(linearItem);
+        }
+
+    }
+    //method used to change dp to pixel. since android takes only pixels
+    public static int dpToPx(int dp) {
+        return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
     }
 }
