@@ -133,6 +133,7 @@ public class ViewSelectedVehicle extends AppCompatActivity {
                     calculatedCost += siriusxmRate;
                 } else {
                     calculatedCost -= siriusxmRate;
+                    //asd
                 }
                 totalCost.setText("$" + Double.toString(calculatedCost));
             }
