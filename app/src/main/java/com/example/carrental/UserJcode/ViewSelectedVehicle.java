@@ -1,10 +1,13 @@
 package com.example.carrental.UserJcode;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,11 +16,7 @@ import com.example.carrental.AdminJcode.UserDbOperations;
 import com.example.carrental.NavigationHelper;
 import com.example.carrental.R;
 import com.example.carrental.SessionHelper;
-
-import org.joda.time.DateTime;
-import org.joda.time.Days;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
@@ -37,12 +36,15 @@ public class ViewSelectedVehicle extends AppCompatActivity {
     TextView totalCost;
     Button btnReserve;
     Button backbtn;
-
+    TableRow membershipContainer;
     String sessionUsername = null;
     String userType = null;
     boolean isMember;
-    double calculatedCost = 0.00;
+    double finalCost = 0.00;
     String reservationNumber = "";
+    double baseCost = 0.0;
+    int noOfDays = 0;
+    TextView finalCostText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +64,8 @@ public class ViewSelectedVehicle extends AppCompatActivity {
         onstar = (CheckBox) findViewById(R.id.onstar);
         siriusxm = (CheckBox) findViewById(R.id.siriusxm);
         totalCost = (TextView) findViewById(R.id.totalCost);
+        finalCostText = (TextView) findViewById(R.id.finalCostText);
+        membershipContainer = (TableRow) findViewById(R.id.membershipContainer);
 
         sessionUsername = session.getloggedInUsername();
         userType = session.getloggedInUserType();
@@ -87,6 +91,16 @@ public class ViewSelectedVehicle extends AppCompatActivity {
 //        String siriusxmRate = car.get(8);
         final String startDate = userInputs.get(1);
         final String endDate = userInputs.get(2);
+        baseCost = getIntent().getDoubleExtra("baseCost", 0.0);
+        noOfDays = getIntent().getIntExtra("noOfDays", 0);
+        finalCostText.setText("$" + calculateFinalCost(baseCost, isMember));
+        if (isMember) {
+            // view membership container
+            membershipContainer.setVisibility(View.VISIBLE);
+        } else {
+            // gone
+            membershipContainer.setVisibility(View.GONE);
+        }
 
         carName.setText(carDetails.get(0));
         carNumber.setText(carDetails.get(1));
@@ -98,19 +112,17 @@ public class ViewSelectedVehicle extends AppCompatActivity {
         siriusxmRate = Double.parseDouble(carDetails.get(8));
 
         // Default cost + tax
-        totalCost.setText("$999.9");
-        // get no of days.
-        int numberOfDays = getDaysBetweenDates(startDate, endDate);
-        //double totalBaseCost = calculateBaseCost(numberOfDays, isMember);
+        totalCost.setText("$" + baseCost);
+        finalCost = calculateFinalCost(baseCost, isMember);
         gps.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    calculatedCost += gpsRate;
+                    baseCost += gpsRate;
                 } else {
-                    calculatedCost -= gpsRate;
+                    baseCost -= gpsRate;
                 }
-                totalCost.setText("$" + Double.toString(calculatedCost));
+                totalCost.setText("$" + Double.toString(baseCost));
             }
         });
 
@@ -118,11 +130,11 @@ public class ViewSelectedVehicle extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    calculatedCost += onstarRate;
+                    baseCost += onstarRate;
                 } else {
-                    calculatedCost -= onstarRate;
+                    baseCost -= onstarRate;
                 }
-                totalCost.setText("$" + Double.toString(calculatedCost));
+                totalCost.setText("$" + Double.toString(baseCost));
             }
         });
 
@@ -130,12 +142,11 @@ public class ViewSelectedVehicle extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    calculatedCost += siriusxmRate;
+                    baseCost += siriusxmRate;
                 } else {
-                    calculatedCost -= siriusxmRate;
-                    //asd
+                    baseCost -= siriusxmRate;
                 }
-                totalCost.setText("$" + Double.toString(calculatedCost));
+                totalCost.setText("$" + Double.toString(baseCost));
             }
         });
 
@@ -145,50 +156,67 @@ public class ViewSelectedVehicle extends AppCompatActivity {
                 // Generate a 6 digit reservation number
                 reservationNumber = generateReservationNumber(6);
                 // Save in car_reservation table
+                //TODO Optional features isSelected() not working
                 userDbOperations.InsertReservationDetails(reservationNumber, sessionUsername, carName.getText().toString(),
-                        startDate, endDate, Integer.parseInt(selectedCapacity.getText().toString()), Double.parseDouble(totalCost.getText().toString().replace("$", "")),
+                        startDate, endDate, Integer.parseInt(selectedCapacity.getText().toString()), Double.parseDouble(finalCostText.getText().toString().replace("$", "")),
                         gps.isSelected(), onstar.isSelected(), siriusxm.isSelected(), null);
 
                 // Redirect/ toast
+                //TODO Not persistent
+                Snackbar.make(findViewById(android.R.id.content), "Reservation Number: " + reservationNumber, Snackbar.LENGTH_INDEFINITE)
+                        .setAction("Action", null).show();
+                navigationHelper.GotoHomeScreen(userType);
+            }
+        });
+
+        totalCost.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                finalCostText.setText("$" + calculateFinalCost(baseCost, isMember));
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        backbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
     }
 
-    private String generateReservationNumber(int stringSize) {
-        // chose a Character random from this String
-        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                + "0123456789"
-                + "abcdefghijklmnopqrstuvxyz";
-
-        // create StringBuffer size of AlphaNumericString
-        StringBuilder sb = new StringBuilder(stringSize);
-
-        for (int i = 0; i < stringSize; i++) {
-
-            // generate a random number between
-            // 0 to AlphaNumericString variable length
-            int index
-                    = (int) (AlphaNumericString.length()
-                    * Math.random());
-
-            // add Character one by one in end of sb
-            sb.append(AlphaNumericString
-                    .charAt(index));
+    private double calculateFinalCost(double baseCost, boolean isMember) {
+        double result = 0.0;
+        // Add tax
+        result = baseCost + (0.0825 * baseCost);
+        if (isMember) {
+            // Add discount
+            result = result - (result * 0.1);
         }
-
-        return sb.toString();
+        return result;
     }
 
-    private int getDaysBetweenDates(String startDate, String endDate) {
-        int numberOfDays = 0;
-        DateTimeFormatter formatter = DateTimeFormat.forPattern("MM-dd-yyyy HH:mm:ss");
-        DateTime start = formatter.parseDateTime(startDate);
-        DateTime end = formatter.parseDateTime(endDate);
-        numberOfDays = Days.daysBetween(start.toLocalDate(), end.toLocalDate()).getDays();
-        if (numberOfDays == 0) {
-            return 1;
+    private String generateReservationNumber(int stringSize) {
+        // chose a Character random from this String
+        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "0123456789";
+        // create StringBuffer size of AlphaNumericString
+        StringBuilder sb = new StringBuilder(stringSize);
+        for (int i = 0; i < stringSize; i++) {
+            // generate a random number between
+            // 0 to AlphaNumericString variable length
+            int index = (int) (AlphaNumericString.length() * Math.random());
+            // add Character one by one in end of sb
+            sb.append(AlphaNumericString.charAt(index));
         }
-        return numberOfDays;
+        return sb.toString();
     }
 
 

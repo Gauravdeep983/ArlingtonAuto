@@ -74,12 +74,14 @@ public class NavigationHelper {
         context.startActivity(loginIntent, options.toBundle());
     }
 
-    public void GoToReservationDetails(ArrayList<String> carDetails, ArrayList<String> userInputs) {
+    public void GoToReservationDetails(ArrayList<String> carDetails, ArrayList<String> userInputs, double baseCost, int noOfDays) {
         Intent i = new Intent(context, ViewSelectedVehicle.class);
         Bundle args = new Bundle();
-        args.putSerializable("car",(Serializable)carDetails);
+        args.putSerializable("car", (Serializable) carDetails);
         args.putSerializable("userInputs", userInputs);
-            i.putExtra("args", args);
+        i.putExtra("args", args);
+        i.putExtra("noOfDays", noOfDays);
+        i.putExtra("baseCost", baseCost);
         ActivityOptions options =
                 ActivityOptions.makeCustomAnimation(context, android.R.anim.fade_in, android.R.anim.fade_out);
 
