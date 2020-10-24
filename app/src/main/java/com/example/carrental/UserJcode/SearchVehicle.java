@@ -27,8 +27,17 @@ import com.example.carrental.NavigationHelper;
 import com.example.carrental.R;
 import com.example.carrental.SessionHelper;
 
+import org.joda.time.DateTime;
+import org.joda.time.Days;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public class SearchVehicle extends AppCompatActivity {
@@ -257,7 +266,13 @@ public class SearchVehicle extends AppCompatActivity {
             LinearLayout.LayoutParams txtparms = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 0.7f);
             txtparms.setMargins(dpToPx(10), dpToPx(10), dpToPx(10), dpToPx(10));
             userSummaryTextObject.setLayoutParams(txtparms);
-            userSummaryTextObject.setText(carName.trim());
+            // get no of days
+            final int noOfDays = getDaysBetweenDates(startDate, endDate);
+            // get base cost
+            final double baseCost = calculateBaseCost(noOfDays, startDate, endDate, weekdayRate, weekendRate, weeklyRate);
+            String displayText = carName.trim() + " - Car Number: " + carNumber + "\nCapacity: " + capacity + ", Cost: $" + baseCost;
+            userSummaryTextObject.setText(displayText);
+
             userSummaryTextObject.setTextSize(15);
             userSummaryTextObject.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
             linearItem.addView(userSummaryTextObject);
@@ -277,11 +292,53 @@ public class SearchVehicle extends AppCompatActivity {
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    navigationHelper.GoToReservationDetails(car, userInputs);
+                    navigationHelper.GoToReservationDetails(car, userInputs, baseCost, noOfDays);
                 }
             });
         }
 
+    }
+
+    private double calculateBaseCost(int noOfDays, String startDate, String endDate, String weekdayRate, String weekendRate, String weeklyRate) {
+        double result = 0.0;
+        //TODO Greater than 7 days?
+        if (noOfDays >= 7) {
+            result = Double.parseDouble(weeklyRate);
+        } else {
+            Date dateFrom = null, dateTo = null;
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy hh:mm");
+            try {
+                // Convert string to date format
+                dateFrom = dateFormat.parse(startDate);
+                dateTo = dateFormat.parse(endDate);
+
+                // Get date list
+                List<Date> dateList = new ArrayList<Date>();
+                Calendar calendar = new GregorianCalendar();
+                calendar.setTime(dateFrom);
+
+                while (calendar.getTime().before(dateTo)) {
+                    Date date = calendar.getTime();
+                    dateList.add(date);
+                    calendar.add(Calendar.DATE, 1);
+                }
+                // Count weekdays, weekends
+                int weekdayCount = 0, weekendCount = 0;
+                for (Date date : dateList) {
+                    if (date.getDay() == 0 || date.getDay() == 6) {
+                        weekendCount += 1;
+                    } else {
+                        weekdayCount += 1;
+                    }
+                }
+                // Calculate cost
+                result = weekdayCount * Double.parseDouble(weekdayRate) + weekendCount * Double.parseDouble(weekendRate);
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
     }
 
     private String mergeDateTime(String date, String time) {
@@ -290,5 +347,17 @@ public class SearchVehicle extends AppCompatActivity {
 
     public static int dpToPx(int dp) {
         return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
+    }
+
+    private int getDaysBetweenDates(String startDate, String endDate) {
+        int numberOfDays = 0;
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("MM-dd-yyyy HH:mm:ss");
+        DateTime start = formatter.parseDateTime(startDate);
+        DateTime end = formatter.parseDateTime(endDate);
+        numberOfDays = Days.daysBetween(start.toLocalDate(), end.toLocalDate()).getDays();
+        if (numberOfDays == 0) {
+            return 1;
+        }
+        return numberOfDays;
     }
 }
