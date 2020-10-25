@@ -176,7 +176,7 @@ public class Admin_searchallusers extends AppCompatActivity {
             linearItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    navigationHelper.GotoViewProfile();
+                    navigationHelper.GotoUserProfile(username);
 
                 }
             });
