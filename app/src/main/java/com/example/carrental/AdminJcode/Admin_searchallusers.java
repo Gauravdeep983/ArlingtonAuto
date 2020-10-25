@@ -171,25 +171,27 @@ public class Admin_searchallusers extends AppCompatActivity {
             btn.setBackgroundResource(R.drawable.backbuttongrey);
             btn.setRotation(180f);
             linearItem.addView(btn);
+            btn.setVisibility(View.INVISIBLE);
+            if(!userRole.equalsIgnoreCase("Admin")) {
+                btn.setVisibility(View.VISIBLE);
+                //we'll add what action needs to be done when user clicks on one of these items
+                linearItem.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        navigationHelper.GotoUserProfile(username);
 
-            //we'll add what action needs to be done when user clicks on one of these items
-            linearItem.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    navigationHelper.GotoUserProfile(username);
+                    }
+                });
 
-                }
-            });
+                btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //route the user to a specific screen and pass the username as parameter. Ex: GoToUserProfile(username);
+                        navigationHelper.GotoUserProfile(username);
 
-            btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //route the user to a specific screen and pass the username as parameter. Ex: GoToUserProfile(username);
-                    navigationHelper.GotoViewProfile();
-
-                }
-            });
-
+                    }
+                });
+            }
             //adding the linearitem to main linear or scroll view
             scrollList.addView(linearItem);
         }
