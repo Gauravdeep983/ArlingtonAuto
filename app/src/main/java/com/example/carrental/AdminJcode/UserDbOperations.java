@@ -49,7 +49,7 @@ public class UserDbOperations {
         Allusers.clear();
         Cursor cursor = mDb.rawQuery("select username FROM user", null);
         if (cursor.getCount() > 0) {
-            String query = "Select * from user where last_name like '%" + identifier + "%'";
+            String query = "Select * from user where last_name like '%" + identifier + "%' order by last_name asc, first_name asc";
             cursor = mDb.rawQuery(query, null);
             if (cursor.getCount() <= 0) {
                 //no user
@@ -61,10 +61,10 @@ public class UserDbOperations {
                     do {
                         ArrayList<String> eachuser = new ArrayList<String>();
                         eachuser.add(cursor.getString(cursor.getColumnIndex("role")));
-                        eachuser.add(cursor.getString(cursor.getColumnIndex("username")) + "\n" +
-                                cursor.getString(cursor.getColumnIndex("uta_id")) + "\n" +
+                        eachuser.add("USERNAME - "+cursor.getString(cursor.getColumnIndex("username")) + "\nUTA ID - " +
+                                cursor.getString(cursor.getColumnIndex("uta_id")) + "\nNAME - " +
                                 cursor.getString(cursor.getColumnIndex("first_name")) + " " +
-                                cursor.getString(cursor.getColumnIndex("last_name")) + "\n" +
+                                cursor.getString(cursor.getColumnIndex("last_name")) + "\nEMAIL - " +
                                 cursor.getString(cursor.getColumnIndex("email")));
                         eachuser.add(cursor.getString(cursor.getColumnIndex("username")));
                         Allusers.add(eachuser);

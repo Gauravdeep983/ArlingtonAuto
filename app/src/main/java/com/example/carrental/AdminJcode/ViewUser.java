@@ -58,7 +58,7 @@ public class ViewUser extends AppCompatActivity {
     ImageButton logoutbutton;
     public SessionHelper session;
     public NavigationHelper navigationHelper;
-
+    public String uname;
     //db related
 
     SharedPreferences sharedpreferences;
@@ -71,13 +71,16 @@ public class ViewUser extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.viewmyprofile);
+        setContentView(R.layout.admin_view_user);
 
         session = new SessionHelper(this);
         navigationHelper = new NavigationHelper(ViewUser.this);
 
         sessionUsername = session.getloggedInUsername();
         userType = session.getloggedInUserType();
+
+        Intent i = getIntent();
+        uname =  i.getStringExtra("username");
 
         //db related
         mDBHelper = new DatabaseHelper(this);
@@ -106,9 +109,7 @@ public class ViewUser extends AppCompatActivity {
         backbutton = (ImageButton)findViewById(R.id.backbutton);
         homebutton = (ImageButton)findViewById(R.id.homebutton);
         logoutbutton = (ImageButton)findViewById(R.id.logoutbutton);
-        homebutton.setVisibility(View.INVISIBLE);
-
-        //spinner code
+       //spinner code
 
         //spinner.setOnItemSelectedListener(this);
 
@@ -133,7 +134,7 @@ public class ViewUser extends AppCompatActivity {
         modifybutton.startAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_left));
 
         spinner.setEnabled(true);
-
+        membership.setEnabled(false);
         //    spinner.setSelection(((ArrayAdapter<String>) spinner.getAdapter()).getPosition("User"));
 
 
@@ -148,11 +149,8 @@ public class ViewUser extends AppCompatActivity {
             }
         });
 
-        final Intent i = new Intent();
         //fetch initial data from db
-        GetUserDetailsFromDb(i.getStringExtra("username"));
-
-
+        GetUserDetailsFromDb(uname);
 
         //update profile click listener
         modifybutton.setOnClickListener(new View.OnClickListener() {
@@ -189,6 +187,7 @@ public class ViewUser extends AppCompatActivity {
                 } else if (zipcode.getText().toString().trim().equals("")) {
                     zipcode.setError("zipcode is required!");
                 } else {
+
                     AlertDialog.Builder builder = new AlertDialog.Builder(ViewUser.this);
                     builder.setMessage("Do you want to modify ?");
                     builder.setTitle("Are you sure ?");
@@ -197,7 +196,11 @@ public class ViewUser extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog,int which)
                         {
-                            UpdateProfileinDB(i.getStringExtra("username"));
+                            if(!spinner.getSelectedItem().toString().equals("User"))
+                            {
+                                membership.setChecked(false);
+                            }
+                            UpdateProfileinDB(uname);
                         }});
                     builder.setNegativeButton("No",new DialogInterface.OnClickListener() {
                         @Override
@@ -239,23 +242,23 @@ public class ViewUser extends AppCompatActivity {
     private void UpdateProfileinDB(String sUsername) {
 
         ContentValues cv = new ContentValues();
-        cv.put("username",username.getText().toString().trim()); //These Fields should be your String values of actual column names
-        cv.put("password",password.getText().toString().trim());
-        cv.put("uta_id",studentid.getText().toString().trim());
+        cv.put("username", username.getText().toString().trim()); //These Fields should be your String values of actual column names
+        cv.put("password", password.getText().toString().trim());
+        cv.put("uta_id", studentid.getText().toString().trim());
         cv.put("last_name", lastname.getText().toString().trim());
-        cv.put("first_name",firstname.getText().toString().trim());
-        cv.put("phone",phonenumber.getText().toString().trim());
-        cv.put("email",email.getText().toString().trim());
-        cv.put("address",address.getText().toString().trim());
-        cv.put("city",city.getText().toString().trim());
-        cv.put("state",state.getText().toString().trim());
-        cv.put("zip",zipcode.getText().toString().trim());
-        cv.put("role",spinner.getSelectedItem().toString().trim());
+        cv.put("first_name", firstname.getText().toString().trim());
+        cv.put("phone", phonenumber.getText().toString().trim());
+        cv.put("email", email.getText().toString().trim());
+        cv.put("address", address.getText().toString().trim());
+        cv.put("city", city.getText().toString().trim());
+        cv.put("state", state.getText().toString().trim());
+        cv.put("zip", zipcode.getText().toString().trim());
+        cv.put("role", spinner.getSelectedItem().toString().trim());
         cv.put("club_membership", getMembership());   //1 - true, 0 -false
         cv.put("is_revoked", getRevokestatus());
 
 
-        mDb.update("user", cv, "username='"+sUsername+"'", null);
+        mDb.update("user", cv, "username='" + sUsername + "'", null);
 
 
         //Toast.makeText(getActivity(), "Account Details Updated", Toast.LENGTH_LONG).show();
@@ -264,18 +267,14 @@ public class ViewUser extends AppCompatActivity {
         GetUserDetailsFromDb(username.getText().toString().trim());
         //saving a session for a logged in user in the form of (key,value) pair (username, "")
 
-        session.setSessionUsername(username.getText().toString().trim());
-        session.setSessionUserType(spinner.getSelectedItem().toString().trim());
 
-        sessionUsername= session.getloggedInUsername();
-        userType= session.getloggedInUserType();
     }
 
     //fetch initial data from db
-    public void GetUserDetailsFromDb(String username) {
+    public void GetUserDetailsFromDb(String uname) {
         Cursor cursor = mDb.rawQuery("select username FROM user", null);
         if (cursor.getCount() > 0) {
-            String query = "Select * from user where username = '" + username.toString().trim()+"'";
+            String query = "Select * from user where username = '" + uname+"'";
             cursor = mDb.rawQuery(query, null);
             if (cursor.getCount() <= 0) {
                 Intent loginIntent = new Intent(this, RegistrationActivity.class);
