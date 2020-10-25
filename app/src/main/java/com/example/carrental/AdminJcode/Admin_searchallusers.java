@@ -118,12 +118,12 @@ public class Admin_searchallusers extends AppCompatActivity {
         //clearing whatever is in scroll list first
         scrollList.removeAllViewsInLayout();
 
-        List<ArrayList<String>> allcars =  userDbOperations.SearchAllUser(lastname.getText().toString().trim());
+        List<ArrayList<String>> allusers =  userDbOperations.SearchAllUser(lastname.getText().toString().trim());
 
-        for (final ArrayList<String> car : allcars) {
-            String userRole = car.get(0);
-            String userSummary = car.get(1);
-            final String username = car.get(2);
+        for (final ArrayList<String> user : allusers) {
+            String userRole = user.get(0);
+            String userSummary = user.get(1);
+            final String username = user.get(2);
 
             LinearLayout linearItem = new LinearLayout(this);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -135,14 +135,22 @@ public class Admin_searchallusers extends AppCompatActivity {
             linearItem.setFocusable(true);
             linearItem.setId(View.generateViewId());
             //properties for Imageview
-            ImageView carpic = new ImageView(this);
+            ImageView userpic = new ImageView(this);
             LinearLayout.LayoutParams Imageviewparams = new LinearLayout.LayoutParams(dpToPx(50),dpToPx(50));
             Imageviewparams.setMargins(dpToPx(10),dpToPx(10),dpToPx(10),dpToPx(10));
             Imageviewparams.gravity = Gravity.CENTER;
-            carpic.setLayoutParams(Imageviewparams);
-            carpic.setBackgroundResource(R.drawable.carspic);
-            carpic.setContentDescription("UserImage");
-            linearItem.addView(carpic);
+            userpic.setLayoutParams(Imageviewparams);
+            if(userRole.equalsIgnoreCase("Admin")){
+                userpic.setBackgroundResource(R.mipmap.adminpic);
+            }
+            else if(userRole.equalsIgnoreCase("Rental Manager")){
+                userpic.setBackgroundResource(R.drawable.personincircle);
+            }
+            else {
+                userpic.setBackgroundResource(R.drawable.personinorange);
+            }
+            userpic.setContentDescription("UserImage");
+            linearItem.addView(userpic);
 
             //properties for TextView
             TextView userSummaryTextObject = new TextView(this);

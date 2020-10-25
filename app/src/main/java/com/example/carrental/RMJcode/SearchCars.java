@@ -41,7 +41,7 @@ public class SearchCars extends AppCompatActivity {
     Button searchbutton;
     ScrollView scroller;
     public SessionHelper session;
-    public UserDbOperations userDbOperations;
+    public CarDbOperations carDbOperations;
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +64,7 @@ public class SearchCars extends AppCompatActivity {
         });
         session = new SessionHelper(this);
         navigationHelper = new NavigationHelper(SearchCars.this);
-        userDbOperations = new UserDbOperations(SearchCars.this);
+        carDbOperations = new CarDbOperations(SearchCars.this);
         scroller = (ScrollView)findViewById(R.id.scroller);
         carname = (EditText)findViewById(R.id.carname);
         searchbutton = (Button)findViewById(R.id.searchforcarbutton);
@@ -116,12 +116,11 @@ public class SearchCars extends AppCompatActivity {
         //clearing whatever is in scroll list first
         scrollList.removeAllViewsInLayout();
 
-        List<ArrayList<String>> allusers =  userDbOperations.SearchAllUser(carname.getText().toString().trim());
+        List<ArrayList<String>> allusers =  carDbOperations.SearchAllcars(carname.getText().toString());
 
         for (final ArrayList<String> user : allusers) {
-            String userRole = user.get(0);
-            String userSummary = user.get(1);
-            final String username = user.get(2);
+            final String carName = user.get(0);
+            String carSummary = user.get(1);
 
             LinearLayout linearItem = new LinearLayout(this);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -133,30 +132,21 @@ public class SearchCars extends AppCompatActivity {
             linearItem.setFocusable(true);
             linearItem.setId(View.generateViewId());
             //properties for Imageview
-            ImageView userpic = new ImageView(this);
+            ImageView carpic = new ImageView(this);
             LinearLayout.LayoutParams Imageviewparams = new LinearLayout.LayoutParams(dpToPx(50),dpToPx(50));
             Imageviewparams.setMargins(dpToPx(10),dpToPx(10),dpToPx(10),dpToPx(10));
             Imageviewparams.gravity = Gravity.CENTER;
-            userpic.setLayoutParams(Imageviewparams);
-            if(userRole.equalsIgnoreCase("Admin")){
-                userpic.setBackgroundResource(R.mipmap.adminpic);
-            }
-            else if(userRole.equalsIgnoreCase("Rental Manager")){
-                userpic.setBackgroundResource(R.drawable.personincircle);
-            }
-            else {
-                userpic.setBackgroundResource(R.drawable.personinorange);
-            }
-
-            userpic.setContentDescription("UserImage");
-            linearItem.addView(userpic);
+            carpic.setLayoutParams(Imageviewparams);
+            carpic.setBackgroundResource(R.drawable.carspic);
+            carpic.setContentDescription("carImage");
+            linearItem.addView(carpic);
 
             //properties for TextView
             TextView userSummaryTextObject = new TextView(this);
             LinearLayout.LayoutParams txtparms = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 0.7f);
             txtparms.setMargins(dpToPx(10),dpToPx(10),dpToPx(10),dpToPx(10));
             userSummaryTextObject.setLayoutParams(txtparms);
-            userSummaryTextObject.setText(userSummary.toString().trim());
+            userSummaryTextObject.setText(carSummary.toString().trim());
             userSummaryTextObject.setTextSize(15);
             userSummaryTextObject.setTypeface(Typeface.create("sans-serif-medium",Typeface.NORMAL));
             linearItem.addView(userSummaryTextObject);
@@ -175,7 +165,7 @@ public class SearchCars extends AppCompatActivity {
             linearItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    navigationHelper.GotoViewProfile();
+                    navigationHelper.GotoViewSelectedCar(carName);
 
                 }
             });
@@ -184,7 +174,7 @@ public class SearchCars extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     //route the user to a specific screen and pass the username as parameter. Ex: GoToUserProfile(username);
-                    navigationHelper.GotoViewProfile();
+                    navigationHelper.GotoViewSelectedCar(carName);
 
                 }
             });
