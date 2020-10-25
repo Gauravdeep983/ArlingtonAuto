@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/llreservationdetails"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:background="#51BCBCBC"
+    android:clickable="true"
+    android:isScrollContainer="false"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/myownbar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/colorPrimary">
+
+        <ImageButton
+            android:id="@+id/backbutton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="6dp"
+            android:background="@drawable/backbutton" />
+
+        <TextView
+            android:id="@+id/greeting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="0sp"
+            android:fontFamily="sans-serif-medium"
+            android:text="Car Details"
+            android:textAllCaps="true"
+            android:textColor="#ffffff"
+            android:textSize="24sp" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="16sp"
+            android:layout_marginRight="16sp"
+            android:gravity="right">
+
+            <ImageButton
+                android:id="@+id/homebutton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginRight="7dp"
+                android:background="@drawable/homescreen">
+
+            </ImageButton>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="sans-serif-medium"
+                android:text="Logout"
+                android:textAllCaps="true"
+                android:textColor="#ffffff"
+                android:textSize="15sp" />
+
+            <ImageButton
+                android:id="@+id/logoutbutton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:background="@drawable/logout"
+
+                />
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <TableLayout
+        android:id="@+id/newmaintable"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/rounded_edge"
+        android:isScrollContainer="false"
+        android:paddingTop="15dp"
+        android:paddingBottom="20dp"
+        android:verticalScrollbarPosition="right"
+        android:visibility="visible"
+        tools:layout_editor_absoluteX="-1dp"
+        tools:layout_editor_absoluteY="3dp">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:baselineAligned="false"
+            android:gravity="center_horizontal"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp"
+            android:layout_marginTop="10dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/CarNumberLabel"
+                    android:layout_width="162dp"
+                    android:layout_height="45dp"
+                    android:ems="10"
+                    android:hint="Car Number"
+                    android:inputType="text"
+                    android:text="Car Number"
+                    android:textColor="#000000"
+                    android:textColorHint="#70000000" />
+
+                <TextView
+                    android:id="@+id/carNumber"
+                    android:layout_width="162dp"
+                    android:layout_height="45dp"
+                    android:ems="12"
+                    android:hint="ABC123"
+                    android:inputType="textPersonName"
+                    android:textColor="#000000"
+                    android:textColorHint="#70000000"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:baselineAligned="false"
+            android:gravity="center_horizontal"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/CarNameLabel"
+                    android:layout_width="162dp"
+                    android:layout_height="45dp"
+
+                    android:ems="10"
+                    android:hint="UTA ID"
+                    android:inputType="text"
+                    android:text="Car Name"
+                    android:textColor="#000000"
+                    android:textColorHint="#70000000" />
+
+                <TextView
+                    android:id="@+id/carName"
+                    android:layout_width="162dp"
+                    android:layout_height="45dp"
+                    android:drawablePadding="15dp"
+                    android:ems="12"
+                    android:hint="Economic"
+                    android:inputType="text"
+                    android:textColor="#000000"
+                    android:textColorHint="#70000000"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:baselineAligned="false"
+            android:gravity="center_horizontal"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/CarOccupantCapacityLabel"
+                    android:layout_width="162dp"
+                    android:layout_height="45dp"
+                    android:ems="10"
+                    android:hint="capacity"
+                    android:inputType="text"
+                    android:text="Car Capacity"
+                    android:textColor="#000000"
+                    android:textColorHint="#70000000" />
+
+                <TextView
+                    android:id="@+id/carcapacity"
+                    android:layout_width="162dp"
+                    android:layout_height="45dp"
+                    android:ems="12"
+                    android:hint="2"
+                    android:inputType="text"
+                    android:textColor="#000000"
+                    android:textColorHint="#70000000"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:baselineAligned="false"
+            android:gravity="center_horizontal"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/DateFromLabel"
+                    android:layout_width="162dp"
+                    android:layout_height="match_parent"
+                    android:ems="10"
+                    android:text="Weekday Rate"
+                    android:textColor="#000000"
+                    android:textColorHint="#70000000" />
+
+                <TextView
+                    android:id="@+id/WeekdayRate"
+                    android:layout_width="162dp"
+                    android:layout_height="45dp"
+                    android:ems="12"
+                    android:textColor="#000000"
+                    android:textColorHint="#70000000"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:baselineAligned="false"
+            android:gravity="center_horizontal"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/DateEndLabel"
+                    android:layout_width="162dp"
+                    android:layout_height="45dp"
+                    android:ems="10"
+                    android:text="Weekend Rate"
+                    android:textColor="#000000"
+                    android:textColorHint="#70000000" />
+
+                <TextView
+                    android:id="@+id/WeekendRate"
+                    android:layout_width="162dp"
+                    android:layout_height="45dp"
+                    android:ems="12"
+                    android:textColor="#000000"
+                    android:textColorHint="#70000000"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:baselineAligned="false"
+            android:gravity="center_horizontal"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/weeklyrateLabel"
+                    android:layout_width="162dp"
+                    android:layout_height="45dp"
+                    android:ems="10"
+                    android:text="Week Rate"
+                    android:textColor="#000000"
+                    android:textColorHint="#70000000" />
+
+                <TextView
+                    android:id="@+id/WeekRate"
+                    android:layout_width="162dp"
+                    android:layout_height="45dp"
+                    android:ems="12"
+                    android:textColor="#000000"
+                    android:textColorHint="#70000000"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:baselineAligned="false"
+            android:gravity="center_horizontal"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="162dp"
+                    android:layout_height="45dp"
+                    android:ems="10"
+                    android:text="GPS Rate"
+                    android:textColor="#000000"
+                    android:textColorHint="#70000000" />
+
+                <TextView
+                    android:id="@+id/gpsRate"
+                    android:layout_width="162dp"
+                    android:layout_height="45dp"
+                    android:ems="12"
+                    android:textColor="#000000"
+                    android:textColorHint="#70000000"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:baselineAligned="false"
+            android:gravity="center_horizontal"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="162dp"
+                    android:layout_height="45dp"
+                    android:ems="10"
+                    android:text="OnStar Rate"
+                    android:textColor="#000000"
+                    android:textColorHint="#70000000" />
+
+                <TextView
+                    android:id="@+id/onstarrate"
+                    android:layout_width="162dp"
+                    android:layout_height="45dp"
+                    android:ems="12"
+                    android:textColor="#000000"
+                    android:textColorHint="#70000000"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:baselineAligned="false"
+            android:gravity="center_horizontal"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="162dp"
+                    android:layout_height="45dp"
+                    android:ems="10"
+                    android:text="SiriusXM Rate"
+                    android:textColor="#000000"
+                    android:textColorHint="#70000000" />
+
+                <TextView
+                    android:id="@+id/siriusxmrate"
+                    android:layout_width="162dp"
+                    android:layout_height="45dp"
+                    android:ems="12"
+                    android:textColor="#000000"
+                    android:textColorHint="#70000000"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:baselineAligned="false"
+            android:gravity="center_horizontal"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="162dp"
+                    android:layout_height="45dp"
+                    android:ems="10"
+                    android:text="Car Status"
+                    android:textColor="#000000"
+                    android:textColorHint="#70000000" />
+
+                <TextView
+                    android:id="@+id/carstatus"
+                    android:layout_width="162dp"
+                    android:layout_height="45dp"
+                    android:ems="12"
+                    android:textColor="#000000"
+                    android:textColorHint="#70000000"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </TableRow>
+
+
+
+
+    </TableLayout>
+
+</LinearLayout>
