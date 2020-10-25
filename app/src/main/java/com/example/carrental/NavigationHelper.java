@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import com.example.carrental.AdminJcode.Admin_searchallusers;
 import com.example.carrental.AdminJcode.MainActivityAdmin;
+import com.example.carrental.AdminJcode.ViewUser;
 import com.example.carrental.RMJcode.MainActivityRM;
 import com.example.carrental.RMJcode.Viewselectedcar;
 import com.example.carrental.UserJcode.MainActivityUser;
@@ -66,6 +67,16 @@ public class NavigationHelper {
 
         context.startActivity(loginIntent, options.toBundle());
     }
+    public void GotoUserProfile(String username) {
+        Intent loginIntent = new Intent(context, ViewUser.class);
+        loginIntent.putExtra("username",username);
+        ActivityOptions options =
+                ActivityOptions.makeCustomAnimation(context, android.R.anim.fade_in, android.R.anim.fade_out);
+
+        context.startActivity(loginIntent, options.toBundle());
+    }
+
+
 
     public void GotoSearchallUsers() {
         Intent loginIntent = new Intent(context, Admin_searchallusers.class);
