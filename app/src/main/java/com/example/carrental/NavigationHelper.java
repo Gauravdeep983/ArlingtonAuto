@@ -8,6 +8,7 @@ import android.os.Bundle;
 import com.example.carrental.AdminJcode.Admin_searchallusers;
 import com.example.carrental.AdminJcode.MainActivityAdmin;
 import com.example.carrental.RMJcode.MainActivityRM;
+import com.example.carrental.RMJcode.Viewselectedcar;
 import com.example.carrental.UserJcode.MainActivityUser;
 import com.example.carrental.UserJcode.ViewSelectedVehicle;
 import com.example.carrental.UserJcode.viewmyprofile.U_ViewProfile;
@@ -85,6 +86,15 @@ public class NavigationHelper {
         ActivityOptions options =
                 ActivityOptions.makeCustomAnimation(context, android.R.anim.fade_in, android.R.anim.fade_out);
 
+        context.startActivity(i, options.toBundle());
+    }
+
+
+    public void GotoViewSelectedCar(String carname)
+    {
+        Intent i = new Intent(context, Viewselectedcar.class);
+        i.putExtra("carname", carname);
+        ActivityOptions options = ActivityOptions.makeCustomAnimation(context, android.R.anim.fade_in, android.R.anim.fade_out);
         context.startActivity(i, options.toBundle());
     }
 
