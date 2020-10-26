@@ -1,7 +1,5 @@
 package com.example.carrental;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.app.AlertDialog;
@@ -35,10 +33,11 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.carrental.AdminJcode.MainActivityAdmin;
 import com.example.carrental.RMJcode.MainActivityRM;
 import com.example.carrental.UserJcode.MainActivityUser;
-import com.example.carrental.UserJcode.viewmyprofile.U_ViewProfile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,14 +69,13 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
     TableRow tr6;
     TableRow tr7;
     TableRow tr8;
-    Boolean pswdvisible=false;
+    Boolean pswdvisible = false;
 
 
     //db related
     SharedPreferences sharedpreferences;
     private DatabaseHelper mDBHelper;
     private SQLiteDatabase mDb;
-
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -93,7 +91,7 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
             throw mSQLException;
         }
         // clearing previous session
-        sharedpreferences  = getSharedPreferences("MyPREFERENCES", Context.MODE_PRIVATE);
+        sharedpreferences = getSharedPreferences("MyPREFERENCES", Context.MODE_PRIVATE);
         SharedPreferences.Editor session = sharedpreferences.edit();
         session.clear().commit();
 
@@ -104,32 +102,32 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
         }
 */
         // db end
-        username = (EditText)findViewById(R.id.textboxUsername);
-        password = (EditText)findViewById(R.id.textboxPassword);
-        email = (EditText)findViewById(R.id.email);
-        lastname = (EditText)findViewById(R.id.lastname);
-        firstname = (EditText)findViewById(R.id.firstname);
-        studentid = (EditText)findViewById(R.id.studentid);
-        phonenumber = (EditText)findViewById(R.id.phonenumber);
-        address = (EditText)findViewById(R.id.address);
-        city = (EditText)findViewById(R.id.city);
-        state = (EditText)findViewById(R.id.state);
-        zipcode = (EditText)findViewById(R.id.zipcode);
+        username = (EditText) findViewById(R.id.textboxUsername);
+        password = (EditText) findViewById(R.id.textboxPassword);
+        email = (EditText) findViewById(R.id.email);
+        lastname = (EditText) findViewById(R.id.lastname);
+        firstname = (EditText) findViewById(R.id.firstname);
+        studentid = (EditText) findViewById(R.id.studentid);
+        phonenumber = (EditText) findViewById(R.id.phonenumber);
+        address = (EditText) findViewById(R.id.address);
+        city = (EditText) findViewById(R.id.city);
+        state = (EditText) findViewById(R.id.state);
+        zipcode = (EditText) findViewById(R.id.zipcode);
         spinner = (Spinner) findViewById(R.id.role);
-        membership = (Switch)findViewById(R.id.membership);
-        linearlayout = (LinearLayout)findViewById(R.id.ll);
-        loginbutton = (Button)findViewById(R.id.loginbutton);
-        registerlink = (TextView)findViewById(R.id.registerbutton);
-        pswdvisible=false;
+        membership = (Switch) findViewById(R.id.membership);
+        linearlayout = (LinearLayout) findViewById(R.id.ll);
+        loginbutton = (Button) findViewById(R.id.loginbutton);
+        registerlink = (TextView) findViewById(R.id.registerbutton);
+        pswdvisible = false;
 
-        maintable = (TableLayout)findViewById(R.id.maintable);
-        registerbtn = (Button)findViewById(R.id.registerbtn);
-        tr3 =  (TableRow)findViewById(R.id.row3);
-        tr4 =  (TableRow)findViewById(R.id.row4);
-        tr5 =  (TableRow)findViewById(R.id.row5);
-        tr6 =  (TableRow)findViewById(R.id.row6);
-        tr7 =  (TableRow)findViewById(R.id.row7);
-        tr8 =  (TableRow)findViewById(R.id.row8);
+        maintable = (TableLayout) findViewById(R.id.maintable);
+        registerbtn = (Button) findViewById(R.id.registerbtn);
+        tr3 = (TableRow) findViewById(R.id.row3);
+        tr4 = (TableRow) findViewById(R.id.row4);
+        tr5 = (TableRow) findViewById(R.id.row5);
+        tr6 = (TableRow) findViewById(R.id.row6);
+        tr7 = (TableRow) findViewById(R.id.row7);
+        tr8 = (TableRow) findViewById(R.id.row8);
 
         // Spinner element
 
@@ -145,7 +143,7 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
 
         // Creating adapter for spinner
         // ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,  R.layout.spinner_item, categories);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item, categories);
 
         // Drop down layout style - list view with radio button
         dataAdapter.setDropDownViewResource(R.layout.dropdown);
@@ -153,18 +151,16 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
         // attaching data adapter to spinner
         spinner.setAdapter(dataAdapter);
 
-        linearlayout.startAnimation(AnimationUtils.loadAnimation(this,R.anim.slide_up));
+        linearlayout.startAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_up));
 
-       //click on login button
+        //click on login button
         loginbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                if(loginbutton.getCurrentTextColor() == Color.parseColor("#D3D1D1"))
-                {
+                if (loginbutton.getCurrentTextColor() == Color.parseColor("#D3D1D1")) {
                     loginbutton.setTextColor(Color.parseColor("#ffffff"));
-                }
-                else{
+                } else {
                     loginbutton.setTextColor(Color.parseColor("#D3D1D1"));
                 }
 
@@ -183,7 +179,7 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
                 else {
 
                     //check with db
-                    sharedpreferences  = getSharedPreferences("MyPREFERENCES", Context.MODE_PRIVATE);
+                    sharedpreferences = getSharedPreferences("MyPREFERENCES", Context.MODE_PRIVATE);
                     Cursor cursor = mDb.rawQuery("select username FROM user", null);
                     if (cursor.getCount() > 0) {
                         String query = "Select * from user where username = '" + username.getText().toString().trim() + "' and password = '" + password.getText().toString().trim() + "'";
@@ -196,12 +192,18 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
                         } else {
                             String data = "User";
                             Boolean isMember = false;
+                            Boolean isRevoked = false;
                             String membershipStatus = "";
+                            String revokeStatus = "";
                             if (cursor.moveToFirst()) {
                                 data = cursor.getString(cursor.getColumnIndex("role"));
                                 membershipStatus = cursor.getString(cursor.getColumnIndex("club_membership"));
+                                revokeStatus = cursor.getString(cursor.getColumnIndex("is_revoked"));
                                 if (membershipStatus.equals("1")) {
                                     isMember = true;
+                                }
+                                if (revokeStatus.equalsIgnoreCase("true")) {
+                                    isRevoked = true;
                                 }
                             }
                             cursor.close();
@@ -210,6 +212,7 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
                             session.putString("username", username.getText().toString().trim());
                             session.putString("userType", data);
                             session.putString("membershipStatus", isMember.toString());
+                            session.putString("revokeStatus", isRevoked.toString());
                             session.commit();
 
                             ForwardUsertoUI(data);
@@ -224,15 +227,13 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
 
         });
 
-        registerbtn.setOnClickListener(new View.OnClickListener(){
+        registerbtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                if(registerbtn.getCurrentTextColor() == Color.parseColor("#D3D1D1"))
-                {
+                if (registerbtn.getCurrentTextColor() == Color.parseColor("#D3D1D1")) {
                     registerbtn.setTextColor(Color.parseColor("#ffffff"));
-                }
-                else{
+                } else {
                     registerbtn.setTextColor(Color.parseColor("#D3D1D1"));
                 }
                 InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
@@ -263,8 +264,7 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
                 }
                 // username and password not empty
                 else {
-                    if (membership.isChecked())
-                    {
+                    if (membership.isChecked()) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(RegistrationActivity.this);
                         builder.setMessage("You have selected Club Membership");
                         builder.setTitle("Enter the valid code");
@@ -274,25 +274,22 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
                         input.setInputType(InputType.TYPE_CLASS_TEXT);
                         builder.setView(input);
 
-                        builder.setPositiveButton("Validate",new DialogInterface.OnClickListener() {
+                        builder.setPositiveButton("Validate", new DialogInterface.OnClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialog,int which)
-                            {
-                                if(input.getText().toString().equalsIgnoreCase("1234"))
-                                {
+                            public void onClick(DialogInterface dialog, int which) {
+                                if (input.getText().toString().equalsIgnoreCase("1234")) {
                                     Toast.makeText(getApplicationContext(), "Membership activated", Toast.LENGTH_SHORT).show();
                                     InsertUserinDB();
-                                }
-                                else{
+                                } else {
                                     Toast.makeText(getApplicationContext(), "Invalid code entered", Toast.LENGTH_SHORT).show();
                                     membership.setChecked(false);
                                 }
 
-                            }});
-                        builder.setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
+                            }
+                        });
+                        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialog,int which)
-                            {
+                            public void onClick(DialogInterface dialog, int which) {
                                 membership.setChecked(false);
                                 dialog.cancel();
                             }
@@ -300,8 +297,7 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
                         AlertDialog alertDialog = builder.create();
                         alertDialog.show();
 
-                    }
-                    else{
+                    } else {
                         InsertUserinDB();
                     }
 
@@ -311,25 +307,25 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
             }
         });
 
-        linearlayout.setOnClickListener(new View.OnClickListener(){
+        linearlayout.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
-                inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(),0);
+                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(), 0);
 
             }
-        } );
+        });
 
-        maintable.setOnClickListener(new View.OnClickListener(){
+        maintable.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
-                inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(),0);
+                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(), 0);
 
             }
-        } );
+        });
 
         membership.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -364,14 +360,16 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
                 final int DRAWABLE_RIGHT = 2;
                 final int DRAWABLE_BOTTOM = 3;
 
-                if(event.getAction() == MotionEvent.ACTION_UP) {
-                    if(event.getRawX() >= (password.getRight() - password.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    if (event.getRawX() >= (password.getRight() - password.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
                         // your action here
-                        if(pswdvisible.equals(false))
-                        {  password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());   pswdvisible=true;}
-                        else
-                        { password.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                            pswdvisible=false;}
+                        if (pswdvisible.equals(false)) {
+                            password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                            pswdvisible = true;
+                        } else {
+                            password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                            pswdvisible = false;
+                        }
                         return true;
                     }
                 }
@@ -379,10 +377,9 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
             }
         });
 
- } //end of Oncreate
+    } //end of Oncreate
 
-    private void InsertUserinDB()
-    {
+    private void InsertUserinDB() {
         //check with db
         sharedpreferences = getSharedPreferences("MyPREFERENCES", Context.MODE_PRIVATE);
         Cursor cursor = mDb.rawQuery("select username FROM user", null);
@@ -397,10 +394,10 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
             } else {
 
                 String insert_query = "insert into user (username, password, uta_id, last_name, first_name, phone, email, address, city, state, zip, role, club_membership, is_revoked) " +
-                        "values ('"+ username.getText().toString().trim() +"','"+password.getText().toString().trim()+"','"+studentid.getText().toString().trim()+"','" +
-                        lastname.getText().toString().trim()+"','"+firstname.getText().toString().trim()+"','"+phonenumber.getText().toString().trim()+"','"+email.getText().toString().trim()+"','" +
-                        address.getText().toString().trim()+"','"+city.getText().toString().trim()+"','"+state.getText().toString().trim()+"','"+zipcode.getText().toString().trim()+"','"+spinner.getSelectedItem().toString().trim()+"','"+
-                        getMembership() +"','0' ) ";
+                        "values ('" + username.getText().toString().trim() + "','" + password.getText().toString().trim() + "','" + studentid.getText().toString().trim() + "','" +
+                        lastname.getText().toString().trim() + "','" + firstname.getText().toString().trim() + "','" + phonenumber.getText().toString().trim() + "','" + email.getText().toString().trim() + "','" +
+                        address.getText().toString().trim() + "','" + city.getText().toString().trim() + "','" + state.getText().toString().trim() + "','" + zipcode.getText().toString().trim() + "','" + spinner.getSelectedItem().toString().trim() + "','" +
+                        getMembership() + "','0' ) ";
                 System.out.println(insert_query);
                 mDb.execSQL(insert_query);
                 Toast.makeText(getApplicationContext(), "Registration Successful", Toast.LENGTH_LONG).show();
@@ -426,16 +423,13 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
                     ActivityOptions.makeCustomAnimation(RegistrationActivity.this, android.R.anim.fade_in, android.R.anim.fade_out);
 
             startActivity(loginIntent, options.toBundle());
-        }
-        else if (data.equalsIgnoreCase("Rental Manager")) {
+        } else if (data.equalsIgnoreCase("Rental Manager")) {
             Intent loginIntent = new Intent(RegistrationActivity.this, MainActivityRM.class);
             ActivityOptions options =
                     ActivityOptions.makeCustomAnimation(RegistrationActivity.this, android.R.anim.fade_in, android.R.anim.fade_out);
 
-            startActivity(loginIntent, options.toBundle());  }
-
-        else if (data.equalsIgnoreCase("Admin"))
-        {
+            startActivity(loginIntent, options.toBundle());
+        } else if (data.equalsIgnoreCase("Admin")) {
             Intent loginIntent = new Intent(RegistrationActivity.this, MainActivityAdmin.class);
             ActivityOptions options =
                     ActivityOptions.makeCustomAnimation(RegistrationActivity.this, android.R.anim.fade_in, android.R.anim.fade_out);
@@ -443,6 +437,7 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
             startActivity(loginIntent, options.toBundle());
         }
     }
+
     //when user selects the role, hide the membership accordingly and hide the keyboard
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -452,17 +447,15 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
         inputMethodManager.hideSoftInputFromWindow(membership.getRootView().getApplicationWindowToken(), 0);
         // Showing selected spinner item
         //Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
-        if(!item.equals("User"))
-        {
-        membership.setEnabled(false);
-        }
-        else
-        {
+        if (!item.equals("User")) {
+            membership.setEnabled(false);
+        } else {
             membership.setEnabled(true);
         }
 
 
     }
+
     public void onNothingSelected(AdapterView<?> arg0) {
         // TODO Auto-generated method stub
     }
@@ -476,6 +469,6 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
     }
 
     public String getMembership() {
-        return membership.isChecked()?"1":"0";
+        return membership.isChecked() ? "1" : "0";
     }
 }
