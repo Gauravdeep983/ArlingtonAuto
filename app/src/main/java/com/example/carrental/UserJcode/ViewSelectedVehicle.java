@@ -18,6 +18,8 @@ import com.example.carrental.R;
 import com.example.carrental.SessionHelper;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 
 public class ViewSelectedVehicle extends AppCompatActivity {
@@ -40,7 +42,7 @@ public class ViewSelectedVehicle extends AppCompatActivity {
     String sessionUsername = null;
     String userType = null;
     boolean isMember;
-    double finalCost = 0.00;
+    double finalCost = 0.0;
     String reservationNumber = "";
     double baseCost = 0.0;
     int noOfDays = 0;
@@ -112,7 +114,7 @@ public class ViewSelectedVehicle extends AppCompatActivity {
         siriusxmRate = Double.parseDouble(carDetails.get(8));
 
         // Default cost + tax
-        totalCost.setText("$" + baseCost);
+        totalCost.setText("$" + round(baseCost, 2));
         finalCost = calculateFinalCost(baseCost, isMember);
         gps.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -122,7 +124,7 @@ public class ViewSelectedVehicle extends AppCompatActivity {
                 } else {
                     baseCost -= gpsRate;
                 }
-                totalCost.setText("$" + Double.toString(baseCost));
+                totalCost.setText("$" + Double.toString(round(baseCost, 2)));
             }
         });
 
@@ -134,7 +136,7 @@ public class ViewSelectedVehicle extends AppCompatActivity {
                 } else {
                     baseCost -= onstarRate;
                 }
-                totalCost.setText("$" + Double.toString(baseCost));
+                totalCost.setText("$" + Double.toString(round(baseCost, 2)));
             }
         });
 
@@ -146,7 +148,7 @@ public class ViewSelectedVehicle extends AppCompatActivity {
                 } else {
                     baseCost -= siriusxmRate;
                 }
-                totalCost.setText("$" + Double.toString(baseCost));
+                totalCost.setText("$" + Double.toString(round(baseCost, 2)));
             }
         });
 
@@ -188,7 +190,7 @@ public class ViewSelectedVehicle extends AppCompatActivity {
         backbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                navigationHelper.GotoHomeScreen(userType);
             }
         });
     }
@@ -201,7 +203,7 @@ public class ViewSelectedVehicle extends AppCompatActivity {
             // Add discount
             result = result - (result * 0.1);
         }
-        return result;
+        return round(result,2);
     }
 
     private String generateReservationNumber(int stringSize) {
@@ -217,6 +219,14 @@ public class ViewSelectedVehicle extends AppCompatActivity {
             sb.append(AlphaNumericString.charAt(index));
         }
         return sb.toString();
+    }
+
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = BigDecimal.valueOf(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 
 
