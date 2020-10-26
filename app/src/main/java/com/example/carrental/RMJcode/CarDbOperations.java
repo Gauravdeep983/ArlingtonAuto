@@ -42,7 +42,7 @@ public class CarDbOperations {
         Allcars.clear();
         Cursor cursor = mDb.rawQuery("select car_name FROM car", null);
         if (cursor.getCount() > 0) {
-            String query = "Select * from car where car_name like '%" + identifier + "%'";
+            String query = "Select * from car where car_name like '%" + identifier + "%' order by car_name ASC ";
             cursor = mDb.rawQuery(query, null);
             if (cursor.getCount() <= 0) {
                 //no user

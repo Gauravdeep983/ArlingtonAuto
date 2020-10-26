@@ -86,6 +86,14 @@ public class UserDbOperations {
         return FindVehiclesInDB(sql);
     }
 
+    public List<ArrayList<String>> ViewAvailableVehicles(String startDate, String endDate) {
+        String sql = "SELECT * FROM car\n" +
+                "WHERE car_name NOT IN (SELECT car_name FROM car_reservation WHERE start_date > '" + startDate + "' AND end_date <'" + endDate + "') " +
+                " ORDER BY car_name ASC";
+
+        return FindVehiclesInDB(sql);
+    }
+
 
     public List<ArrayList<String>> FindVehiclesInDB(String sql) {
         List<ArrayList<String>> allVehicles = new ArrayList<ArrayList<String>>();
