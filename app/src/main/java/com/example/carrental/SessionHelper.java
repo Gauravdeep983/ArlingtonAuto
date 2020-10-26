@@ -43,5 +43,14 @@ public class SessionHelper {
         return userType;
     }
 
+    public void setRevokeStatus(Boolean isRevoked) {
+        session.putString("revokeStatus", isRevoked.toString());
+        session.commit();
+    }
+    public String getRevokeStatus() {
+        String isRevoked = prefs.getString("revokeStatus", "");
+        return isRevoked;
+    }
+
 
 }

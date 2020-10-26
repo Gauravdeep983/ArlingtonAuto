@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -53,6 +54,7 @@ public class SearchVehicle extends AppCompatActivity {
     EditText startDate;
     EditText endTime;
     EditText endDate;
+    TableLayout tablemain;
     TimePickerDialog picker;
     DatePickerDialog dpicker;
     EditText capacity;
@@ -61,6 +63,7 @@ public class SearchVehicle extends AppCompatActivity {
     public UserDbOperations userDbOperations;
     ScrollView scroller;
     LinearLayout scrollList;
+    LinearLayout revokeContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +84,7 @@ public class SearchVehicle extends AppCompatActivity {
         capacity = (EditText) findViewById(R.id.capacity);
         searchbtn = (Button) findViewById(R.id.btnSearch);
         scrollList = (LinearLayout) findViewById(R.id.scrollList);
+        revokeContainer = (LinearLayout) findViewById(R.id.revokeContainer);
         scroller = (ScrollView) findViewById(R.id.scroller);
         // Back button click
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -95,6 +99,15 @@ public class SearchVehicle extends AppCompatActivity {
                 navigationHelper.logout();
             }
         });
+        tablemain = (TableLayout) findViewById(R.id.tableMain);
+
+        // Check if revoked or not
+        String isRevoked = session.getRevokeStatus();
+        if (isRevoked.equals("true")) {
+            tablemain.setVisibility(View.GONE);
+            scroller.setVisibility(View.GONE);
+            revokeContainer.setVisibility(View.VISIBLE);
+        }
 
         startTime.setOnClickListener(new View.OnClickListener() {
             @Override
