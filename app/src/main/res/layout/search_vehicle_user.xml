@@ -269,7 +269,7 @@
     <ScrollView
         android:id="@+id/scroller"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:visibility="visible">
 
         <!-- linearlayout for having the items linear inside the scroll-->
@@ -286,20 +286,20 @@
     <LinearLayout
         android:id="@+id/revokeContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/rounded_edge"
         android:isScrollContainer="false"
+        android:orientation="vertical"
         android:paddingLeft="15dp"
         android:paddingTop="15dp"
         android:paddingRight="15dp"
         android:paddingBottom="20dp"
         android:verticalScrollbarPosition="right"
-        android:visibility="visible"
+        android:visibility="gone"
         tools:layout_editor_absoluteX="-1dp"
         tools:layout_editor_absoluteY="3dp">
 
@@ -308,10 +308,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:text="You have been banned."
             android:textAlignment="center"
             android:textColor="#020202"
-            android:textSize="20dp"
-            android:text="You have been banned." />
+            android:textSize="20dp" />
 
         <TextView
             android:id="@+id/textView3"

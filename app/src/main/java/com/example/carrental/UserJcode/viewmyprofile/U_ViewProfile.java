@@ -290,7 +290,7 @@ public class U_ViewProfile extends AppCompatActivity {
         cv.put("zip",zipcode.getText().toString().trim());
         cv.put("role",spinner.getSelectedItem().toString().trim());
         cv.put("club_membership", getMembership());   //1 - true, 0 -false
-        cv.put("is_revoked", 0);
+        //cv.put("is_revoked", "false");
 
 
         mDb.update("user", cv, "username='"+sUsername+"'", null);
@@ -335,7 +335,7 @@ public class U_ViewProfile extends AppCompatActivity {
                     state.setText(cursor.getString(cursor.getColumnIndex("state")));
                     zipcode.setText(cursor.getString(cursor.getColumnIndex("zip")));
                     spinner.setSelection(((ArrayAdapter<String>)spinner.getAdapter()).getPosition(cursor.getString(cursor.getColumnIndex("role"))));
-                    membership.setChecked(cursor.getInt(cursor.getColumnIndex("club_membership"))==1);
+                    membership.setChecked("true".equals(cursor.getString(cursor.getColumnIndex("club_membership"))));
 
                 }
                 cursor.close();
@@ -345,7 +345,7 @@ public class U_ViewProfile extends AppCompatActivity {
 
     }
     public String getMembership() {
-        return membership.isChecked()?"1":"0";
+        return membership.isChecked()?"true":"false";
     }
 
 }

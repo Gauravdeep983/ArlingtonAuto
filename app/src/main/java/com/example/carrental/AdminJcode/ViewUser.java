@@ -296,8 +296,8 @@ public class ViewUser extends AppCompatActivity {
                     state.setText(cursor.getString(cursor.getColumnIndex("state")));
                     zipcode.setText(cursor.getString(cursor.getColumnIndex("zip")));
                     spinner.setSelection(((ArrayAdapter<String>)spinner.getAdapter()).getPosition(cursor.getString(cursor.getColumnIndex("role"))));
-                    membership.setChecked(cursor.getInt(cursor.getColumnIndex("club_membership"))==1);
-                    revokestatus.setChecked(cursor.getInt(cursor.getColumnIndex("is_revoked"))==1);
+                    membership.setChecked("true".equals(cursor.getString(cursor.getColumnIndex("club_membership"))));
+                    revokestatus.setChecked("true".equals(cursor.getString(cursor.getColumnIndex("is_revoked"))));
 
 
                 }
@@ -308,11 +308,11 @@ public class ViewUser extends AppCompatActivity {
 
     }
     public String getMembership() {
-        return membership.isChecked()?"1":"0";
+        return membership.isChecked()?"true":"false";
     }
 
     public String getRevokestatus() {
-        return revokestatus.isChecked()?"1":"0";
+        return revokestatus.isChecked()?"true":"false";
     }
 
 }
