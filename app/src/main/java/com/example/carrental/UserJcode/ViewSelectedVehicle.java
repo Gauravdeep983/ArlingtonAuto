@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.TableRow;
 import android.widget.TextView;
 
@@ -37,7 +38,9 @@ public class ViewSelectedVehicle extends AppCompatActivity {
     CheckBox siriusxm;
     TextView totalCost;
     Button btnReserve;
-    Button backbtn;
+    ImageButton backbtn;
+    ImageButton homebutton;
+    ImageButton logoutbutton;
     TableRow membershipContainer;
     String sessionUsername = null;
     String userType = null;
@@ -55,7 +58,9 @@ public class ViewSelectedVehicle extends AppCompatActivity {
         session = new SessionHelper(this);
         userDbOperations = new UserDbOperations(this);
         navigationHelper = new NavigationHelper(this);
-        backbtn = (Button) findViewById(R.id.backbtn);
+        backbtn = (ImageButton)findViewById(R.id.backbutton);
+        homebutton = (ImageButton)findViewById(R.id.homebutton);
+        logoutbutton = (ImageButton)findViewById(R.id.logoutbutton);
         btnReserve = (Button) findViewById(R.id.btnReserve);
         carNumber = (TextView) findViewById(R.id.carNumber);
         carName = (TextView) findViewById(R.id.carName);
@@ -68,6 +73,27 @@ public class ViewSelectedVehicle extends AppCompatActivity {
         totalCost = (TextView) findViewById(R.id.totalCost);
         finalCostText = (TextView) findViewById(R.id.finalCostText);
         membershipContainer = (TableRow) findViewById(R.id.membershipContainer);
+
+        backbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        homebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigationHelper.GotoHomeScreen(session.getloggedInUserType());
+            }
+        });
+
+        logoutbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigationHelper.logout();
+            }
+        });
 
         sessionUsername = session.getloggedInUsername();
         userType = session.getloggedInUserType();
@@ -164,8 +190,8 @@ public class ViewSelectedVehicle extends AppCompatActivity {
                         gps.isSelected(), onstar.isSelected(), siriusxm.isSelected(), null);
 
                 // Redirect/ toast
-                //TODO Not persistent
-                Snackbar.make(findViewById(android.R.id.content), "Reservation Number: " + reservationNumber, Snackbar.LENGTH_INDEFINITE)
+                // TODO Not persistent
+                Snackbar.make(findViewById(android.R.id.content), "Reservation Number: " + reservationNumber, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
                 navigationHelper.GotoHomeScreen(userType);
             }

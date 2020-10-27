@@ -19,6 +19,7 @@ import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -219,15 +220,39 @@ public class SearchVehicle extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
             @Override
             public void onClick(View v) {
+
                 int selectedCapacity = Integer.parseInt(capacity.getText().toString());
                 String start_date = startDate.getText().toString();
                 String end_date = endDate.getText().toString();
                 String start_time = startTime.getText().toString();
                 String end_time = endTime.getText().toString();
-
                 String dateFrom = mergeDateTime(start_date, start_time);
                 String dateTo = mergeDateTime(end_date, end_time);
-                searchVehicles(selectedCapacity, dateFrom, dateTo);
+                if (!(start_date.isEmpty() | end_date.isEmpty() | start_time.isEmpty() | end_time.isEmpty())) {
+                    scrollList.removeAllViewsInLayout();
+                    if(getDaysBetweenDates(dateFrom, dateTo)>0)
+                    {
+                        try {
+                            if (validateTime() > 0) {
+                                searchVehicles(selectedCapacity, dateFrom, dateTo);
+                            }
+                            else
+                            {
+                                Toast.makeText(getApplicationContext(), "End Time is before Start Time", Toast.LENGTH_SHORT).show();
+                            }
+                        }catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    else
+                    {
+                        Toast.makeText(getApplicationContext(), "End Date is before Start Date", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(), "Please fill all fields correctly", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -243,6 +268,8 @@ public class SearchVehicle extends AppCompatActivity {
         userInputs.add(1, startDate);
         userInputs.add(2, endDate);
         allCars = userDbOperations.SearchVehicles(capacity, startDate, endDate);
+        // get no of days
+        final int noOfDays = getDaysBetweenDates(startDate, endDate);
         for (final ArrayList<String> car : allCars) {
             String carName = car.get(0);
             String carNumber = car.get(1);
@@ -270,8 +297,8 @@ public class SearchVehicle extends AppCompatActivity {
             Imageviewparams.gravity = Gravity.CENTER;
             userpic.setLayoutParams(Imageviewparams);
 
-            userpic.setBackgroundResource(R.drawable.personinorange);
-            userpic.setContentDescription("UserImage");
+            userpic.setBackgroundResource(R.drawable.carspic);
+            userpic.setContentDescription("carImage");
             linearItem.addView(userpic);
 
             //properties for TextView
@@ -279,8 +306,7 @@ public class SearchVehicle extends AppCompatActivity {
             LinearLayout.LayoutParams txtparms = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 0.7f);
             txtparms.setMargins(dpToPx(10), dpToPx(10), dpToPx(10), dpToPx(10));
             userSummaryTextObject.setLayoutParams(txtparms);
-            // get no of days
-            final int noOfDays = getDaysBetweenDates(startDate, endDate);
+
             // get base cost
             final double baseCost = calculateBaseCost(noOfDays, startDate, endDate, weekdayRate, weekendRate, weeklyRate);
             String displayText = carName.trim() + " - Car Number: " + carNumber + "\nCapacity: " + capacity + ", Cost: $" + baseCost;
@@ -301,6 +327,14 @@ public class SearchVehicle extends AppCompatActivity {
             linearItem.addView(btn);
             //adding the linearitem to main linear or scroll view
             scrollList.addView(linearItem);
+
+
+            linearItem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    navigationHelper.GoToReservationDetails(car, userInputs, baseCost, noOfDays);
+                }
+            });
 
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -372,5 +406,22 @@ public class SearchVehicle extends AppCompatActivity {
             return 1;
         }
         return numberOfDays;
+    }
+
+    public long validateTime() throws ParseException {
+        String start_date = startDate.getText().toString();
+        String end_date = endDate.getText().toString();
+        String start_time = startTime.getText().toString()+ ":00";
+        String end_time = endTime.getText().toString()+ ":00";
+        if(start_date.equalsIgnoreCase(end_date))
+        {
+            SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+            Date date1 = format.parse(start_time);
+            Date date2 = format.parse(end_time);
+            long difference = date2.getTime() - date1.getTime();
+            return difference/1000;
+        }
+
+        return 1;
     }
 }
