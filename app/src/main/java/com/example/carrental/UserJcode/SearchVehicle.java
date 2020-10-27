@@ -104,7 +104,7 @@ public class SearchVehicle extends AppCompatActivity {
 
         // Check if revoked or not
         String isRevoked = session.getRevokeStatus();
-        if (isRevoked.equals("true")) {
+        if (isRevoked.equalsIgnoreCase("true")) {
             tablemain.setVisibility(View.GONE);
             scroller.setVisibility(View.GONE);
             revokeContainer.setVisibility(View.VISIBLE);

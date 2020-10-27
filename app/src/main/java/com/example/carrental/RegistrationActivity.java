@@ -93,7 +93,7 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
         // clearing previous session
         sharedpreferences = getSharedPreferences("MyPREFERENCES", Context.MODE_PRIVATE);
         SharedPreferences.Editor session = sharedpreferences.edit();
-        session.clear().commit();
+        session.clear().apply();
 
        /* try {
             mDBHelper.updateDataBase();
@@ -191,15 +191,15 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
                             cursor.close();
                         } else {
                             String data = "User";
-                            Boolean isMember = false;
-                            Boolean isRevoked = false;
-                            String membershipStatus = "";
-                            String revokeStatus = "";
+                            boolean isMember = false;
+                            boolean isRevoked = false;
+                            String membershipStatus;
+                            String revokeStatus;
                             if (cursor.moveToFirst()) {
                                 data = cursor.getString(cursor.getColumnIndex("role"));
                                 membershipStatus = cursor.getString(cursor.getColumnIndex("club_membership"));
                                 revokeStatus = cursor.getString(cursor.getColumnIndex("is_revoked"));
-                                if (membershipStatus.equals("1")) {
+                                if (membershipStatus.equals("true")) {
                                     isMember = true;
                                 }
                                 if (revokeStatus.equalsIgnoreCase("true")) {
@@ -211,9 +211,9 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
                             SharedPreferences.Editor session = sharedpreferences.edit();
                             session.putString("username", username.getText().toString().trim());
                             session.putString("userType", data);
-                            session.putString("membershipStatus", isMember.toString());
-                            session.putString("revokeStatus", isRevoked.toString());
-                            session.commit();
+                            session.putString("membershipStatus", Boolean.toString(isMember));
+                            session.putString("revokeStatus", Boolean.toString(isRevoked));
+                            session.apply();
 
                             ForwardUsertoUI(data);
 
@@ -397,7 +397,7 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
                         "values ('" + username.getText().toString().trim() + "','" + password.getText().toString().trim() + "','" + studentid.getText().toString().trim() + "','" +
                         lastname.getText().toString().trim() + "','" + firstname.getText().toString().trim() + "','" + phonenumber.getText().toString().trim() + "','" + email.getText().toString().trim() + "','" +
                         address.getText().toString().trim() + "','" + city.getText().toString().trim() + "','" + state.getText().toString().trim() + "','" + zipcode.getText().toString().trim() + "','" + spinner.getSelectedItem().toString().trim() + "','" +
-                        getMembership() + "','0' ) ";
+                        getMembership() + "','false' ) ";
                 System.out.println(insert_query);
                 mDb.execSQL(insert_query);
                 Toast.makeText(getApplicationContext(), "Registration Successful", Toast.LENGTH_LONG).show();
@@ -469,6 +469,6 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
     }
 
     public String getMembership() {
-        return membership.isChecked() ? "1" : "0";
+        return membership.isChecked() ? "true" : "false";
     }
 }
