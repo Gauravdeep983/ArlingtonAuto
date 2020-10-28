@@ -11,6 +11,7 @@ import com.example.carrental.AdminJcode.ViewUser;
 import com.example.carrental.RMJcode.MainActivityRM;
 import com.example.carrental.RMJcode.Viewselectedcar;
 import com.example.carrental.UserJcode.MainActivityUser;
+import com.example.carrental.UserJcode.SearchVehicle;
 import com.example.carrental.UserJcode.ViewSelectedVehicle;
 import com.example.carrental.UserJcode.viewmyprofile.U_ViewProfile;
 
@@ -58,6 +59,15 @@ public class NavigationHelper {
         }
 
 
+    }
+
+   public void GotoSearchVehicleScreen()
+    {
+        Intent searchVehicleIntent = new Intent(context, SearchVehicle.class);
+        ActivityOptions options =
+                ActivityOptions.makeCustomAnimation(context, android.R.anim.fade_in, android.R.anim.fade_out);
+
+        context.startActivity(searchVehicleIntent, options.toBundle());
     }
 
     public void GotoViewProfile() {

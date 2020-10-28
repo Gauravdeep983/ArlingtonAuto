@@ -72,11 +72,7 @@ public class MainActivityUser extends AppCompatActivity {
         searchvehicle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent searchVehicleIntent = new Intent(MainActivityUser.this, SearchVehicle.class);
-                ActivityOptions options =
-                        ActivityOptions.makeCustomAnimation(MainActivityUser.this, android.R.anim.fade_in, android.R.anim.fade_out);
-
-                startActivity(searchVehicleIntent, options.toBundle());
+                navigationHelper.GotoSearchVehicleScreen();
             }
         });
 
