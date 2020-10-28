@@ -5,12 +5,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -18,9 +21,11 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.example.carrental.AdminJcode.UserDbOperations;
 import com.example.carrental.NavigationHelper;
@@ -91,6 +96,7 @@ public class ViewAvailableCars extends AppCompatActivity {
             }
         });
 
+
         startTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,7 +110,27 @@ public class ViewAvailableCars extends AppCompatActivity {
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                startTime.setText(hourOfDay + ":" + minute);
+
+
+                                SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+                                try {
+
+                                    Date start_date = dateFormat.parse(startDate.getText().toString());
+                                    int day= start_date.getDay();
+                                    if(!checkArlingtonTimings(hourOfDay,minute,day))
+                                    {
+                                        Toast.makeText(getApplicationContext(), "Please select Arlington Auto Timings", Toast.LENGTH_SHORT).show();
+                                        //ShowPopUp();
+                                        startTime.setText("");
+                                    }
+                                    else
+                                    {
+                                        startTime.setText(hourOfDay + ":" + minute);
+                                    }
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
+
                             }
                         }, hour, minutes, true);
                 picker.show();
@@ -125,7 +151,23 @@ public class ViewAvailableCars extends AppCompatActivity {
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                endTime.setText(hourOfDay + ":" + minute);
+                                SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+                                try {
+                                    Date end_date = dateFormat.parse(endDate.getText().toString());
+                                    int day= end_date.getDay();
+                                    if(!checkArlingtonTimings(hourOfDay,minute,day))
+                                    {
+                                        Toast.makeText(getApplicationContext(), "Please select Arlington Auto Timings", Toast.LENGTH_SHORT).show();
+                                       // ShowPopUp();
+                                        endTime.setText("");
+                                    }
+                                    else
+                                    {
+                                        endTime.setText(hourOfDay + ":" + minute);
+                                    }
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }, hour, minutes, true);
                 picker.show();
@@ -178,6 +220,7 @@ public class ViewAvailableCars extends AppCompatActivity {
         });
 
 
+
         searchbtn.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
             @Override
@@ -188,7 +231,33 @@ public class ViewAvailableCars extends AppCompatActivity {
                 String end_time = endTime.getText().toString();
                 String dateFrom = mergeDateTime(start_date, start_time);
                 String dateTo = mergeDateTime(end_date, end_time);
-                ViewAvailableVehicles( dateFrom, dateTo);
+
+                if (!(start_date.isEmpty() | end_date.isEmpty() | start_time.isEmpty() | end_time.isEmpty())) {
+                    scrollList.removeAllViewsInLayout();
+                    if(getDaysBetweenDates(dateFrom, dateTo)>0)
+                    {
+                        try {
+                            if (validateTime() > 0) {
+                                ViewAvailableVehicles( dateFrom, dateTo);
+                            }
+                            else
+                            {
+                                Toast.makeText(getApplicationContext(), "End Time is before Start Time", Toast.LENGTH_SHORT).show();
+                            }
+                        }catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    else
+                    {
+                        Toast.makeText(getApplicationContext(), "End Date is before Start Date", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(), "Please fill all fields correctly", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
@@ -296,4 +365,56 @@ public class ViewAvailableCars extends AppCompatActivity {
         }
         return numberOfDays;
     }
+
+    //check if selected timings are according to Arlington Auto timings
+    public boolean checkArlingtonTimings(int hour,int minute, int day)  {
+
+        switch(day){
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+                if((hour>=8 && hour<20)|| (hour==20 && minute==0))
+                {
+                    return true;
+                }
+                break;
+
+            case 0:
+                if((hour>=12 && hour<17)|| (hour==17 && minute==0))
+                {
+                    return true;
+                }
+                break;
+            case 6:
+                if((hour>=8 && hour<17)|| (hour==17 && minute==0))
+                {
+                    return true;
+                }
+                break;
+            default:
+                return false;
+
+        }
+
+        return false;
+    }
+    public long validateTime() throws ParseException {
+        String start_date = startDate.getText().toString();
+        String end_date = endDate.getText().toString();
+        String start_time = startTime.getText().toString()+ ":00";
+        String end_time = endTime.getText().toString()+ ":00";
+        if(start_date.equalsIgnoreCase(end_date))
+        {
+            SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+            Date date1 = format.parse(start_time);
+            Date date2 = format.parse(end_time);
+            long difference = date2.getTime() - date1.getTime();
+            return difference/1000;
+        }
+
+        return 1;
+    }
+
 }
