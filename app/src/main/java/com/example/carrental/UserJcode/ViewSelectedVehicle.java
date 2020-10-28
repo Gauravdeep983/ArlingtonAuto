@@ -1,5 +1,6 @@
 package com.example.carrental.UserJcode;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -184,10 +185,9 @@ public class ViewSelectedVehicle extends AppCompatActivity {
                 // Generate a 6 digit reservation number
                 reservationNumber = generateReservationNumber(6);
                 // Save in car_reservation table
-                //TODO Optional features isSelected() not working
-                userDbOperations.InsertReservationDetails(reservationNumber, sessionUsername, carName.getText().toString(),
+               userDbOperations.InsertReservationDetails(reservationNumber, sessionUsername, carName.getText().toString(),
                         startDate, endDate, Integer.parseInt(selectedCapacity.getText().toString()), Double.parseDouble(finalCostText.getText().toString().replace("$", "")),
-                        gps.isSelected(), onstar.isSelected(), siriusxm.isSelected(), null);
+                        gps.isChecked(), onstar.isChecked(), siriusxm.isChecked(), null);
 
                 // Redirect/ toast
                 // TODO Not persistent

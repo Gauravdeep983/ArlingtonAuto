@@ -2,12 +2,15 @@ package com.example.carrental.UserJcode;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -15,7 +18,9 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.ScrollView;
+import android.widget.Switch;
 import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -65,6 +70,10 @@ public class SearchVehicle extends AppCompatActivity {
     ScrollView scroller;
     LinearLayout scrollList;
     LinearLayout revokeContainer;
+    ImageButton infobutton;
+    ImageButton closePopupBtn;
+    PopupWindow popupWindow;
+    LinearLayout mainLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +96,8 @@ public class SearchVehicle extends AppCompatActivity {
         scrollList = (LinearLayout) findViewById(R.id.scrollList);
         revokeContainer = (LinearLayout) findViewById(R.id.revokeContainer);
         scroller = (ScrollView) findViewById(R.id.scroller);
+        infobutton = (ImageButton)findViewById(R.id.info);
+        mainLayout = (LinearLayout)findViewById(R.id.llsearchvehicle);
         // Back button click
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,6 +111,14 @@ public class SearchVehicle extends AppCompatActivity {
                 navigationHelper.logout();
             }
         });
+
+        infobutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               ShowPopUp();
+            }
+        });
+
         tablemain = (TableLayout) findViewById(R.id.tableMain);
 
         // Check if revoked or not
@@ -123,7 +142,27 @@ public class SearchVehicle extends AppCompatActivity {
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                startTime.setText(hourOfDay + ":" + minute);
+
+
+                                SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+                                try {
+
+                                    Date start_date = dateFormat.parse(startDate.getText().toString());
+                                    int day= start_date.getDay();
+                                    if(!checkArlingtonTimings(hourOfDay,minute,day))
+                                    {
+                                       Toast.makeText(getApplicationContext(), "Please select Arlington Auto Timings", Toast.LENGTH_SHORT).show();
+                                       ShowPopUp();
+                                        startTime.setText("");
+                                    }
+                                    else
+                                    {
+                                        startTime.setText(hourOfDay + ":" + minute);
+                                    }
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
+
                             }
                         }, hour, minutes, true);
                 picker.show();
@@ -144,7 +183,23 @@ public class SearchVehicle extends AppCompatActivity {
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                endTime.setText(hourOfDay + ":" + minute);
+                                SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+                                try {
+                                    Date end_date = dateFormat.parse(endDate.getText().toString());
+                                    int day= end_date.getDay();
+                                    if(!checkArlingtonTimings(hourOfDay,minute,day))
+                                    {
+                                        Toast.makeText(getApplicationContext(), "Please select Arlington Auto Timings", Toast.LENGTH_SHORT).show();
+                                        ShowPopUp();
+                                        endTime.setText("");
+                                    }
+                                    else
+                                    {
+                                        endTime.setText(hourOfDay + ":" + minute);
+                                    }
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }, hour, minutes, true);
                 picker.show();
@@ -234,7 +289,7 @@ public class SearchVehicle extends AppCompatActivity {
                     {
                         try {
                             if (validateTime() > 0) {
-                                searchVehicles(selectedCapacity, dateFrom, dateTo);
+                                  searchVehicles(selectedCapacity, dateFrom, dateTo);
                             }
                             else
                             {
@@ -352,7 +407,7 @@ public class SearchVehicle extends AppCompatActivity {
         if (noOfDays >= 7) {
             result = Double.parseDouble(weeklyRate);
         } else {
-            Date dateFrom = null, dateTo = null;
+            Date dateFrom, dateTo;
             SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy hh:mm");
             try {
                 // Convert string to date format
@@ -366,21 +421,32 @@ public class SearchVehicle extends AppCompatActivity {
 
                 while (calendar.getTime().before(dateTo)) {
                     Date date = calendar.getTime();
+                    // System.out.println(date);
                     dateList.add(date);
                     calendar.add(Calendar.DATE, 1);
                 }
+                dateList.remove(dateFrom);
+
+                // System.out.println(dateList);
                 // Count weekdays, weekends
                 int weekdayCount = 0, weekendCount = 0;
                 for (Date date : dateList) {
-                    if (date.getDay() == 0 || date.getDay() == 6) {
+                    if (date.getDay() == 0 || date.getDay() == 6 || date.getDay() == 1) {
                         weekendCount += 1;
                     } else {
                         weekdayCount += 1;
                     }
                 }
-                // Calculate cost
-                result = weekdayCount * Double.parseDouble(weekdayRate) + weekendCount * Double.parseDouble(weekendRate);
+                if (dateTo.getDay() == 0 || dateTo.getDay() == 6 || dateTo.getDay() == 1 && dateList.get(dateList.size()-1).getDay()==0) {
+                    weekendCount += 1;
+                } else {
+                    weekdayCount += 1;
+                }
 
+
+                // Calculate cost
+               result = weekdayCount * Double.parseDouble(weekdayRate) + weekendCount * Double.parseDouble(weekendRate);
+                result = ViewSelectedVehicle.round(result,2);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -407,7 +473,7 @@ public class SearchVehicle extends AppCompatActivity {
         }
         return numberOfDays;
     }
-
+    //if end time is after start time
     public long validateTime() throws ParseException {
         String start_date = startDate.getText().toString();
         String end_date = endDate.getText().toString();
@@ -423,5 +489,62 @@ public class SearchVehicle extends AppCompatActivity {
         }
 
         return 1;
+    }
+//check if selected timings are according to Arlington Auto timings
+    public boolean checkArlingtonTimings(int hour,int minute, int day)  {
+
+        switch(day){
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+                if((hour>=8 && hour<20)|| (hour==20 && minute==0))
+                {
+                    return true;
+                }
+                break;
+
+            case 0:
+                if((hour>=12 && hour<17)|| (hour==17 && minute==0))
+                {
+                    return true;
+                }
+                break;
+            case 6:
+                if((hour>=8 && hour<17)|| (hour==17 && minute==0))
+                {
+                    return true;
+                }
+                break;
+            default:
+                return false;
+
+        }
+
+        return false;
+    }
+
+    public void ShowPopUp()
+    {
+        //instantiate the popup.xml layout file
+        LayoutInflater layoutInflater = (LayoutInflater) SearchVehicle.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View customView = layoutInflater.inflate(R.layout.popup,null);
+
+        closePopupBtn = (ImageButton) customView.findViewById(R.id.closebutton);
+
+        //instantiate popup window
+        popupWindow = new PopupWindow(customView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        //display the popup window
+        popupWindow.showAtLocation(mainLayout, Gravity.CENTER, 0, 200);
+
+        //close the popup window on button click
+        closePopupBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+            }
+        });
     }
 }

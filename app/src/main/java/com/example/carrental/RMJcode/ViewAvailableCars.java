@@ -242,7 +242,7 @@ public class ViewAvailableCars extends AppCompatActivity {
             userSummaryTextObject.setLayoutParams(txtparms);
             // get no of days
             final int noOfDays = getDaysBetweenDates(startDate, endDate);
-            String displayText = "Car Name - " + carName.trim() + "\nCar Number - " + carNumber + "\nCar Occupant Capacity - " + maxCapacity + "\nCost Per Day - $"+weekdayRate+"\nCar Status - " ;
+            String displayText = "Car Name - " + carName.trim() + "\nCar Number - " + carNumber + "\nCar Occupant Capacity - " + maxCapacity + "\nCost Per Day - $"+weekdayRate+"\nCar Status - Available" ;
             userSummaryTextObject.setText(displayText);
 
             userSummaryTextObject.setTextSize(15);
