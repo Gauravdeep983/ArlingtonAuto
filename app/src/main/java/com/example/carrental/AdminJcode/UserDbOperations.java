@@ -79,16 +79,18 @@ public class UserDbOperations {
     }
 
     public List<ArrayList<String>> SearchVehicles(int capacity, String startDate, String endDate) {
-        String sql = "SELECT * FROM car\n" +
-                "WHERE car_name NOT IN (SELECT car_name FROM car_reservation WHERE start_date > '" + startDate + "' AND end_date <'" + endDate + "') " +
+        String sql = "SELECT * FROM car " +
+                "WHERE car_name NOT IN (SELECT car_name FROM car_reservation WHERE '"+startDate+"' BETWEEN start_date AND end_date OR '"+ endDate+"' BETWEEN start_date AND end_date " +
+                "OR start_date between '"+startDate+"' AND '"+endDate+"' OR end_date between '"+startDate+"' AND '"+endDate+"')" +
                 "AND capacity >= " + capacity + " ORDER BY weekly_rate ASC";
-
+        System.out.println(sql);
         return FindVehiclesInDB(sql);
     }
 
     public List<ArrayList<String>> ViewAvailableVehicles(String startDate, String endDate) {
-        String sql = "SELECT * FROM car\n" +
-                "WHERE car_name NOT IN (SELECT car_name FROM car_reservation WHERE start_date > '" + startDate + "' AND end_date <'" + endDate + "') " +
+        String sql = "SELECT * FROM car " +
+                "WHERE car_name NOT IN (SELECT car_name FROM car_reservation WHERE '"+startDate+"' BETWEEN start_date AND end_date OR '"+ endDate+"' BETWEEN start_date AND end_date " +
+                "OR start_date between '"+startDate+"' AND '"+endDate+"' OR end_date between '"+startDate+"' AND '"+endDate+"')" +
                 " ORDER BY car_name ASC";
 
         return FindVehiclesInDB(sql);
@@ -127,33 +129,21 @@ public class UserDbOperations {
     }
 
     public void InsertReservationDetails(String reservation_number, String username, String car_name, String start_date, String end_date, int occupant_capacity, double total_cost, boolean gps_selected, boolean onstar_selected, boolean siriusxm_selected, Boolean is_cancelled) {
-        String query = "INSERT INTO car_reservation (\n" +
-                "                                reservation_number,\n" +
-                "                                username,\n" +
-                "                                car_name,\n" +
-                "                                start_date,\n" +
-                "                                end_date,\n" +
-                "                                occupant_capacity,\n" +
-                "                                total_cost,\n" +
-                "                                gps_selected,\n" +
-                "                                siriusxm_selected,\n" +
-                "                                onstar_selected,\n" +
-                "                                is_cancelled\n" +
-                "                            )\n" +
-                "                            VALUES (\n" +
-                "                                '"+reservation_number+"',\n" +
-                "                                '"+username+"',\n" +
-                "                                '"+car_name+"',\n" +
-                "                                '"+start_date+"',\n" +
-                "                                '"+end_date+"',\n" +
-                "                                '"+occupant_capacity+"',\n" +
-                "                                '"+total_cost+"',\n" +
-                "                                '"+gps_selected+"',\n" +
-                "                                '"+siriusxm_selected+"',\n" +
-                "                                '"+onstar_selected+"',\n" +
-                "                                "+is_cancelled+"\n" +
-                "                            );";
+        String query = "INSERT INTO car_reservation (reservation_number,username,car_name,start_date,end_date,occupant_capacity,total_cost,gps_selected,siriusxm_selected,onstar_selected,is_cancelled)"
+                + "VALUES(" +
+                "'"+reservation_number+"'," +
+                "'"+username+"'," +
+                "'"+car_name+"'," +
+                "'"+start_date+"'," +
+                "'"+end_date+"'," +
+                "'"+occupant_capacity+"'," +
+                "'"+total_cost+"'," +
+                "'"+gps_selected+"'," +
+                "'"+siriusxm_selected+"'," +
+                "'"+onstar_selected+"'," +
+                ""+is_cancelled+"" +");";
         Cursor cursor = null;
+        System.out.println(query);
         cursor = mDb.rawQuery(query, null);
         int temp = cursor.getCount();
         cursor.close();
