@@ -59,7 +59,7 @@
             android:label="Search Vehicle"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".UserJcode.SelectVehicle"
+            android:name=".UserJcode.ReservationSummary"
             android:label="Vehicle Details"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

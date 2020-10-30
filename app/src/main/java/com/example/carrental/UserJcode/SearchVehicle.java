@@ -121,6 +121,24 @@ public class SearchVehicle extends AppCompatActivity {
 
         tablemain = (TableLayout) findViewById(R.id.tableMain);
 
+        //popup code
+        //instantiate the popup.xml layout file
+        LayoutInflater layoutInflater = (LayoutInflater) SearchVehicle.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View customView = layoutInflater.inflate(R.layout.popup,null);
+
+        closePopupBtn = (ImageButton) customView.findViewById(R.id.closebutton);
+
+        //instantiate popup window
+        popupWindow = new PopupWindow(customView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//close the popup window on button click
+        closePopupBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+            }
+        });
+
+
         // Check if revoked or not
         String isRevoked = session.getRevokeStatus();
         if (isRevoked.equalsIgnoreCase("true")) {
@@ -134,6 +152,7 @@ public class SearchVehicle extends AppCompatActivity {
             public void onClick(View v) {
                 InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
                 inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(), 0);
+                popupWindow.dismiss();
                 final Calendar cldr = Calendar.getInstance();
                 int hour = cldr.get(Calendar.HOUR_OF_DAY);
                 int minutes = cldr.get(Calendar.MINUTE);
@@ -173,6 +192,7 @@ public class SearchVehicle extends AppCompatActivity {
             public void onClick(View v) {
                 InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
                 inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(), 0);
+                popupWindow.dismiss();
                 final Calendar cldr = Calendar.getInstance();
                 //Adds +1 hour to the current time
                 cldr.add(Calendar.HOUR_OF_DAY, 1);
@@ -211,6 +231,7 @@ public class SearchVehicle extends AppCompatActivity {
             public void onClick(View v) {
                 InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
                 inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(), 0);
+                popupWindow.dismiss();
                 final Calendar cldr = Calendar.getInstance();
                 int month = cldr.get(Calendar.MONTH);
                 int day = cldr.get(Calendar.DAY_OF_MONTH);
@@ -234,6 +255,7 @@ public class SearchVehicle extends AppCompatActivity {
             public void onClick(View v) {
                 InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
                 inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(), 0);
+                popupWindow.dismiss();
                 final Calendar cldr = Calendar.getInstance();
                 int month = cldr.get(Calendar.MONTH);
                 int day = cldr.get(Calendar.DAY_OF_MONTH);
@@ -275,7 +297,7 @@ public class SearchVehicle extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
             @Override
             public void onClick(View v) {
-
+                popupWindow.dismiss();
                 int selectedCapacity = Integer.parseInt(capacity.getText().toString());
                 String start_date = startDate.getText().toString();
                 String end_date = endDate.getText().toString();
@@ -526,25 +548,12 @@ public class SearchVehicle extends AppCompatActivity {
     }
 
     public void ShowPopUp()
-    {
-        //instantiate the popup.xml layout file
-        LayoutInflater layoutInflater = (LayoutInflater) SearchVehicle.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View customView = layoutInflater.inflate(R.layout.popup,null);
+    {  //display the popup window
+        if(popupWindow.isShowing())
+            popupWindow.dismiss();
+        else{
+            popupWindow.showAtLocation(mainLayout, Gravity.CENTER, 0, 200);
+        }
 
-        closePopupBtn = (ImageButton) customView.findViewById(R.id.closebutton);
-
-        //instantiate popup window
-        popupWindow = new PopupWindow(customView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-
-        //display the popup window
-        popupWindow.showAtLocation(mainLayout, Gravity.CENTER, 0, 200);
-
-        //close the popup window on button click
-        closePopupBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popupWindow.dismiss();
-            }
-        });
     }
 }

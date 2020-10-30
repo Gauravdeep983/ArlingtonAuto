@@ -191,9 +191,8 @@ public class ViewSelectedVehicle extends AppCompatActivity {
 
                 // Redirect/ toast
                 // TODO Not persistent
-                Snackbar.make(findViewById(android.R.id.content), "Reservation Number: " + reservationNumber, Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                navigationHelper.GotoHomeScreen(userType);
+                Snackbar.make(findViewById(android.R.id.content), "Reservation Number: " + reservationNumber, Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                navigationHelper.GotoReservationSummary(reservationNumber);
             }
         });
 
