@@ -105,4 +105,35 @@ public class CarDbOperations {
         return eachcar;
     }
 
+    public ArrayList<String> GetreservationdetailsfromDB(String reserveID) {
+        ArrayList<String> eachcar = new ArrayList<String>();
+        Cursor cursor;
+            String query = "Select * from car_reservation where reservation_number = '"+reserveID+"'";
+            cursor = mDb.rawQuery(query, null);
+            if (cursor.getCount() <= 0) {
+                //no user
+                cursor.close();
+
+            } else {
+                cursor.moveToFirst();
+                try {
+                    do {
+                        eachcar.add(cursor.getString(cursor.getColumnIndex("reservation_number")));
+                        eachcar.add(cursor.getString(cursor.getColumnIndex("car_name")));
+                        eachcar.add(cursor.getString(cursor.getColumnIndex("occupant_capacity")));
+                        eachcar.add(cursor.getString(cursor.getColumnIndex("start_date")));
+                        eachcar.add(cursor.getString(cursor.getColumnIndex("end_date")));
+                        eachcar.add(cursor.getString(cursor.getColumnIndex("gps_selected")));
+                        eachcar.add(cursor.getString(cursor.getColumnIndex("onstar_selected")));
+                        eachcar.add(cursor.getString(cursor.getColumnIndex("siriusxm_selected")));
+                        eachcar.add(cursor.getString(cursor.getColumnIndex("total_cost")));
+                    }
+                    while (cursor.moveToNext());
+                } finally {
+                    cursor.close();
+                }
+            }
+
+        return eachcar;
+    }
 }
