@@ -11,6 +11,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -96,6 +97,7 @@ public class SearchVehicle extends AppCompatActivity {
         scrollList = (LinearLayout) findViewById(R.id.scrollList);
         revokeContainer = (LinearLayout) findViewById(R.id.revokeContainer);
         scroller = (ScrollView) findViewById(R.id.scroller);
+        scroller.isSmoothScrollingEnabled();
         infobutton = (ImageButton)findViewById(R.id.info);
         mainLayout = (LinearLayout)findViewById(R.id.llsearchvehicle);
         // Back button click
@@ -333,7 +335,23 @@ public class SearchVehicle extends AppCompatActivity {
             }
         });
 
+        scroller.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+            @Override
+            public void onScrollChanged() {
+                int scrollY = scroller.getScrollY(); // For ScrollView
+                //System.out.println(scrollY);
+                if(scrollList.getChildCount()>6){
+                if(scrollY>300){
+                    tablemain.setVisibility(View.GONE);
+                }
+                else if( scrollY<=1){
+                    tablemain.setVisibility(View.VISIBLE);
+                }}
+            }
+        });
+
     }
+
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void searchVehicles(final int capacity, String startDate, String endDate) {
@@ -386,7 +404,7 @@ public class SearchVehicle extends AppCompatActivity {
 
             // get base cost
             final double baseCost = calculateBaseCost(noOfDays, startDate, endDate, weekdayRate, weekendRate, weeklyRate);
-            String displayText = carName.trim() + " - Car Number: " + carNumber + "\nCapacity: " + capacity + ", Cost: $" + baseCost;
+            String displayText = "Car Name - "+carName.trim() + "\nCar Number - " + carNumber + "\nMax Capacity - " + maxCapacity + "\nCost - $" + baseCost;
             userSummaryTextObject.setText(displayText);
 
             userSummaryTextObject.setTextSize(15);

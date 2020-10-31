@@ -8,7 +8,8 @@
     android:background="#51BCBCBC"
     android:clickable="true"
     android:isScrollContainer="false"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
 
     <LinearLayout
         android:id="@+id/myownbar"
@@ -83,7 +84,8 @@
         android:paddingBottom="20dp"
         android:verticalScrollbarPosition="right"
         tools:layout_editor_absoluteX="-1dp"
-        tools:layout_editor_absoluteY="3dp">
+        tools:layout_editor_absoluteY="3dp"
+        android:animateLayoutChanges="true">
 
         <TableRow
             android:layout_width="match_parent"
@@ -233,13 +235,6 @@
                     android:hint="End Time" />
             </LinearLayout>
         </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:baselineAligned="false"
-            android:paddingTop="1dp"
-            android:paddingBottom="1dp" />
 
         <TableRow
             android:layout_width="match_parent"
