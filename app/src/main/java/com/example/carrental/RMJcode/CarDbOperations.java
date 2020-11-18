@@ -106,7 +106,7 @@ public class CarDbOperations {
     }
 
     public ArrayList<String> GetreservationdetailsfromDB(String reserveID) {
-        ArrayList<String> eachcar = new ArrayList<String>();
+        ArrayList<String> eachreservation = new ArrayList<String>();
         Cursor cursor;
             String query = "Select * from car_reservation where reservation_number = '"+reserveID+"'";
             cursor = mDb.rawQuery(query, null);
@@ -118,15 +118,16 @@ public class CarDbOperations {
                 cursor.moveToFirst();
                 try {
                     do {
-                        eachcar.add(cursor.getString(cursor.getColumnIndex("reservation_number")));
-                        eachcar.add(cursor.getString(cursor.getColumnIndex("car_name")));
-                        eachcar.add(cursor.getString(cursor.getColumnIndex("occupant_capacity")));
-                        eachcar.add(cursor.getString(cursor.getColumnIndex("start_date")));
-                        eachcar.add(cursor.getString(cursor.getColumnIndex("end_date")));
-                        eachcar.add(cursor.getString(cursor.getColumnIndex("gps_selected")));
-                        eachcar.add(cursor.getString(cursor.getColumnIndex("onstar_selected")));
-                        eachcar.add(cursor.getString(cursor.getColumnIndex("siriusxm_selected")));
-                        eachcar.add(cursor.getString(cursor.getColumnIndex("total_cost")));
+                        eachreservation.add(cursor.getString(cursor.getColumnIndex("reservation_number")));
+                        eachreservation.add(cursor.getString(cursor.getColumnIndex("car_name")));
+                        eachreservation.add(cursor.getString(cursor.getColumnIndex("occupant_capacity")));
+                        eachreservation.add(cursor.getString(cursor.getColumnIndex("start_date")));
+                        eachreservation.add(cursor.getString(cursor.getColumnIndex("end_date")));
+                        eachreservation.add(cursor.getString(cursor.getColumnIndex("gps_selected")));
+                        eachreservation.add(cursor.getString(cursor.getColumnIndex("onstar_selected")));
+                        eachreservation.add(cursor.getString(cursor.getColumnIndex("siriusxm_selected")));
+                        eachreservation.add(cursor.getString(cursor.getColumnIndex("total_cost")));
+                        eachreservation.add(cursor.getString(cursor.getColumnIndex("username")));
                     }
                     while (cursor.moveToNext());
                 } finally {
@@ -134,6 +135,12 @@ public class CarDbOperations {
                 }
             }
 
-        return eachcar;
+        return eachreservation;
     }
+
+    public boolean DeleteReservationinDB(String reservationID)
+    {
+         return mDb.delete("car_reservation","reservation_number=?",new String[]{reservationID}) >0;
+    }
+
 }

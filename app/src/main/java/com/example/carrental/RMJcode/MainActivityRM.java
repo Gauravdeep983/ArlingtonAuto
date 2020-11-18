@@ -24,6 +24,7 @@ public class MainActivityRM extends AppCompatActivity {
     Button viewprofilebutton;
     Button searchcar;
     Button viewavailablecars;
+    Button viewreservationCalendar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +36,7 @@ public class MainActivityRM extends AppCompatActivity {
         viewprofilebutton = (Button)findViewById(R.id.viewprofilebutton);
         searchcar = (Button)findViewById(R.id.searchcar);
         viewavailablecars = (Button)findViewById(R.id.viewavailablecars);
+        viewreservationCalendar = (Button)findViewById(R.id.viewreservationcalendar);
 
         session = new SessionHelper(this);
         navigationHelper = new NavigationHelper(MainActivityRM.this);
@@ -80,6 +82,15 @@ public class MainActivityRM extends AppCompatActivity {
             public void onClick(View view) {
 
                 Intent ui = new Intent(MainActivityRM.this, ViewAvailableCars.class);
+                startActivity(ui);
+            }
+        });
+
+        viewreservationCalendar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent ui = new Intent(MainActivityRM.this, ViewReservationCalendar.class);
                 startActivity(ui);
             }
         });
