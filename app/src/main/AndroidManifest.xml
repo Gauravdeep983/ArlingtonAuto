@@ -10,14 +10,18 @@
         android:roundIcon="@drawable/carspic"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity
+            android:name=".RMJcode.RM_ReservationSummary"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".RMJcode.ViewReservationCalendar"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".RMJcode.Viewselectedcar"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".AdminJcode.ViewUser"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".UserJcode.ViewSelectedVehicle"
             android:theme="@style/AppTheme.NoActionBar" />

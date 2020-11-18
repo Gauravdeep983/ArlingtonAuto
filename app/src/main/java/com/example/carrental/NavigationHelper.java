@@ -9,6 +9,7 @@ import com.example.carrental.AdminJcode.Admin_searchallusers;
 import com.example.carrental.AdminJcode.MainActivityAdmin;
 import com.example.carrental.AdminJcode.ViewUser;
 import com.example.carrental.RMJcode.MainActivityRM;
+import com.example.carrental.RMJcode.RM_ReservationSummary;
 import com.example.carrental.RMJcode.Viewselectedcar;
 import com.example.carrental.UserJcode.MainActivityUser;
 import com.example.carrental.UserJcode.ReservationSummary;
@@ -123,6 +124,14 @@ public class NavigationHelper {
     public void GotoReservationSummary(String reservationnumber)
     {
         Intent i = new Intent(context, ReservationSummary.class);
+        i.putExtra("reservationnumber", reservationnumber);
+        ActivityOptions options = ActivityOptions.makeCustomAnimation(context, android.R.anim.fade_in, android.R.anim.fade_out);
+        context.startActivity(i, options.toBundle());
+    }
+
+    public void GotoReservationRM(String reservationnumber)
+    {
+        Intent i = new Intent(context, RM_ReservationSummary.class);
         i.putExtra("reservationnumber", reservationnumber);
         ActivityOptions options = ActivityOptions.makeCustomAnimation(context, android.R.anim.fade_in, android.R.anim.fade_out);
         context.startActivity(i, options.toBundle());
