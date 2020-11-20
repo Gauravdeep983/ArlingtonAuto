@@ -12,8 +12,10 @@ import com.example.carrental.RMJcode.MainActivityRM;
 import com.example.carrental.RMJcode.RM_ReservationSummary;
 import com.example.carrental.RMJcode.Viewselectedcar;
 import com.example.carrental.UserJcode.MainActivityUser;
+//import com.example.carrental.UserJcode.PastRentalSearch;
 import com.example.carrental.UserJcode.ReservationSummary;
 import com.example.carrental.UserJcode.SearchVehicle;
+import com.example.carrental.UserJcode.ViewRentalHistory;
 import com.example.carrental.UserJcode.ViewSelectedVehicle;
 import com.example.carrental.UserJcode.viewmyprofile.U_ViewProfile;
 
@@ -137,6 +139,17 @@ public class NavigationHelper {
         context.startActivity(i, options.toBundle());
     }
 
+    public void GotoReservationHistory() {
+        Intent i = new Intent(context, ViewRentalHistory.class);
+        ActivityOptions options = ActivityOptions.makeCustomAnimation(context, android.R.anim.fade_in, android.R.anim.fade_out);
+        context.startActivity(i, options.toBundle());
+    }
+
+    public void GotoPastReservationDetails() {
+        Intent i = new Intent(context, ReservationSummary.class);
+        ActivityOptions options = ActivityOptions.makeCustomAnimation(context, android.R.anim.fade_in, android.R.anim.fade_out);
+        context.startActivity(i, options.toBundle());
+    }
 }
 
 

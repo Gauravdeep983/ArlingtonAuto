@@ -92,7 +92,7 @@ public class RM_ReservationSummary extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(RM_ReservationSummary.this);
-                builder.setMessage("Do you want to delete ?");
+                builder.setMessage("Do you want to delete this reservation?");
                 builder.setTitle("Are you sure ?");
                 builder.setCancelable(true);
                 builder.setPositiveButton("Yes",new DialogInterface.OnClickListener() {

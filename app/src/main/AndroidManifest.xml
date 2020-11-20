@@ -10,9 +10,13 @@
         android:roundIcon="@drawable/carspic"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".UserJcode.ReservationSummary"></activity>
+        <activity
+            android:name=".UserJcode.ViewRentalHistory"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".RMJcode.RM_ReservationSummary"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".RMJcode.ViewReservationCalendar"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -62,10 +66,10 @@
             android:name=".UserJcode.SearchVehicle"
             android:label="Search Vehicle"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".UserJcode.ReservationSummary"
-            android:label="Vehicle Details"
-            android:theme="@style/AppTheme.NoActionBar" />
+<!--        <activity-->
+<!--            android:name=".UserJcode.PastRentalSearch"-->
+<!--            android:label="Vehicle Details"-->
+<!--            android:theme="@style/AppTheme.NoActionBar" />-->
         <activity
             android:name=".AdminJcode.Admin_searchallusers"
             android:label="SEARCH ALL USERS"

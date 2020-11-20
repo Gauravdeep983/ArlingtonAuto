@@ -28,8 +28,8 @@ public class ReservationDbOperations {
         }
     }
 
-    public List<ArrayList<String>> ViewReservations( String startDate, String endDate) {
-        String sql =  "select * from Car_Reservation where start_date between '"+startDate+"' and '"+endDate+"' AND end_date between '"+startDate+"' and '"+endDate+"' ORDER BY start_date ASC, car_name ASC";
+    public List<ArrayList<String>> ViewReservations(String startDate, String endDate) {
+        String sql = "select * from Car_Reservation where start_date between '" + startDate + "' and '" + endDate + "' AND end_date between '" + startDate + "' and '" + endDate + "' ORDER BY start_date ASC, car_name ASC";
         System.out.println(sql);
         return ViewReservationsInDB(sql);
     }
@@ -40,7 +40,7 @@ public class ReservationDbOperations {
         Cursor cursor = null;
         String query = sql;
         cursor = mDb.rawQuery(query, null);
-        if(cursor.getCount()>0) {
+        if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             try {
                 do {
@@ -62,5 +62,9 @@ public class ReservationDbOperations {
         return allReservations;
     }
 
+    public List<ArrayList<String>> ViewReservationHistory(String startDate, String endDate, String username) {
+        String sql = "select * from Car_Reservation where start_date >= '" + startDate + "' AND end_date <= '" + endDate + "' AND username = '" + username + "' ORDER BY start_date ASC, car_name ASC";
 
+        return ViewReservationsInDB(sql);
+    }
 }

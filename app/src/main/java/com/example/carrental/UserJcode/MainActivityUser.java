@@ -25,7 +25,7 @@ public class MainActivityUser extends AppCompatActivity {
     ImageButton homebutton;
     Button viewprofilebtn;
     Button searchvehicle;
-    Button viewmyreservation;
+    Button viewreservationsummary;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +37,7 @@ public class MainActivityUser extends AppCompatActivity {
         homebutton = (ImageButton) findViewById(R.id.homebutton);
         viewprofilebtn = (Button) findViewById(R.id.viewprofilebutton);
         searchvehicle = (Button) findViewById(R.id.searchcar);
-        viewmyreservation = (Button) findViewById(R.id.viewreservationbutton);
+        viewreservationsummary = (Button) findViewById(R.id.viewreservationsummary);
 
         session = new SessionHelper(this);
         navigationHelper = new NavigationHelper(MainActivityUser.this);
@@ -76,11 +76,11 @@ public class MainActivityUser extends AppCompatActivity {
             }
         });
 
-        viewmyreservation.setOnClickListener(new View.OnClickListener() {
+
+        viewreservationsummary.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
+                navigationHelper.GotoReservationHistory();
             }
         });
 
