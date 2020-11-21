@@ -12,8 +12,11 @@ import com.example.carrental.RMJcode.MainActivityRM;
 import com.example.carrental.RMJcode.RM_ReservationSummary;
 import com.example.carrental.RMJcode.Viewselectedcar;
 import com.example.carrental.UserJcode.MainActivityUser;
+//import com.example.carrental.UserJcode.PastRentalSearch;
+import com.example.carrental.UserJcode.ReservationReceipt;
 import com.example.carrental.UserJcode.ReservationSummary;
 import com.example.carrental.UserJcode.SearchVehicle;
+import com.example.carrental.UserJcode.ViewRentalHistory;
 import com.example.carrental.UserJcode.ViewSelectedVehicle;
 import com.example.carrental.UserJcode.viewmyprofile.U_ViewProfile;
 
@@ -112,7 +115,6 @@ public class NavigationHelper {
         context.startActivity(i, options.toBundle());
     }
 
-
     public void GotoViewSelectedCar(String carname)
     {
         Intent i = new Intent(context, Viewselectedcar.class);
@@ -123,7 +125,7 @@ public class NavigationHelper {
 
     public void GotoReservationSummary(String reservationnumber)
     {
-        Intent i = new Intent(context, ReservationSummary.class);
+        Intent i = new Intent(context, ReservationReceipt.class);
         i.putExtra("reservationnumber", reservationnumber);
         ActivityOptions options = ActivityOptions.makeCustomAnimation(context, android.R.anim.fade_in, android.R.anim.fade_out);
         context.startActivity(i, options.toBundle());
@@ -137,6 +139,29 @@ public class NavigationHelper {
         context.startActivity(i, options.toBundle());
     }
 
+    public void GotoReservationHistory() {
+        Intent i = new Intent(context, ViewRentalHistory.class);
+        ActivityOptions options = ActivityOptions.makeCustomAnimation(context, android.R.anim.fade_in, android.R.anim.fade_out);
+        context.startActivity(i, options.toBundle());
+    }
+
+    public void GotoPastReservationDetails(ArrayList<String> reservationDetails, double baseCost, int noOfDays, String reservationNumber) {
+//        Intent i = new Intent(context, ReservationSummary.class);
+//        ActivityOptions options = ActivityOptions.makeCustomAnimation(context, android.R.anim.fade_in, android.R.anim.fade_out);
+//        context.startActivity(i, options.toBundle());
+
+        Intent i = new Intent(context, ReservationSummary.class);
+        Bundle args = new Bundle();
+        args.putSerializable("reservation", (Serializable) reservationDetails);
+        i.putExtra("args", args);
+        i.putExtra("noOfDays", noOfDays);
+        i.putExtra("baseCost", baseCost);
+        i.putExtra("reservationnumber", reservationNumber);
+        ActivityOptions options =
+                ActivityOptions.makeCustomAnimation(context, android.R.anim.fade_in, android.R.anim.fade_out);
+
+        context.startActivity(i, options.toBundle());
+    }
 }
 
 

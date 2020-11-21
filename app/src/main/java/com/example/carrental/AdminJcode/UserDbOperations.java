@@ -128,26 +128,5 @@ public class UserDbOperations {
         return allVehicles;
     }
 
-    public void InsertReservationDetails(String reservation_number, String username, String car_name, String start_date, String end_date, int occupant_capacity, double total_cost, boolean gps_selected, boolean onstar_selected, boolean siriusxm_selected, Boolean is_cancelled) {
-        String query = "INSERT INTO car_reservation (reservation_number,username,car_name,start_date,end_date,occupant_capacity,total_cost,gps_selected,siriusxm_selected,onstar_selected,is_cancelled)"
-                + "VALUES(" +
-                "'"+reservation_number+"'," +
-                "'"+username+"'," +
-                "'"+car_name+"'," +
-                "'"+start_date+"'," +
-                "'"+end_date+"'," +
-                "'"+occupant_capacity+"'," +
-                "'"+total_cost+"'," +
-                "'"+gps_selected+"'," +
-                "'"+siriusxm_selected+"'," +
-                "'"+onstar_selected+"'," +
-                ""+is_cancelled+"" +");";
-        Cursor cursor = null;
-        System.out.println(query);
-        cursor = mDb.rawQuery(query, null);
-        int temp = cursor.getCount();
-        cursor.close();
-    }
-
 
 }

@@ -111,14 +111,15 @@
 
         </Button>
 
+
         <Button
-            android:id="@+id/viewreservationbutton"
+            android:id="@+id/viewreservationsummary"
             android:layout_width="300dp"
             android:layout_height="60dp"
             android:drawableLeft="@drawable/carspic"
             android:paddingLeft="15dp"
             android:drawablePadding="-15dp"
-            android:text="View Rental History"
+            android:text="Reservation history"
             android:textAllCaps="true"
             android:textSize="19dp"
             android:textColor="@color/colorPrimary"
