@@ -32,7 +32,7 @@
             android:layout_gravity="center"
             android:layout_marginLeft="0sp"
             android:fontFamily="sans-serif-medium"
-            android:text="View Reservation Calendar"
+            android:text="Reservation Calendar"
             android:textAllCaps="true"
             android:textColor="#ffffff"
             android:textSize="14sp" />

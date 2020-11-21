@@ -9,6 +9,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -212,8 +213,7 @@ public class ReservationSummary extends AppCompatActivity {
                 reservationDbOperations.cancelReservation(reservationnumber.getText().toString());
 
                 // Toast for "Reservation Cancelled"
-                Snackbar.make(findViewById(android.R.id.content), "Reservation Cancelled", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-
+                Toast.makeText(getApplicationContext(), "Reservation Cancelled", Toast.LENGTH_LONG).show();
                 // Redirect to homepage
                 navigationHelper.GotoHomeScreen("User");
             }
