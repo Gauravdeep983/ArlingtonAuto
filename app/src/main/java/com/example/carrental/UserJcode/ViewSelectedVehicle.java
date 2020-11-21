@@ -11,6 +11,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -194,7 +195,8 @@ public class ViewSelectedVehicle extends AppCompatActivity {
 
                 // Redirect/ toast
                 // TODO Not persistent
-                Snackbar.make(findViewById(android.R.id.content), "Reservation Number: " + reservationNumber, Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                Toast.makeText(getApplicationContext(), "Reservation Number: " + reservationNumber, Toast.LENGTH_LONG).show();
+              //  Snackbar.make(findViewById(android.R.id.content), "Reservation Number: " + reservationNumber, Snackbar.LENGTH_LONG).setAction("Action", null).show();
                 navigationHelper.GotoReservationSummary(reservationNumber);
             }
         });

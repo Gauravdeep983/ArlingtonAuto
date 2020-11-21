@@ -10,7 +10,8 @@
         android:roundIcon="@drawable/carspic"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UserJcode.ReservationSummary"></activity>
+        <activity android:name=".UserJcode.ReservationSummary"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".UserJcode.ViewRentalHistory"
             android:theme="@style/AppTheme.NoActionBar" />
