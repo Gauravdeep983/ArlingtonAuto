@@ -62,9 +62,54 @@ public class ReservationDbOperations {
         return allReservations;
     }
 
+    public void InsertReservationDetails(String reservation_number, String username, String car_name, String start_date, String end_date, int occupant_capacity, double total_cost, boolean gps_selected, boolean onstar_selected, boolean siriusxm_selected, Boolean is_cancelled) {
+        String query = "INSERT INTO car_reservation (reservation_number,username,car_name,start_date,end_date,occupant_capacity,total_cost,gps_selected,siriusxm_selected,onstar_selected,is_cancelled)"
+                + "VALUES(" +
+                "'" + reservation_number + "'," +
+                "'" + username + "'," +
+                "'" + car_name + "'," +
+                "'" + start_date + "'," +
+                "'" + end_date + "'," +
+                "'" + occupant_capacity + "'," +
+                "'" + total_cost + "'," +
+                "'" + gps_selected + "'," +
+                "'" + siriusxm_selected + "'," +
+                "'" + onstar_selected + "'," +
+                "'" + is_cancelled + "'" + ");";
+        Cursor cursor = null;
+        System.out.println(query);
+        cursor = mDb.rawQuery(query, null);
+        int temp = cursor.getCount();
+        cursor.close();
+    }
+
     public List<ArrayList<String>> ViewReservationHistory(String startDate, String endDate, String username) {
-        String sql = "select * from Car_Reservation where start_date >= '" + startDate + "' AND end_date <= '" + endDate + "' AND username = '" + username + "' ORDER BY start_date ASC, car_name ASC";
+        String sql = "select * from Car_Reservation where start_date >= '" + startDate + "' AND end_date <= '" + endDate + "' AND username = '" + username + "' AND is_cancelled != 'true' ORDER BY start_date ASC, car_name ASC";
 
         return ViewReservationsInDB(sql);
+    }
+
+
+    public void updateReservation(String reservationNo, double finalCost, boolean gpsSelected, boolean onStarSelected, boolean siriusSelected) {
+        String query = "UPDATE Car_Reservation\n" +
+                "   SET total_cost = '" + finalCost + "',\n" +
+                "       gps_selected = '" + gpsSelected + "',\n" +
+                "       siriusxm_selected = '" + siriusSelected + "',\n" +
+                "       onstar_selected = '" + onStarSelected + "'\n" +
+                " WHERE reservation_number = '" + reservationNo + "'";
+        Cursor cursor;
+        cursor = mDb.rawQuery(query, null);
+        int temp = cursor.getCount();
+        cursor.close();
+    }
+
+    public void cancelReservation(String reservationNo) {
+        String query = "UPDATE Car_Reservation\n" +
+                "   SET is_cancelled = 'true'\n" +
+                " WHERE reservation_number = '" + reservationNo + "'";
+        Cursor cursor;
+        cursor = mDb.rawQuery(query, null);
+        int temp = cursor.getCount();
+        cursor.close();
     }
 }

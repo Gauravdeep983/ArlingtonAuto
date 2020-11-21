@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.carrental.AdminJcode.UserDbOperations;
 import com.example.carrental.NavigationHelper;
 import com.example.carrental.R;
+import com.example.carrental.RMJcode.ReservationDbOperations;
 import com.example.carrental.SessionHelper;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -29,6 +30,7 @@ public class ViewSelectedVehicle extends AppCompatActivity {
     public NavigationHelper navigationHelper;
     public SessionHelper session;
     public UserDbOperations userDbOperations;
+    public ReservationDbOperations reservationDbOperations;
     TextView carNumber;
     TextView carName;
     TextView selectedCapacity;
@@ -59,6 +61,7 @@ public class ViewSelectedVehicle extends AppCompatActivity {
         session = new SessionHelper(this);
         userDbOperations = new UserDbOperations(this);
         navigationHelper = new NavigationHelper(this);
+        reservationDbOperations= new ReservationDbOperations(this);
         backbtn = (ImageButton)findViewById(R.id.backbutton);
         homebutton = (ImageButton)findViewById(R.id.homebutton);
         logoutbutton = (ImageButton)findViewById(R.id.logoutbutton);
@@ -185,9 +188,9 @@ public class ViewSelectedVehicle extends AppCompatActivity {
                 // Generate a 6 digit reservation number
                 reservationNumber = generateReservationNumber(6);
                 // Save in car_reservation table
-               userDbOperations.InsertReservationDetails(reservationNumber, sessionUsername, carName.getText().toString(),
+                reservationDbOperations.InsertReservationDetails(reservationNumber, sessionUsername, carName.getText().toString(),
                         startDate, endDate, Integer.parseInt(selectedCapacity.getText().toString()), Double.parseDouble(finalCostText.getText().toString().replace("$", "")),
-                        gps.isChecked(), onstar.isChecked(), siriusxm.isChecked(), null);
+                        gps.isChecked(), onstar.isChecked(), siriusxm.isChecked(), false);
 
                 // Redirect/ toast
                 // TODO Not persistent

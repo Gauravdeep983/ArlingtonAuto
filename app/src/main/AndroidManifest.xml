@@ -47,6 +47,10 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".UserJcode.ReservationReceipt"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".UserJcode.MainActivityUser"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
