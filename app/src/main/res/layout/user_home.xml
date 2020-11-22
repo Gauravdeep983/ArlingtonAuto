@@ -119,7 +119,7 @@
             android:drawableLeft="@drawable/carspic"
             android:paddingLeft="15dp"
             android:drawablePadding="-15dp"
-            android:text="Reservation history"
+            android:text="View Rental History"
             android:textAllCaps="true"
             android:textSize="19dp"
             android:textColor="@color/colorPrimary"
