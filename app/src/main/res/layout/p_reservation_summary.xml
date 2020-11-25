@@ -318,17 +318,22 @@
 
         </TableRow>
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="52dp"
             android:paddingTop="1dp"
             android:paddingBottom="1dp"
-            android:layout_marginTop="10dp">
-
+            android:layout_marginTop="10dp"
+            >
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
             <Button
                 android:id="@+id/saveBtn"
-                android:layout_width="142dp"
-                android:layout_height="50dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/buttonrounded_edge"
                 android:fontFamily="sans-serif-medium"
@@ -340,8 +345,8 @@
                 />
             <Button
                 android:id="@+id/edit"
-                android:layout_width="145dp"
-                android:layout_height="50dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@drawable/buttonrounded_edge"
                 android:fontFamily="sans-serif-medium"
                 android:text="Edit"
@@ -350,19 +355,20 @@
                 android:textColorHint="#FFFDFD"
                 android:textSize="15sp"
                />
-
+            </LinearLayout>
             <Button
                 android:id="@+id/deletereservation"
-                android:layout_width="156dp"
-                android:layout_height="50dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:background="@drawable/buttonrounded_edge"
                 android:fontFamily="sans-serif-medium"
                 android:text="Cancel Reservation"
                 android:textColor="#020202"
                 android:textColorHint="#FFFDFD"
-                android:textSize="12sp"/>
+                android:textSize="12sp" />
 
-        </TableRow>
+        </LinearLayout>
 
 
 
