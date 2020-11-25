@@ -209,14 +209,32 @@ public class ReservationSummary extends AppCompatActivity {
         cancelReservationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Cancel current reservation
-                reservationDbOperations.cancelReservation(reservationnumber.getText().toString());
+                // Confirm from user
+                AlertDialog.Builder builder = new AlertDialog.Builder(ReservationSummary.this);
+                builder.setMessage("Do you want to cancel this reservation?");
+                builder.setTitle("Are you sure?");
+                builder.setCancelable(true);
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Cancel current reservation
+                        reservationDbOperations.cancelReservation(reservationnumber.getText().toString());
 
-                // Toast for "Reservation Cancelled"
-                Toast.makeText(getApplicationContext(), "Reservation Cancelled", Toast.LENGTH_LONG).show();
-                // Redirect to homepage
-                navigationHelper.GotoHomeScreen("User");
-            }
+                        // Toast for "Reservation Cancelled"
+                        Toast.makeText(getApplicationContext(), "Reservation Cancelled", Toast.LENGTH_LONG).show();
+                        // Redirect to homepage
+                        navigationHelper.GotoHomeScreen("User");
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+     }
         });
 
 
