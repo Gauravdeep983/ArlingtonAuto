@@ -558,9 +558,9 @@
                     android:textColor="#020202"
                     android:textColorHint="#FFFDFD"
                     android:textSize="17sp"
-                    android:visibility="visible"
                     tools:layout_editor_absoluteX="448dp"
-                    tools:layout_editor_absoluteY="671dp" />
+                    tools:layout_editor_absoluteY="671dp"
+                    />
 
             </LinearLayout>
 
