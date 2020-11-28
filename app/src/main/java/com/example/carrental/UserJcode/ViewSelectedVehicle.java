@@ -42,7 +42,7 @@ public class ViewSelectedVehicle extends AppCompatActivity {
     CheckBox siriusxm;
     TextView totalCost;
     Button btnReserve;
-    ImageButton backbtn;
+    Button backbtn;
     ImageButton homebutton;
     ImageButton logoutbutton;
     TableRow membershipContainer;
@@ -63,7 +63,7 @@ public class ViewSelectedVehicle extends AppCompatActivity {
         userDbOperations = new UserDbOperations(this);
         navigationHelper = new NavigationHelper(this);
         reservationDbOperations= new ReservationDbOperations(this);
-        backbtn = (ImageButton)findViewById(R.id.backbutton);
+        backbtn = (Button)findViewById(R.id.backbtn);
         homebutton = (ImageButton)findViewById(R.id.homebutton);
         logoutbutton = (ImageButton)findViewById(R.id.logoutbutton);
         btnReserve = (Button) findViewById(R.id.btnReserve);
