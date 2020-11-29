@@ -56,8 +56,7 @@ public class CarDbOperations {
                         eachcar.add("CAR NAME - " + cursor.getString(cursor.getColumnIndex("car_name")) + "\nCAR NUMBER - " +
                                 cursor.getString(cursor.getColumnIndex("car_number")) + "\nCAR CAPACITY - " +
                                 cursor.getString(cursor.getColumnIndex("capacity")) + "\nWEEKDAY RATE - $" +
-                                cursor.getString(cursor.getColumnIndex("weekday_rate")) + "\nGPS RATE - $" +
-                                cursor.getString(cursor.getColumnIndex("gps_rate")));
+                                cursor.getString(cursor.getColumnIndex("weekday_rate")));
                         Allcars.add(eachcar);
                     }
                     while (cursor.moveToNext());
