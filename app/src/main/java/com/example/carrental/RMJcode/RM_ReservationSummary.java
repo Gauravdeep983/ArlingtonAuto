@@ -102,7 +102,7 @@ public class RM_ReservationSummary extends AppCompatActivity {
                         if(carDbOperations.DeleteReservationinDB(reservationnumber.getText().toString()))
                         {
                             Toast.makeText(getApplicationContext(), "Reservation Deleted", Toast.LENGTH_LONG).show();
-                            finish();
+                            navigationHelper.GotoHomeScreen(session.getloggedInUserType());
                         }
                     }});
                 builder.setNegativeButton("No",new DialogInterface.OnClickListener() {
