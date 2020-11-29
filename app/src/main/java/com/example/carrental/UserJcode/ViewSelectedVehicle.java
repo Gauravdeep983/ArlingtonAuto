@@ -42,6 +42,7 @@ public class ViewSelectedVehicle extends AppCompatActivity {
     CheckBox siriusxm;
     TextView totalCost;
     Button btnReserve;
+    ImageButton backbutton;
     Button backbtn;
     ImageButton homebutton;
     ImageButton logoutbutton;
@@ -63,6 +64,7 @@ public class ViewSelectedVehicle extends AppCompatActivity {
         userDbOperations = new UserDbOperations(this);
         navigationHelper = new NavigationHelper(this);
         reservationDbOperations= new ReservationDbOperations(this);
+        backbutton = (ImageButton)findViewById(R.id.backbutton);
         backbtn = (Button)findViewById(R.id.backbtn);
         homebutton = (ImageButton)findViewById(R.id.homebutton);
         logoutbutton = (ImageButton)findViewById(R.id.logoutbutton);
@@ -79,10 +81,16 @@ public class ViewSelectedVehicle extends AppCompatActivity {
         finalCostText = (TextView) findViewById(R.id.finalCostText);
         membershipContainer = (TableRow) findViewById(R.id.membershipContainer);
 
+        backbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               finish();
+            }
+        });
         backbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+               finish();
             }
         });
 
@@ -217,12 +225,6 @@ public class ViewSelectedVehicle extends AppCompatActivity {
 
             }
         });
-        backbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navigationHelper.GotoHomeScreen(userType);
-            }
-        });
     }
 
     private double calculateFinalCost(double baseCost, boolean isMember) {
@@ -258,6 +260,8 @@ public class ViewSelectedVehicle extends AppCompatActivity {
         bd = bd.setScale(places, RoundingMode.HALF_UP);
         return bd.doubleValue();
     }
-
+    private void killActivity() {
+        finish();
+    }
 
 }
